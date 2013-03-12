@@ -5,7 +5,7 @@
   <title>Iaato</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Bootstrap -->
-  <link href="/Iaato/app/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+  <link href="/Iaato/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
 </head>
 <!-- Debut du header-->
 <header>
@@ -14,7 +14,7 @@
 -->
 </header>
 <!-- bar de navigation -->
-<div class="navbar navbar-inverse">
+<div class="navbar navbar-blue">
 <div class="navbar-inner">
         <div class="container">
           <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
