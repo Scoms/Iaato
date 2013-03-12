@@ -5,3 +5,17 @@ iaato_iaato_homepage:
 iaato_capitaine:
     pattern: /capitaine
     defaults: { _controller: IaatoIaatoBundle:Capitaine:index }
+
+iaato_secretariat:
+    pattern: /secretariat
+    defaults: { _controller: IaatoIaatoBundle:Secretariat:index }
+
+iaato_connexion:
+    pattern: /connexion
+    defaults: { _controller: IaatoIaatoBundle:Connexion:index }
+
+iaato_contact:
+    pattern: /contact
+    defaults: { _controller:IaatoIaatoBundle:Contact:index }
+
+
