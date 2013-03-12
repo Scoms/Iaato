@@ -1,0 +1,3 @@
+iaato_iaato_homepage:
+    pattern:  /home
+    defaults: { _controller: IaatoIaatoBundle:Home:index }

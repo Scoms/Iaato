@@ -1,0 +1,7 @@
+parameters:
+#    iaato_iaato.example.class: Iaato\IaatoBundle\Example
+
+services:
+#    iaato_iaato.example:
+#        class: %iaato_iaato.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
