@@ -1,3 +1,7 @@
 iaato_iaato_homepage:
     pattern:  /home
     defaults: { _controller: IaatoIaatoBundle:Home:index }
+
+iaato_capitaine:
+    pattern: /capitaine
+    defaults: { _controller: IaatoIaatoBundle:Capitaine:index }
