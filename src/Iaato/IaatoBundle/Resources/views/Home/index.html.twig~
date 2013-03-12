@@ -1,15 +1,17 @@
+<!DOCTYPE html>
+
 <html>
 <head>
   <title>Iaato</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Bootstrap -->
-  <link href="/Iaato/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="/Iaato/app/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
 </head>
 <!-- Debut du header-->
 <header>
-</br>
-<h1>Une super belle image</h1>
-
+<!--
+<img src="/Iaato/img/iceberg.jpg">
+-->
 </header>
 <!-- bar de navigation -->
 <div class="navbar navbar-inverse">
@@ -24,7 +26,6 @@
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">lol</a></li>
               <li><a href="#contact">Connexion</a></li>
             </ul>
           </div><!--/.nav-collapse -->
@@ -32,7 +33,9 @@
       </div>
 </div>
 <body>
-    IAATOme!
+<div id="1">
+	{{ content }}
+</div>
 </body>
 <footer>
 <h2>Un footer de ouf</h2>

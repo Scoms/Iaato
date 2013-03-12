@@ -1,5 +1,5 @@
 /web/bundles/
-/app/bootstrap*
+/bootstrap*
 /app/cache/*
 /app/logs/*
 /vendor/

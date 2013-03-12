@@ -8,7 +8,8 @@ class CapitaineController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('IaatoIaatoBundle:Home:index.html.twig');
+        return $this->render('IaatoIaatoBundle:Home:index.html.twig',array('content' => 'Capitaine'));
+	
     }
 
 }
