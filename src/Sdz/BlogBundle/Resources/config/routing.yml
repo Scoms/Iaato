@@ -1,0 +1,30 @@
+#sdz_blog_homepage:
+#    pattern:  /hello/{name}
+#    defaults: { _controller: SdzBlogBundle:Default:index }
+
+#HelloTheWorld:
+#    pattern : /hello-world
+#    defaults: { _controller: SdzBlogBundle:Blog:index }
+
+#ByeByeWorld:
+#    pattern: /byebye-world
+#    defaults: { _controller: SdzBlogBundle:Blog:index }
+
+sdzblog_acceuil:
+    pattern: /
+    defaults: { _controller: SdzBlogBundle:Blog:index }
+
+sdzblog_voir:
+    pattern: /article/{id}
+    defaults: { _controller: SdzBlogBundle:Blog:voir }
+
+sdzblog_ajouter:
+    pattern: /ajouter
+    defaults: { _controller: SdzBlogBundle:Blog:ajouter }
+
+sdzblog_voir_slug:
+    pattern: /{annee}/{slug}.{format}
+    defaults: { _controller: SdzBlogBundle:Blog:voirSlug, format: html }
+    requirements:
+        annee: \d{4}
+        format: html|xml

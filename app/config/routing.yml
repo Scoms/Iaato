@@ -1,3 +1,11 @@
+iaato_iaato:
+    resource: "@IaatoIaatoBundle/Resources/config/routing.yml"
+    prefix:   /
+
+sdz_blog:
+    resource:    "@SdzBlogBundle/Resources/config/routing.yml"
+    prefix:  /blog
+
 # Internal routing configuration to handle ESI
 # ****** WARNING ******
 # This route should be enabled with caution as it can open a security vulnerability
