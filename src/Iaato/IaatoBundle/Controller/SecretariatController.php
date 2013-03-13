@@ -8,7 +8,7 @@ class SecretariatController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('IaatoIaatoBundle:Home:index.html.twig',array('content' => 'Secrétariat'));
+        return $this->render('IaatoIaatoBundle:Secretariat:index.html.twig',array('content' => 'Secrétariat'));
 	
     }
 

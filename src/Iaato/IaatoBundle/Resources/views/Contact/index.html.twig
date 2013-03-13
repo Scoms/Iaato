@@ -1,5 +1,41 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-<h6>Hello ! {{content}}</h6>
+
+<div class=mailto style="padding:10px 10px; width:30%; float:left;">
+<form METHOD=POST ENCTYPE="text/plain" ACTION="mailto:#"> 
+   <PRE>
+      Nom: <INPUT NAME=Nom size=30>
+      Email: <INPUT NAME=Email size=50>
+      Message: <TEXTAREA NAME=Message rows=5 cols=30></TEXTAREA>
+
+      <INPUT TYPE=SUBMIT VALUE=Envoyer>
+      <INPUT TYPE=RESET VALUE=Effacer>
+   </PRE>
+</FORM>
+</div>
+
+<div class=contactus style="text-align:justify; padding: 10px 10px; width:65%; float:right;">
+<h3>Contact Us</h3>
+
+<i style=font-weight:bold>In order to further assist you, please use the following references : </i><br/><br/>
+<p>For tours to Antarctica, brochures, contact names telephone numbers, employment, or company specific information about IAATO Members, Member Vessels and Company Descriptions, please go to our Memmbership Directory.</p>
+<p>For information on tourism trends and information papers on Antarctic Tourism, go to these pages of our web site : Tourism Statistics ans Guidelines & Resources.</p>
+<p>To become a member of IAATO, click here.</p>
+
+<address>
+   Steve Wellmeier<br/>
+   Administrative Director<br/>
+   11 South Angell St., Box 302<br/>
+   Providence, RI 02906<br/>
+   Tel: 401 272 2152<br/>
+   Fax: 401 272 2154
+</address>
+
+<i style=font-weight:bold>For specific enquiries about one of the following as appropriate :</i><br/><br/>
+<p>General Information, Press Requests, Science Support or Transport : IAATO</p>
+<p>Environmental & Operational Issues : Kim Crosbie</p>
+<p>Policy and Students Requests : John Spletts</p>
+</div>
+
 {% endblock %}

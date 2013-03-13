@@ -8,8 +8,10 @@ class ContactController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('IaatoIaatoBundle:Home:index.html.twig',array('content' => 'Contact'));
+        return $this->render('IaatoIaatoBundle:Contact:index.html.twig',array('content' => 'contact'));
 	
     }
 
 }
+
+?>
