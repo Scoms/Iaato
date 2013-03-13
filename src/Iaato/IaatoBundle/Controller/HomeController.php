@@ -12,7 +12,7 @@ class HomeController extends Controller
         return $this->render('IaatoIaatoBundle:Home:index.html.twig',array('content' => 'home'));
     }
     
-    public function formulAction()
+    public function formAction()
     {
       
       $article = new Article();
