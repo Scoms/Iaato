@@ -13,7 +13,7 @@ class HomeController extends Controller
       $formBuilder = $this->createFormBuilder($article);
       $form = $formBuilder->getForm();
         return $this->render('IaatoIaatoBundle:Home:index.html.twig',array(
-            'content' => 'index',
+            'content' => 'home',
             'form' => $form->createView()
         ));
     }

@@ -1,7 +1,13 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
+{{ content }}
+<form action="{{ path('contact_new') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <input type="submit" />
+</form>
 
+<<<<<<< HEAD
 <div class=mailto style="padding:10px 10px; width:30%; float:left;">
 <div class="well">
   <form method="post" {{ form_enctype(form) }}>
@@ -12,6 +18,9 @@
 </div>
 
 <div class=contactus style="text-align:justify; padding: 10px 10px; width:65%; float:right;">
+=======
+<div class="hero-unit" style="text-align:justify; padding: 10px 10px; width:65%; float:right;">
+>>>>>>> af4e1e011e1e682d61123aff23e4dcb5b0641aeb
 <h3>Contact Us</h3>
 
 <i style=font-weight:bold>In order to further assist you, please use the following references : </i><br/><br/>

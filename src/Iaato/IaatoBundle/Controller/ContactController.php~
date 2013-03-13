@@ -1,0 +1,31 @@
+<?php
+
+namespace Iaato\IaatoBundle\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Iaato\IaatoBundle\Entity\Contact;
+
+class ContactController extends Controller
+{
+    public function indexAction()
+    {
+    
+    // fin test 
+      $contact = new Contact();
+      $formBuilder = $this->createFormBuilder($contact);
+      $form = $formBuilder->getForm();
+        return $this->render('IaatoIaatoBundle:Contact:index.html.twig',array(
+            'content' => $request,
+            'form' => $form->createView()
+        ));
+    }
+    public function formAction()
+    {
+      $contact = new Contact();
+      $formBuilder = $this->createFormBuilder($contact);
+      $form = $formBuilder->getForm();
+        return $this->render('IaatoIaatoBundle:Home:index.html.twig',array('content' => 'OUAIS','form' => $form->createView()));
+    }
+}
+
+?>
