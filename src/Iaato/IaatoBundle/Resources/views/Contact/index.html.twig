@@ -3,16 +3,12 @@
 {% block body %}
 
 <div class=mailto style="padding:10px 10px; width:30%; float:left;">
-<form METHOD=POST ENCTYPE="text/plain" ACTION="mailto:#"> 
-   <PRE>
-      Nom: <INPUT NAME=Nom size=30>
-      Email: <INPUT NAME=Email size=50>
-      Message: <TEXTAREA NAME=Message rows=5 cols=30></TEXTAREA>
-
-      <INPUT TYPE=SUBMIT VALUE=Envoyer>
-      <INPUT TYPE=RESET VALUE=Effacer>
-   </PRE>
-</FORM>
+<div class="well">
+  <form method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <input type="submit" class="btn btn-primary" />
+  </form>
+</div>
 </div>
 
 <div class=contactus style="text-align:justify; padding: 10px 10px; width:65%; float:right;">
