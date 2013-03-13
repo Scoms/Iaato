@@ -4,7 +4,7 @@ iaato_iaato_homepage:
 
 iaato_iaato_formpage:
     pattern:  /formul
-    defaults: { _controller: IaatoIaatoBundle:Home:formul }
+    defaults: { _controller: IaatoIaatoBundle:Home:form }
     
 iaato_capitaine:
     pattern: /capitaine

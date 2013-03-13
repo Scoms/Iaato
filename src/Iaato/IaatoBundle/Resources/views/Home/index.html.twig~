@@ -1,5 +1,15 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-<h6>Hello !{{content}}</h6>
+<h6>Hello ! </h6>
+
+
+
+<div class="well">
+  
+</div>
 {% endblock %}
+
+{% block connexion %}
+{% endblock %}
+

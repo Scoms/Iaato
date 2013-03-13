@@ -1,0 +1,5 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+<h6>Hello ! {{content}}</h6>
+{% endblock %}

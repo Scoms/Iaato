@@ -30,8 +30,7 @@
               <li><a href="./secretariat">Secretariat</a></li>
 	      <li><a href="./contact">Contact</a></li>
             </ul>
-            {% block connexion %}
-            {% endblock %}
+            {% block connexion %}{% endblock %}
           </div><!--/.nav-collapse -->
         </div>
       </div>
