@@ -17,7 +17,7 @@ class HomeController extends Controller
             'form' => $form->createView()
         ));
     }
-    
+    /*
     public function formAction()
     {
       
@@ -30,6 +30,6 @@ class HomeController extends Controller
       return $this->render('IaatoIaatoBundle:Home:index.html.twig', array('form' => $form->createView()));
     
      //return $this->render('IaatoIaatoBundle:Home:index.html.twig',array('content' => 'home'));
-    }
+    }*/
     
 }

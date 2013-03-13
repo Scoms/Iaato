@@ -1,21 +1,13 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
+{{ content }}
+<form action="{{ path('form') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <input type="submit" />
+</form>
 
-<div class=mailto style="padding:10px 10px; width:30%; float:left;">
-<form METHOD=POST ENCTYPE="text/plain" ACTION="mailto:#"> 
-   <PRE>
-      Nom: <INPUT NAME=Nom size=30>
-      Email: <INPUT NAME=Email size=50>
-      Message: <TEXTAREA NAME=Message rows=5 cols=30></TEXTAREA>
-
-      <INPUT TYPE=SUBMIT VALUE=Envoyer>
-      <INPUT TYPE=RESET VALUE=Effacer>
-   </PRE>
-</FORM>
-</div>
-
-<div class=contactus style="text-align:justify; padding: 10px 10px; width:65%; float:right;">
+<div class="hero-unit" style="text-align:justify; padding: 10px 10px; width:65%; float:right;">
 <h3>Contact Us</h3>
 
 <i style=font-weight:bold>In order to further assist you, please use the following references : </i><br/><br/>

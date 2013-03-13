@@ -22,4 +22,7 @@ iaato_contact:
     pattern: /contact
     defaults: { _controller:IaatoIaatoBundle:Contact:index }
 
+contact_new:
+    pattern: ./
+    defaults: { _controller:IaatoIaatoBundle:Contact:form }
 
