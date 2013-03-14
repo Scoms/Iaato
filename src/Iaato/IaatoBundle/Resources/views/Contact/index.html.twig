@@ -3,7 +3,7 @@
 {% block body %}
 
 {{ content }}
-<form method="post" {{ form_enctype(form) }}>
+<form action="{{ path('contact_new') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <input type="submit" value="Envoyer" />
 </form>

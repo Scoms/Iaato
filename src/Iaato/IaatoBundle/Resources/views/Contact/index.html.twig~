@@ -1,10 +1,11 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
+
 {{ content }}
-<form action="{{ path('form') }}" method="post" {{ form_enctype(form) }}>
+<form action="" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
-    <input type="submit" />
+    <input type="submit" value="Envoyer" />
 </form>
 
 <div class="hero-unit" style="text-align:justify; padding: 10px 10px; width:65%; float:right;">

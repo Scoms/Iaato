@@ -1,10 +1,6 @@
 iaato_iaato_homepage:
     pattern:  /home
     defaults: { _controller: IaatoIaatoBundle:Home:index }
-
-iaato_iaato_formpage:
-    pattern:  /form
-    defaults: { _controller: IaatoIaatoBundle:Home:form }
     
 iaato_capitaine:
     pattern: /capitaine
@@ -23,6 +19,5 @@ iaato_contact:
     defaults: { _controller:IaatoIaatoBundle:Contact:index }
 
 contact_new:
-    pattern: /contact
-    defaults: { _controller:IaatoIaatoBundle:Contact:form }
-
+    pattern: /add_contact
+    defaults: { _controller:IaatoIaatoBundle:Home:index }

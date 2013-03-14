@@ -19,5 +19,5 @@ iaato_contact:
     defaults: { _controller:IaatoIaatoBundle:Contact:index }
 
 contact_new:
-    pattern: /contact
+    pattern: /add_contact
     defaults: { _controller:IaatoIaatoBundle:Contact:form }

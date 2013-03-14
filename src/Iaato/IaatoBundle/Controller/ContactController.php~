@@ -15,7 +15,7 @@ class ContactController extends Controller
       $formBuilder = $this->createFormBuilder($contact);
       $form = $formBuilder->getForm();
         return $this->render('IaatoIaatoBundle:Contact:index.html.twig',array(
-            'content' => $request,
+            'content' => 'contact',
             'form' => $form->createView()
         ));
     }
