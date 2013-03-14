@@ -20,4 +20,4 @@ iaato_contact:
 
 contact_new:
     pattern: /add_contact
-    defaults: { _controller:IaatoIaatoBundle:Contact:form }
+    defaults: { _controller:IaatoIaatoBundle:Contact:mailto }

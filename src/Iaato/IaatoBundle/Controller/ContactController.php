@@ -19,22 +19,17 @@ class ContactController extends Controller{
 	public function indexAction(){
 		$contact = new Contact();
 		$formBuilder = $this->createFormBuilder($contact);
-		$form = $formBuilder->getForm();
-		return $this->render('IaatoIaatoBundle:Contact:index.html.twig', array(
-			'content' => 'contact',
-			'form' => $form->createView()
-		));
-	}
-
-	public function formAction(){
-		$contact = new Contact();
-		$formBuilder = $this->createFormBuilder($contact);
 		$formBuilder
 			->add('nom',	'text')
-			->add('email',	'text')
+			->add('email',	'email')
+			->add('sujet',	'text')
 			->add('message',	'textarea');
 		$form = $formBuilder->getForm();
-		return $this->render('IaatoIaatoBundle:Contact:index.html.twig',array('content' => 'OUAIS','form' => $form->createView()));
+		return $this->render('IaatoIaatoBundle:Contact:index.html.twig', array('content' => 'OUAIS', 'form' => $form->createView()));
+	}
+
+	public function mailtoAction(){
+		return $this->render('IaatoIaatoBundle:Contact:mailto.html.twig',array('content' => 'Votre message a bien été envoyé'));
 	}
 
 }
