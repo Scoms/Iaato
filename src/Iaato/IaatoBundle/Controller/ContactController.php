@@ -23,7 +23,7 @@ class ContactController extends Controller{
 			->add('nom',	'text')
 			->add('email',	'email')
 			->add('sujet',	'text')
-			->add('message',	'textarea');
+			->add('message',	'textarea', array('max_length' => 250));
 		$form = $formBuilder->getForm();
 	
 		$request = $this->get('request');
@@ -42,7 +42,7 @@ class ContactController extends Controller{
 
 		}
 	
-		return $this->render('IaatoIaatoBundle:Contact:index.html.twig', array('content' => 'OUAIS', 'form' => $form->createView()));
+		return $this->render('IaatoIaatoBundle:Contact:index.html.twig', array('form' => $form->createView()));
 	}
 	
 	/*public function setContact

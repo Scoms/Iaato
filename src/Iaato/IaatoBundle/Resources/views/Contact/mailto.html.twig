@@ -2,9 +2,13 @@
 
 {% block body %}
 
-{{ nom }}
-{{ email }}
-{{ sujet }}
-{{ message }}
+<p>Nom : {{ nom }}</p>
+<p>Email : {{ email }}</p>
+<p>Sujet : {{ sujet }}</p>
+<p>Message : {{ message }}</p>
 
+{% endblock %}
+
+{% block connexion %}
+<button class="btn btn-primary" onclick="">Connexion</button>
 {% endblock %}
