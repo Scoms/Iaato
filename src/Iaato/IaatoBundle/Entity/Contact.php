@@ -13,7 +13,7 @@ class Contact{
 		return $this->nom;
 	}
 	
-	public function setNom(){
+	public function setNom($nom){
 		$this->nom = $nom;
 	}
 	
@@ -21,7 +21,7 @@ class Contact{
 		return $this->email;
 	}
 	
-	public function setEmail(){
+	public function setEmail($email){
 		$this->email = $email;
 	}
 
@@ -29,7 +29,7 @@ class Contact{
 		return $this->sujet;
 	}
 
-	public function setSujet(){
+	public function setSujet($sujet){
 		$this->sujet = $sujet;
 	}
 
@@ -37,7 +37,7 @@ class Contact{
 		return $this->message;
 	}
 	
-	public function setMessage(){
+	public function setMessage($message){
 		$this->message = $message;
 	}
 }

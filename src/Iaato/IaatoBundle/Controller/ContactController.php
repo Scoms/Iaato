@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Iaato\IaatoBundle\Entity\Contact;
 
 class ContactController extends Controller{
-
+	
 	public function indexAction(){
 		$contact = new Contact();
 		$formBuilder = $this->createFormBuilder($contact);
@@ -25,6 +25,18 @@ class ContactController extends Controller{
 			->add('sujet',	'text')
 			->add('message',	'textarea');
 		$form = $formBuilder->getForm();
+	
+		$request = $this->get('request');
+
+		if ($request->getMethod() == 'POST'){
+			$form->bind($request);
+			
+			if ($form->isValid()){
+				return $this->redirect($this->generateUrl('contact_new', array('content' => $contact)));
+			}
+
+		}
+	
 		return $this->render('IaatoIaatoBundle:Contact:index.html.twig', array('content' => 'OUAIS', 'form' => $form->createView()));
 	}
 
