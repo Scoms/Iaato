@@ -18,6 +18,6 @@ iaato_contact:
     pattern: /contact
     defaults: { _controller:IaatoIaatoBundle:Contact:index }
 
-contact_new:
-    pattern: /add_contact
-    defaults: { _controller:IaatoIaatoBundle:Contact:mailto }
+#contact_new:
+#    pattern: /add_contact
+#    defaults: { _controller:IaatoIaatoBundle:Contact:mailto }

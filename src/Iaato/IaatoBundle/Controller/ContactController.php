@@ -32,17 +32,23 @@ class ContactController extends Controller{
 			$form->bind($request);
 			
 			if ($form->isValid()){
-				return $this->redirect($this->generateUrl('contact_new', array('content' => $contact)));
+				return $this->render('IaatoIaatoBundle:Contact:mailto.html.twig', array(
+					'nom' => $contact->getNom(), 
+					'email' => $contact->getEmail(),
+					'sujet' => $contact->getSujet(),
+					'message' => $contact->getMessage()
+				));
 			}
 
 		}
 	
 		return $this->render('IaatoIaatoBundle:Contact:index.html.twig', array('content' => 'OUAIS', 'form' => $form->createView()));
 	}
-
+	
+	/*public function setContact
 	public function mailtoAction(){
 		return $this->render('IaatoIaatoBundle:Contact:mailto.html.twig',array('content' => 'Votre message a bien été envoyé'));
-	}
+	}*/
 
 }
 
