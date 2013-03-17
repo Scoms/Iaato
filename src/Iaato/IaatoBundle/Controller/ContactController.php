@@ -25,13 +25,21 @@ class ContactController extends Controller{
 			->add('sujet',	'text')
 			->add('message',	'textarea', array('max_length' => 250));
 		$form = $formBuilder->getForm();
-	
+		
+		// On récupère la requête
 		$request = $this->get('request');
-
+		
+		// On vérifie qu'elle est de type POST
 		if ($request->getMethod() == 'POST'){
+
+			// On fait le lien requête / formulaire 
+			// La variable $contact contient les données entrées par l'utilisateur
 			$form->bind($request);
 			
+			// On vérifie que les valeurs sont correctes
 			if ($form->isValid()){
+
+				// On affiche les données dans mailto.html.twig
 				return $this->render('IaatoIaatoBundle:Contact:mailto.html.twig', array(
 					'nom' => $contact->getNom(), 
 					'email' => $contact->getEmail(),
