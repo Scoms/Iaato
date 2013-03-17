@@ -1,14 +1,12 @@
 {% extends '::base.html.twig' %}
 
+{% block title%}
+Page de contact
+{% endblock %}
+
 {% block body %}
 
-{{ content }}
-<form action="" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <input type="submit" value="Envoyer" />
-</form>
-
-<div class="hero-unit" style="text-align:justify; padding: 10px 10px; width:65%; float:right;">
+<div class="hero-unit" style="text-align:justify; padding: 10px 10px;">
 <h3>Contact Us</h3>
 
 <i style=font-weight:bold>In order to further assist you, please use the following references : </i><br/><br/>
@@ -29,6 +27,13 @@
 <p>General Information, Press Requests, Science Support or Transport : IAATO</p>
 <p>Environmental & Operational Issues : Kim Crosbie</p>
 <p>Policy and Students Requests : John Spletts</p>
+</div>
+
+<div class="well" style="width:60%; margin-left:auto; margin-right:auto">
+<form method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <input type="submit" value="Envoyer" class="btn btn-primary" />
+</form>
 </div>
 
 {% endblock %}
