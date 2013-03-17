@@ -1,8 +1,12 @@
 {% extends '::base.html.twig' %}
+
 {% block body %}
-<h6>Hello ! a</h6>
+
+<h6>Hello ! {{ content }}</h6>
+
 {% endblock %}
 
 {% block connexion %}
+<button class="btn btn-primary" onclick="">Connexion</button>
 {% endblock %}
 
