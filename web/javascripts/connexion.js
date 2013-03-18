@@ -3,4 +3,3 @@
  {
   alert("Click");
  }
- click();

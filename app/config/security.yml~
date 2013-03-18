@@ -14,7 +14,7 @@ security:
         in_memory:
             memory:
                 users:
-                    capitaine: {password: capitainepass, roles: [ 'ROLE_CAPITAINE' ] }
+                    capitaine: {password: capitainepass, roles; [ 'ROLE_CAPITAINE' ] }
                     secretariat:  { password: secretariatpass, roles: [ 'ROLE_SECRETARIAT' ] }
                     admin: { password: adminpass, roles: [ 'ROLE_SUPER_ADMIN' ] }
 
