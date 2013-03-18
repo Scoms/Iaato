@@ -31,7 +31,7 @@
 		<script src="{{ asset('javascripts/connexion.js') }}" type="text/javascript"></script>
 	    {% endblock %}
             {% block connexion %}
-            <button class="btn btn-primary" onClick='alert("ok");click();'>Connexion</button>
+            <button class="btn btn-primary" onClick='alert("création de boutons");'>Connexion</button>
             {% endblock %}
           </div><!--/.nav-collapse -->
         </div>
