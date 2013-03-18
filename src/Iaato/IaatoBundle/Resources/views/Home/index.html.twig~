@@ -6,7 +6,11 @@
 
 {% endblock %}
 
-{% block connexion %}
-<button class="btn btn-primary" onclick="">Connexion</button>
-{% endblock %}
 
+{% block navbar %}
+  <li class="active"><a href="./home">Home</a></li>
+  <li><a href="./capitaine">Capitaine</a></li>
+  <li><a href="./secretariat">Secretariat</a></li>
+  
+  <li><a href="./contact">Contact</a></li>
+{% endblock %}

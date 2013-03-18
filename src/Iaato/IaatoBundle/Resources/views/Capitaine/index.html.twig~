@@ -4,3 +4,9 @@
 <h6>Hello ! {{content}}</h6>
 {% endblock %}
 
+{% block navbar %}
+  <li ><a href="./home">Home</a></li>
+  <li class="active"><a href="./capitaine">Capitaine</a></li>
+  <li><a href="./secretariat">Secretariat</a></li>
+  <li><a href="./contact">Contact</a></li>
+{% endblock %}

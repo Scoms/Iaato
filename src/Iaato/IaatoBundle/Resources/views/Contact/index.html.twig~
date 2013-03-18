@@ -30,14 +30,18 @@ Page de contact
 </div>
 
 <div class="well" style="width:60%; margin-left:auto; margin-right:auto">
-<form method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
+<form method="post" {{ form_enctype(form) }} class="form">
+    {{ form_errors(form) }}
+
+    {{ form_row(form.nom) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.sujet) }}
+    {{ form_row(form.message, { 'attr' : {'placeholder':'Tapez votre message ici ...'}}) }}
+
+    {{ form_rest(form) }}
     <input type="submit" value="Envoyer" class="btn btn-primary" />
 </form>
 </div>
 
 {% endblock %}
-
-{% block connexion %}
-<button class="btn btn-primary" onclick="">Connexion</button>
-{% endblock %}
+{% block navbar %}

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Bootstrap -->
   <link href="/Iaato/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+  <link href="/Iaato/css/stylecontact.css" rel="stylesheet" media="screen">
 </head>
 <!-- Debut du header-->
 <header>
@@ -21,14 +22,16 @@
           </button>
           <a class="brand" href="./home">Welcome to IAATO</a>
           <div class="nav-collapse collapse">
-            <ul class="nav">
-              <li class="active"><a href="./home">Home</a></li>
-              <li><a href="./capitaine">Capitaine</a></li>
-              <li><a href="./secretariat">Secretariat</a></li>
-	      <li><a href="./contact">Contact</a></li>
+            <ul class="nav"> 
+              <li ><a href="./home">Home</a></li>
+  <li><a href="./capitaine">Capitaine</a></li>
+  <li class="active"><a href="./secretariat">Secretariat</a></li>
+  <li><a href="./contact">Contact</a></li>
             </ul>
             {% block connexion %}
-            <a class="btn btn-primary" href="{{ path ('login') }}">Connexion</a>
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <a class="btn btn-danger"  href="{{ path('logout') }}">Déconnexion</a>
+            {% endif %}
             {% endblock %}
           </div><!--/.nav-collapse -->
         </div>

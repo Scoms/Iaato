@@ -10,7 +10,8 @@ class CapitaineController extends Controller
 {
 
     /**
-    * @Secure(roles="ROLE_CAPITAINE")
+    * @Secure(roles="ROLE_CAPITAINE , ROLE_ADMIN")
+    *
     */
     public function indexAction()
     {

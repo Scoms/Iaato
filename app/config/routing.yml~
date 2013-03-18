@@ -11,7 +11,7 @@ login:
     defaults: { _controller: IaatoUserBundle:Security:login }
     
 login_check:
-    pattern: /login_check
+    pattern: /home
     
 logout:
     pattern: /logout
