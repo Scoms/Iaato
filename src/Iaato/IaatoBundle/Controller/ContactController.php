@@ -23,7 +23,7 @@ class ContactController extends Controller{
 			->add('nom',	'text')
 			->add('email',	'email')
 			->add('sujet',	'text')
-			->add('message',	'textarea', array('max_length' => 250));
+			->add('message',	'textarea');
 		$form = $formBuilder->getForm();
 		
 		// On récupère la requête

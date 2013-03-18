@@ -1,0 +1,23 @@
+@charset "utf-8";
+
+/**
+ * stylecontact.css
+ *
+ * @author 
+ * @version 2013/03/18
+ */
+
+form.contact input[type="text"], form.contact input[type="email"]{
+	width:300px;
+}
+
+form.contact textarea{ 
+	width:550px;
+	max-width:550px;
+	height:100px;
+	max-height:200px;
+}
+
+form.contact label{
+	font-weight:bold;
+}
