@@ -17,7 +17,11 @@ iaato_connexion:
 iaato_contact:
     pattern: /contact
     defaults: { _controller:IaatoIaatoBundle:Contact:index }
+    
+patch:
+    pattern: /
+    defaults: { _controller:IaatoUserBundle:Home:index }
 
-contact_new:
-    pattern: /add_contact
-    defaults: { _controller:IaatoIaatoBundle:Home:index }
+#contact_new:
+#    pattern: /add_contact
+#    defaults: { _controller:IaatoIaatoBundle:Contact:mailto }
