@@ -12,6 +12,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Ship
 {
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Type")
+     * @ORM\JoinColumn(nullable=false)
+    */
+    private $type;
+
     /**
      * @var integer
      *

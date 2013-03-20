@@ -67,45 +67,4 @@ class Type
     {
         return $this->labelType;
     }
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->ship = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
-    /**
-     * Add ship
-     *
-     * @param \Iaato\IaatoBundle\Entity\Ship $ship
-     * @return Type
-     */
-    public function addShip(\Iaato\IaatoBundle\Entity\Ship $ship)
-    {
-        $this->ship[] = $ship;
-    
-        return $this;
-    }
-
-    /**
-     * Remove ship
-     *
-     * @param \Iaato\IaatoBundle\Entity\Ship $ship
-     */
-    public function removeShip(\Iaato\IaatoBundle\Entity\Ship $ship)
-    {
-        $this->ship->removeElement($ship);
-    }
-
-    /**
-     * Get ship
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getShip()
-    {
-        return $this->ship;
-    }
 }

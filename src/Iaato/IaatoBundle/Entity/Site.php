@@ -14,8 +14,14 @@ class Site
 {
 
     /**
+     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Zone") //Un site est rattaché à une seule zone mais une zone est rattachée à un seul site
+     * @ORM\JoinColumn(nullable=false) //Interdit de créer un site sans une zone
+    */
+    private $zone;
+
+    /**
      * @ORM\ManyToMany(targetEntity="Iaato\IaatoBundle\Entity\Activity",
-     cascade={"persist"}) //Un site propose plusieurs activites et une activite est rattachee à plusieurs sites
+     cascade={"persist"}) //Un site propose plusieurs activités et une activité est rattachée à plusieurs sites
     */
     private $activity;
 
@@ -197,5 +203,28 @@ class Site
     public function getActivity()
     {
         return $this->activity;
+    }
+
+    /**
+     * Set zone
+     *
+     * @param \Iaato\IaatoBundle\Entity\Zone $zone
+     * @return Site
+     */
+    public function setZone(\Iaato\IaatoBundle\Entity\Zone $zone)
+    {
+        $this->zone = $zone;
+    
+        return $this;
+    }
+
+    /**
+     * Get zone
+     *
+     * @return \Iaato\IaatoBundle\Entity\Zone 
+     */
+    public function getZone()
+    {
+        return $this->zone;
     }
 }

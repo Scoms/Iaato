@@ -12,6 +12,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Ship
 {
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Type", inversedBy="ship") //Un bateau a un seul type mais un type est rattaché à plusieurs bateaux
+     * @ORM\JoinColumn(nullable=false) //Interdit de créer un bateau sans son type
+    */
+    private $type;
+
     /**
      * @var integer
      *
@@ -150,5 +157,28 @@ class Ship
     public function getNbPassenger()
     {
         return $this->nbPassenger;
+    }
+
+    /**
+     * Set type
+     *
+     * @param \Iaato\IaatoBundle\Entity\Type $type
+     * @return Ship
+     */
+    public function setType(\Iaato\IaatoBundle\Entity\Type $type)
+    {
+        $this->type = $type;
+    
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return \Iaato\IaatoBundle\Entity\Type 
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }
