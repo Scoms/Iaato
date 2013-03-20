@@ -1,3 +1,7 @@
+ensiie_activity:
+    resource: "@EnsiieActivityBundle/Resources/config/routing.yml"
+    prefix:   /
+
 iaato_iaato:
     resource: "@IaatoIaatoBundle/Resources/config/routing.yml"
     prefix:   /
@@ -11,7 +15,7 @@ login:
     defaults: { _controller: IaatoUserBundle:Security:login }
     
 login_check:
-    pattern: /home
+    pattern: /login_check
     
 logout:
     pattern: /logout

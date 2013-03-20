@@ -1,3 +1,5 @@
+
+
 iaato_iaato:
     resource: "@IaatoIaatoBundle/Resources/config/routing.yml"
     prefix:   /
