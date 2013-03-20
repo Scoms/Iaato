@@ -157,27 +157,4 @@ class Ship
     {
         return $this->nbPassenger;
     }
-
-    /**
-     * Set type
-     *
-     * @param \Iaato\IaatoBundle\Entity\Type $type
-     * @return Ship
-     */
-    public function setType(\Iaato\IaatoBundle\Entity\Type $type)
-    {
-        $this->type = $type;
-    
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return \Iaato\IaatoBundle\Entity\Type 
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
 }
