@@ -68,27 +68,4 @@ class Email
     {
         return $this->email;
     }
-
-    /**
-     * Set ship
-     *
-     * @param \Iaato\IaatoBundle\Entity\Ship $ship
-     * @return Email
-     */
-    public function setShip(\Iaato\IaatoBundle\Entity\Ship $ship)
-    {
-        $this->ship = $ship;
-    
-        return $this;
-    }
-
-    /**
-     * Get ship
-     *
-     * @return \Iaato\IaatoBundle\Entity\Ship 
-     */
-    public function getShip()
-    {
-        return $this->ship;
-    }
 }

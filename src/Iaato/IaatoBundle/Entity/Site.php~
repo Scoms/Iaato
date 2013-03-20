@@ -158,44 +158,4 @@ class Site
     {
         return $this->iaato;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->activity = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
-    /**
-     * Add activity
-     *
-     * @param \Iaato\IaatoBundle\Entity\Activity $activity
-     * @return Site
-     */
-    public function addActivity(\Iaato\IaatoBundle\Entity\Activity $activity)
-    {
-        $this->activity[] = $activity;
-    
-        return $this;
-    }
-
-    /**
-     * Remove activity
-     *
-     * @param \Iaato\IaatoBundle\Entity\Activity $activity
-     */
-    public function removeActivity(\Iaato\IaatoBundle\Entity\Activity $activity)
-    {
-        $this->activity->removeElement($activity);
-    }
-
-    /**
-     * Get activity
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getActivity()
-    {
-        return $this->activity;
-    }
 }
