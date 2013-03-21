@@ -14,7 +14,7 @@ class Site
 {
 
     /**
-     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Zone") //Un site est rattaché à une seule zone mais une zone est rattachée à un seul site
+     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Zone", inversedBy="site") //Un site est rattaché à une seule zone mais une zone est rattachée à un seul site
      * @ORM\JoinColumn(nullable=false) //Interdit de créer un site sans une zone
     */
     private $zone;

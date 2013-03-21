@@ -12,6 +12,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class TimeSlot
 {
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Date", inversedBy="timeslot")
+     * @ORM\JoinColumn(nullable=false)
+    */
+    private $date;
+
     /**
      * @var integer
      *

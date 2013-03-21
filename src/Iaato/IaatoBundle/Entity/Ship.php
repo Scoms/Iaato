@@ -20,6 +20,16 @@ class Ship
     private $type;
 
     /**
+     * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\Email",mappedBy="ship")
+    */
+    private $email;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\Phone", mappedBy="ship")
+    */
+    private $phone;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
@@ -180,5 +190,79 @@ class Ship
     public function getType()
     {
         return $this->type;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->email = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->phone = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add email
+     *
+     * @param \Iaato\IaatoBundle\Entity\Email $email
+     * @return Ship
+     */
+    public function addEmail(\Iaato\IaatoBundle\Entity\Email $email)
+    {
+        $this->email[] = $email;
+    
+        return $this;
+    }
+
+    /**
+     * Remove email
+     *
+     * @param \Iaato\IaatoBundle\Entity\Email $email
+     */
+    public function removeEmail(\Iaato\IaatoBundle\Entity\Email $email)
+    {
+        $this->email->removeElement($email);
+    }
+
+    /**
+     * Get email
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Add phone
+     *
+     * @param \Iaato\IaatoBundle\Entity\Phone $phone
+     * @return Ship
+     */
+    public function addPhone(\Iaato\IaatoBundle\Entity\Phone $phone)
+    {
+        $this->phone[] = $phone;
+    
+        return $this;
+    }
+
+    /**
+     * Remove phone
+     *
+     * @param \Iaato\IaatoBundle\Entity\Phone $phone
+     */
+    public function removePhone(\Iaato\IaatoBundle\Entity\Phone $phone)
+    {
+        $this->phone->removeElement($phone);
+    }
+
+    /**
+     * Get phone
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPhone()
+    {
+        return $this->phone;
     }
 }

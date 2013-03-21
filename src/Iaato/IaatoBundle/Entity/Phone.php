@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Phone
 {
     /**
-     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Ship") //Un phone pour un seul bateau mais un bateau peut avoir plusieurs phones
+     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Ship", inversedBy="phone") //Un phone pour un seul bateau mais un bateau peut avoir plusieurs phones
      * @ORM\JoinColumn(nullable=false) //Interdit de créer un phone non rattaché à un bateau
     */
     private $ship;
