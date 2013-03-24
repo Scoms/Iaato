@@ -1,6 +1,12 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
+<div class = "btn-group">
+	<button class="btn"><a method="post" href={{ path('iaato_ship') }}>Ship</a></button>
+	<button class="btn">Site</button>
+	<button class="btn">Activity</button>
+	<button class="btn">Type</button>
+</div>
 <h6>Hello ! {{content}}</h6>
 {% endblock %}
 

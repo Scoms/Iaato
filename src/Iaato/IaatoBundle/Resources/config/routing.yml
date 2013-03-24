@@ -10,6 +10,10 @@ iaato_secretariat:
     pattern: /secretariat
     defaults: { _controller: IaatoIaatoBundle:Secretariat:index }
 
+iaato_ship:
+    pattern: /secretariat/ship
+    defaults: { _controller: IaatoIaatoBundle:Ship:index }
+
 iaato_connexion:
     pattern: /connexion
     defaults: { _controller: IaatoIaatoBundle:Connexion:index }

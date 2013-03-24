@@ -20,13 +20,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="./home">Welcome to IAATO</a>
+          <a class="brand" href="{{ path('iaato_iaato_homepage') }}">Welcome to IAATO</a>
           <div class="nav-collapse collapse">
             <ul class="nav"> 
-              <li ><a href="./home">Home</a></li>
-  <li><a href="./capitaine">Capitaine</a></li>
-  <li><a href="./secretariat">Secretariat</a></li>
-  <li><a href="./contact">Contact</a></li>
+              <li ><a href="{{ path('iaato_iaato_homepage') }}">Home</a></li>
+  <li><a href="{{ path('iaato_capitaine') }}">Capitaine</a></li>
+  <li><a href="{{ path('iaato_secretariat') }}">Secretariat</a></li>
+  <li><a href="{{ path('iaato_contact') }}">Contact</a></li>
             </ul>
             {% block connexion %}
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
