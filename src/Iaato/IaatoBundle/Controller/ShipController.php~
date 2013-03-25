@@ -14,7 +14,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\Security\Core\SecurityContext;
-use Iaato\IaatoBundle\Entity\Ship;
 
 class ShipController extends Controller {
 
@@ -25,13 +24,14 @@ class ShipController extends Controller {
 	}
 
 	public function addshipAction(){
+		
 		$ship = new Ship();
 		$formBuilder = $this->createFormBuilder($ship);
 		$formBuilder
 			->add('code',	'text')
 			->add('nameShip',	'text')
 			->add('nameSociety',	'text')
-			->add('nbPassenger',	'text')
+			->add('nbPassenger',	'textarea')
 			->add('type',	'text')
 			->add('email',	'email')
 			->add('phone',	'text');
@@ -50,30 +50,19 @@ class ShipController extends Controller {
 			// On vérifie que les valeurs sont correctes
 			if ($form->isValid()){
 
-				// On enregistre les données dans la BDD et retourne sur ship.html.twig
+				// On enregistre les données dans la BDD et on retourne sur la page ship.html.twig
 				$em = $this->getDoctrine()->getManager();
 				$em = persist($ship);
-				$em = flush();
-
-				return $this->render('IaatoIaatoBundle:Secretariat:ship.html.twig');
+				$em = flush($ship);
+				return $this->render('IaatoIaatoBundle:Secretariat:ship.html.twig', array('response' => 'Ship enregistré'));
 			}
 
 		}
 	
-		return $this->render('IaatoIaatoBundle:Secretariat:addship.html.twig', array('formaddship' => $form->createView()));
-	}
-
-	public function deleteshipAction(){
-	
-		return $this->render('IaatoIaatoBundle:Secretariat:deleteship.html.twig');
+		return $this->render('IaatoIaatoBundle:Secretariat:ship.html.twig', array('form' => $form->createView()));		
 
 	}
 
-	public function changeshipAction(){
-
-		return $this->render('IaatoIaatoBundle:Secretariat:changeship.html.twig');
-
-	}
 
 }
 

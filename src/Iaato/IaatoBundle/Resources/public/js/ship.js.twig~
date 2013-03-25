@@ -1,0 +1,9 @@
+<script type="text/javascript">
+
+	$(document).ready(function () {
+		$('#linkaddship').click(function() {
+			$('#addship').animate( {height: "70px"}, 500 ).css('display', 'block');
+		});	
+	});
+
+</script>

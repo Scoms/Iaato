@@ -14,6 +14,18 @@ iaato_ship:
     pattern: /secretariat/ship
     defaults: { _controller: IaatoIaatoBundle:Ship:index }
 
+iaato_ship_add:
+    pattern: /secretariat/ship/add
+    defaults: { _controller: IaatoIaatoBundle:Ship:addship }
+
+iaato_ship_change:
+    pattern: /secretariat/ship/change
+    defaults: { _controller: IaatoIaatoBundle:Ship:changeship }
+
+iaato_ship_delete:
+    pattern: /secretariat/ship/delete
+    defaults: { _controller: IaatoIaatoBundle:Ship:deleteship}
+
 iaato_connexion:
     pattern: /connexion
     defaults: { _controller: IaatoIaatoBundle:Connexion:index }

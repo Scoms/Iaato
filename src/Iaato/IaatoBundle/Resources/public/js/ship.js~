@@ -1,0 +1,15 @@
+/**
+ * @overview
+ *
+ * @author 
+ * @version 2013/03/24
+ */
+
+
+$(document).ready(function () {
+			
+	$('#las').click(function () {
+		$('#as').animate({ height: "70px" }, 500).css('display','block');			
+	});	
+		
+});
