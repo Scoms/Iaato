@@ -19,8 +19,11 @@ use Iaato\IaatoBundle\Entity\Ship;
 class ShipController extends Controller {
 
 	public function indexAction(){
-	
-		return $this->render('IaatoIaatoBundle:Secretariat:ship.html.twig');
+		
+		$em = $this->getDoctrine()->getEntityManager();
+		$query = $em->createQuery('SELECT s FROM IaatoIaatoBundle:Ship s');
+		$ships = $query->getResult();
+		return $this->render('IaatoIaatoBundle:Secretariat:ship.html.twig', array('ships' => $ships));
 	
 	}
 

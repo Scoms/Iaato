@@ -191,6 +191,7 @@ class Ship
     {
         return $this->type;
     }
+
     /**
      * Constructor
      */

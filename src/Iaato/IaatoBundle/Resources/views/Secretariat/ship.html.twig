@@ -9,6 +9,24 @@
 	<li><a href="{{ path('iaato_ship_delete') }}" id="linkdeleteship">Delete a ship</a></li>
 </ul>
 
-<p>Ship list</p>
+<table style="margin:15px 15px">
+	<tr>
+		<th style="padding:10px">Code</th>
+		<th style="padding:10px">Name ship</th>
+		<th style="padding:10px">Name society</th>
+		<th style="padding:10px">Number of passenger</th>
+	</tr>
+
+	{% for ship in ships %}
+	<tr>
+		<td style="padding:7px">{{ ship.code }}</td>
+		<td style="padding:7px">{{ ship.nameShip }}</td>
+		<td style="padding:7px">{{ ship.nameSociety }}</td>
+		<td style="padding:7px">{{ ship.nbPassenger }}</td>
+	<tr>
+	{% else %}
+	<p>No ships</p>
+	{% endfor %}
+</table>
 
 {% endblock %}
