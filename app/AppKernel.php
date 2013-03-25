@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
             new Iaato\IaatoBundle\IaatoIaatoBundle(),
             new Iaato\UserBundle\IaatoUserBundle(),
+            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             //new FOS\UserBundle\FOSUserBundle(),
         );
 

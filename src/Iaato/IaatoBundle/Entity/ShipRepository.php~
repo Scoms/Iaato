@@ -13,4 +13,3 @@ use Doctrine\ORM\EntityRepository;
 class ShipRepository extends EntityRepository
 {
 }
-?>

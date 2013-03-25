@@ -5,14 +5,13 @@ namespace Iaato\UserBundle\DataFixtures\ORM;
  
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Iaato\UserBundle\Entity\User;
- 
+use Iaato\UserBundle\Entity\User; 
 class Users implements FixtureInterface
 {
   public function load(ObjectManager $manager)
   {
     // Les noms d'utilisateur à créer
-    $noms = array('winzou', 'John', 'Talus');
+    $noms = array('Laurent', 'Eleonore', 'Elsa');
  
     foreach ($noms as $i => $nom) {
       // On crée l'utilisateur
@@ -24,7 +23,7 @@ class Users implements FixtureInterface
  
       // Le sel et les rôles sont vides pour l'instant
       $users[$i]->setSalt('');
-      $users[$i]->setRoles(array());
+      $users[$i]->setRoles(array("ROLE_ADMIN"));
  
       // On le persiste
       $manager->persist($users[$i]);

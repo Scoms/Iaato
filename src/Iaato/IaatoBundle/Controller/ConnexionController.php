@@ -10,5 +10,4 @@ class ConnexionController extends Controller
     {
         return $this->render('IaatoIaatoBundle:Home:index.html.twig',array('content' => 'Connexion'));
     }
-
 }
