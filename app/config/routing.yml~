@@ -1,6 +1,4 @@
-ensiie_activity:
-    resource: "@EnsiieActivityBundle/Resources/config/routing.yml"
-    prefix:   /
+
 
 iaato_iaato:
     resource: "@IaatoIaatoBundle/Resources/config/routing.yml"

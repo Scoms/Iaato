@@ -4,10 +4,6 @@ iaato_iaato:
     resource: "@IaatoIaatoBundle/Resources/config/routing.yml"
     prefix:   /
 
-sdz_blog:
-    resource:    "@SdzBlogBundle/Resources/config/routing.yml"
-    prefix:  /blog
-
 login:
     pattern: /login
     defaults: { _controller: IaatoUserBundle:Security:login }

@@ -23,7 +23,6 @@ class AppKernel extends Kernel
             new Iaato\IaatoBundle\IaatoIaatoBundle(),
             new Iaato\UserBundle\IaatoUserBundle(),
             //new FOS\UserBundle\FOSUserBundle(),
-            new Ensiie\Bundle\ActivityBundle\EnsiieActivityBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
