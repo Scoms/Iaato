@@ -33,7 +33,7 @@ class ShipController extends Controller {
 		$formBuilder
 			->add('code',	'text')
 			->add('nameShip',	'text')
-			->add('nameSociety',	'text')
+			->add('society',	'text')
 			->add('nbPassenger',	'text')
 			->add('type',	'text')
 			->add('email',	'email')

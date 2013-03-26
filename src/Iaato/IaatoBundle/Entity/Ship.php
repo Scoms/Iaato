@@ -17,7 +17,13 @@ class Ship
      * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Type", inversedBy="ship") //Un bateau a un seul type mais un type est rattaché à plusieurs bateaux
      * @ORM\JoinColumn(nullable=false) //Interdit de créer un bateau sans son type
     */
-    private $type;
+    private $idtype;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Society", inversedBy="ship")
+     * @ORM\JoinColumn(nullable=false)
+    */
+    private $society;
 
     /**
      * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\Email",mappedBy="ship")
@@ -51,13 +57,6 @@ class Ship
      * @ORM\Column(name="nameShip", type="string", length=255)
      */
     private $nameShip;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="nameSociety", type="string", length=255)
-     */
-    private $nameSociety;
 
     /**
      * @var integer
@@ -177,7 +176,7 @@ class Ship
      */
     public function setType(\Iaato\IaatoBundle\Entity\Type $type)
     {
-        $this->type = $type;
+        $this->idtype = $type;
     
         return $this;
     }
@@ -189,7 +188,7 @@ class Ship
      */
     public function getType()
     {
-        return $this->type;
+        return $this->idtype;
     }
 
     /**
@@ -265,5 +264,51 @@ class Ship
     public function getPhone()
     {
         return $this->phone;
+    }
+
+    /**
+     * Set society
+     *
+     * @param \Iaato\IaatoBundle\Entity\Society $society
+     * @return Ship
+     */
+    public function setSociety(\Iaato\IaatoBundle\Entity\Society $society)
+    {
+        $this->society = $society;
+    
+        return $this;
+    }
+
+    /**
+     * Get society
+     *
+     * @return \Iaato\IaatoBundle\Entity\Society 
+     */
+    public function getSociety()
+    {
+        return $this->society;
+    }
+
+    /**
+     * Set idtype
+     *
+     * @param \Iaato\IaatoBundle\Entity\Type $idtype
+     * @return Ship
+     */
+    public function setIdtype(\Iaato\IaatoBundle\Entity\Type $idtype)
+    {
+        $this->idtype = $idtype;
+    
+        return $this;
+    }
+
+    /**
+     * Get idtype
+     *
+     * @return \Iaato\IaatoBundle\Entity\Type 
+     */
+    public function getIdtype()
+    {
+        return $this->idtype;
     }
 }

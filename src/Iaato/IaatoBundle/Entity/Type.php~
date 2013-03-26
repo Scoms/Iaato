@@ -14,7 +14,7 @@ class Type
 {
 
     /**
-     * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\Ship",mappedBy="type")
+     * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\Ship",mappedBy="idtype")
     */
     private $ship;
 

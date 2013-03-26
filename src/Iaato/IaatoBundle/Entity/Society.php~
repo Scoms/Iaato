@@ -5,16 +5,16 @@ namespace Iaato\IaatoBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Type
+ * Society
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Iaato\IaatoBundle\Entity\TypeRepository")
+ * @ORM\Entity(repositoryClass="Iaato\IaatoBundle\Entity\SocietyRepository")
  */
-class Type
+class Society
 {
 
     /**
-     * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\Ship",mappedBy="idtype")
+     * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\Ship",mappedBy="society")
     */
     private $ship;
 
@@ -30,9 +30,9 @@ class Type
     /**
      * @var string
      *
-     * @ORM\Column(name="labelType", type="string", length=255)
+     * @ORM\Column(name="labelSociety", type="string", length=255)
      */
-    private $labelType;
+    private $labelSociety;
 
 
     /**
@@ -46,28 +46,27 @@ class Type
     }
 
     /**
-     * Set labelType
+     * Set labelSociety
      *
-     * @param string $labelType
-     * @return Type
+     * @param string $labelSociety
+     * @return Society
      */
-    public function setLabelType($labelType)
+    public function setLabelSociety($labelSociety)
     {
-        $this->labelType = $labelType;
+        $this->labelSociety = $labelSociety;
     
         return $this;
     }
 
     /**
-     * Get labelType
+     * Get labelSociety
      *
      * @return string 
      */
-    public function getLabelType()
+    public function getLabelSociety()
     {
-        return $this->labelType;
+        return $this->labelSociety;
     }
-
     /**
      * Constructor
      */
@@ -80,7 +79,7 @@ class Type
      * Add ship
      *
      * @param \Iaato\IaatoBundle\Entity\Ship $ship
-     * @return Type
+     * @return Society
      */
     public function addShip(\Iaato\IaatoBundle\Entity\Ship $ship)
     {
