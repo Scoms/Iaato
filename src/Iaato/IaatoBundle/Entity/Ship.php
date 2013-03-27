@@ -12,6 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Ship
 {
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\Step", mappedBy="ship")
+     * @ORM\JoinColumn(nullable=false)
+    */
+    private $step;
 
     /**
      * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Type", inversedBy="ship") //Un bateau a un seul type mais un type est rattaché à plusieurs bateaux
@@ -310,5 +316,38 @@ class Ship
     public function getIdtype()
     {
         return $this->idtype;
+    }
+
+    /**
+     * Add step
+     *
+     * @param \Iaato\IaatoBundle\Entity\Step $step
+     * @return Ship
+     */
+    public function addStep(\Iaato\IaatoBundle\Entity\Step $step)
+    {
+        $this->step[] = $step;
+    
+        return $this;
+    }
+
+    /**
+     * Remove step
+     *
+     * @param \Iaato\IaatoBundle\Entity\Step $step
+     */
+    public function removeStep(\Iaato\IaatoBundle\Entity\Step $step)
+    {
+        $this->step->removeElement($step);
+    }
+
+    /**
+     * Get step
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStep()
+    {
+        return $this->step;
     }
 }

@@ -1,0 +1,52 @@
+<?php
+
+namespace Iaato\IaatoBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Step
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="Iaato\IaatoBundle\Entity\StepRepository")
+ */
+class Step
+{
+    /**
+     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Ship", inversedBy="step")
+     * @ORM\JoinColumn(nullable=false)
+    */
+    private $ship;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Site", inversedBy="step")
+     * @ORM\JoinColumn(nullable=false)
+    */
+    private $site;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\TimeSlot", inversedBy="step")
+     * @ORM\JoinColumn(nullable=false)
+    */
+    private $timeslot;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}

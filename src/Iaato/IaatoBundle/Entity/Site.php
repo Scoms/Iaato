@@ -14,6 +14,12 @@ class Site
 {
 
     /**
+     * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\Step", mappedBy="site")
+     * @ORM\JoinColumn(nullable=false)
+    */
+    private $step;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Zone", inversedBy="site") //Un site est rattaché à une seule zone mais une zone est rattachée à un seul site
      * @ORM\JoinColumn(nullable=false) //Interdit de créer un site sans une zone
     */
@@ -226,5 +232,38 @@ class Site
     public function getZone()
     {
         return $this->zone;
+    }
+
+    /**
+     * Add step
+     *
+     * @param \Iaato\IaatoBundle\Entity\Step $step
+     * @return Site
+     */
+    public function addStep(\Iaato\IaatoBundle\Entity\Step $step)
+    {
+        $this->step[] = $step;
+    
+        return $this;
+    }
+
+    /**
+     * Remove step
+     *
+     * @param \Iaato\IaatoBundle\Entity\Step $step
+     */
+    public function removeStep(\Iaato\IaatoBundle\Entity\Step $step)
+    {
+        $this->step->removeElement($step);
+    }
+
+    /**
+     * Get step
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStep()
+    {
+        return $this->step;
     }
 }
