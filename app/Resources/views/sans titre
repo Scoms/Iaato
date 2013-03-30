@@ -8,10 +8,10 @@
 		{{ form_rest(form_add) }}
 		<input type="submit" value="Envoyer" class="btn btn-primary" />
 	</form>
+	<h3>Modifcation d'un utilisateur</h3>
 	<h3>Suppression d'un utilisateur</h3>
-	
-	
 </div>
 
 {% endblock %}
+
 

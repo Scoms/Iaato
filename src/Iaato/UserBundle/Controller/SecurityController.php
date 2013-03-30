@@ -12,10 +12,10 @@ class SecurityController extends Controller
   public function loginAction()
   {
     // Si le visiteur est déjà identifié, on le redirige vers l'acceuil
-    if($this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
+    /*if($this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
     {
       return $this->redirect($this->generateUrl('iaato_iaato_homepage'));	
-    }
+    }*/
    
     $request = $this->getRequest();
     $session = $request->getSession();
