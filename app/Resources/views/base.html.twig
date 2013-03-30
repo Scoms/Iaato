@@ -23,16 +23,21 @@
           <a class="brand" href="{{ path('iaato_iaato_homepage') }}">Welcome to IAATO</a>
           <div class="nav-collapse collapse">
             <ul class="nav"> 
-              <li ><a href="{{ path('iaato_iaato_homepage') }}">Home</a></li>
-  <li><a href="{{ path('iaato_capitaine') }}">Capitaine</a></li>
-  <li><a href="{{ path('iaato_secretariat') }}">Secretariat</a></li>
-  <li><a href="{{ path('iaato_contact') }}">Contact</a></li>
+            <li ><a href="{{ path('iaato_iaato_homepage') }}">Home</a></li>
+			<li><a href="{{ path('iaato_capitaine') }}">Capitaine</a></li>
+			<li><a href="{{ path('iaato_secretariat') }}">Secretariat</a></li>
+			<li><a href="{{ path('iaato_contact') }}">Contact</a></li>
+			{% if is_granted('ROLE_ADMIN') %}
+			<li><a href="{{ path('iaato_admin') }}"><i class="icon-cog" ></i></a></li>
+            {% endif %}
             </ul>
+            <a class="btn btn-primary" href="{{ path('login') }}">Connexion</a>
             {% block connexion %}
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             <a class="btn btn-danger"  href="{{ path('logout') }}">Déconnexion</a>
             {% endif %}
             {% endblock %}
+          
           </div><!--/.nav-collapse -->
         </div>
       </div>

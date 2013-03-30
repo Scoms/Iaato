@@ -12,12 +12,12 @@ namespace Iaato\IaatoBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class HomeController extends Controller
+class AdminController extends Controller
 {
-public function indexAction()
-{
-return $this->render('IaatoIaatoBundle:Home:index.html.twig',array('content' => 'home'));
-} 
+	public function indexAction()
+	{
+	return $this->render('IaatoIaatoBundle:Admin:index.html.twig');
+	}
 }
 ?>
 

@@ -38,6 +38,9 @@ patch:
     pattern: /
     defaults: { _controller:IaatoIaatoBundle:Home:index }
 
+iaato_admin:
+    pattern: /admin
+    defaults: { _controller:IaatoIaatoBundle:Admin:index }
 #contact_new:
 #    pattern: /add_contact
 #    defaults: { _controller:IaatoIaatoBundle:Contact:mailto }
