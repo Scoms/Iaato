@@ -68,7 +68,7 @@ class ShipController extends Controller {
 
 	public function deleteshipAction(){
 	
-		return $this->render('IaatoIaatoBundle:Secretariat:deleteship.html.twig');
+		return $this->render('IaatoIaatoBundle:Secretariat:deleship.html.twig');
 
 	}
 

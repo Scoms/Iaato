@@ -9,22 +9,30 @@
 	<li><a href="{{ path('iaato_ship_delete') }}" id="linkdeleteship">Delete a ship</a></li>
 </ul>
 
-<table style="margin:15px 15px">
-	<tr>
-		<th style="padding:10px">Code</th>
-		<th style="padding:10px">Name ship</th>
-		<th style="padding:10px">Number of passenger</th>
-	</tr>
+<div class="list" style="display:block;">
+	<table style="margin:15px 15px">
+		<tr>
+			<th style="padding:10px">Code</th>
+			<th style="padding:10px">Name ship</th>
+			<th style="padding:10px">Number of passenger</th>
+		</tr>
 
-	{% for ship in ships %}
-	<tr>
-		<td style="padding:7px">{{ ship.code }}</td>
-		<td style="padding:7px">{{ ship.nameShip }}</td>
-		<td style="padding:7px">{{ ship.nbPassenger }}</td>
-	<tr>
-	{% else %}
-	<p>No ships</p>
-	{% endfor %}
-</table>
+		{% for ship in ships %}
+		<tr>
+			<td style="padding:7px">{{ ship.code }}</td>
+			<td style="padding:7px">{{ ship.nameShip }}</td>
+			<td style="padding:7px">{{ ship.nbPassenger }}</td>
+		<tr>
+		{% else %}
+		<p>No ships</p>
+		{% endfor %}
+	</table>
+</div>
 
 {% endblock %}
+
+{#}
+{% block javascripts %}
+	<script type="text/javascript" src="{{ asset('bundles/iaatoiaato/js/ship.js') }}" ></script>
+{% endblock %}
+#}

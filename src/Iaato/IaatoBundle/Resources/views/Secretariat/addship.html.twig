@@ -1,0 +1,29 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+<ul class="nav nav-pills">
+	<li class="active"><a href="{{ path('iaato_ship') }}" id="linklistship">See all ships</a></li>
+	<li><a href="{{ path('iaato_ship_change') }}" id="linkchangeship">Change a ship</a></li>
+	<li><a href="{{ path('iaato_ship_add') }}" id="linkaddship">Add a ship</a></li>
+	<li><a href="{{ path('iaato_ship_delete') }}" id="linkdeleteship">Delete a ship</a></li>
+</ul>
+
+<div class="well" id="addship" style="width:60%; margin-left:auto; margin-right:auto; heigth:200px;">
+	<form method="post" {{ form_enctype(formaddship) }} class="form">
+	    {{ form_errors(formaddship) }}
+
+	    {{ form_row(formaddship.code) }}
+	    {{ form_row(formaddship.nameShip) }}
+	    {{ form_row(formaddship.society) }}
+	    {{ form_row(formaddship.nbPassenger) }}
+	    {{ form_row(formaddship.type) }}
+	    {{ form_row(formaddship.email) }}
+	    {{ form_row(formaddship.phone) }}
+
+	    {{ form_rest(formaddship) }}
+	    <input type="submit" value="Envoyer" class="btn btn-primary" />
+	</form>#}
+</div>
+
+{% endblock %}
