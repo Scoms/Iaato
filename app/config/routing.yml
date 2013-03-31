@@ -13,6 +13,10 @@ login_check:
     
 logout:
     pattern: /logout
+    
+admin_remove:
+    pattern: /admin/remove
+    defaults: { _controller: IaatoIaatoBundle:Remove:index }
 
 # Internal routing configuration to handle ESI
 # ****** WARNING ******

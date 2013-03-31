@@ -15,6 +15,7 @@ use Iaato\UserBundle\Entity\User;
 
 class AdminController extends Controller
 {
+
 	public function indexAction()
 	{
 		$entityManager = $this->getDoctrine()->getEntityManager();
@@ -43,11 +44,7 @@ class AdminController extends Controller
 				))
 			;
 				
-		$form = $formBuilder->getForm();
-		/*
-		 * Formulaire de suppression
-		*/
-		
+		$form = $formBuilder->getForm();		
 		$request = $this->get('request');
 			
 		if ($request->getMethod() == 'POST')
