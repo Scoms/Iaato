@@ -2,13 +2,13 @@
 {% block body %}
 <div class="well">
 	<p>You can add and remove users</p>
-	<h3>Add a user</h3>
+	<h3>Ajout d'un utilisateur</h3>
 	<form method="post" {{ form_enctype(form_add) }} class="form">
 		{{ form_errors(form_add) }}
 		{{ form_rest(form_add) }}
 		<input type="submit" value="Send" class="btn btn-primary" />
 	</form>
-	<h3>Remove a user</h3>
+	<h3>Suppression d'un utilisateur</h3>
 	<a href="{{ path('admin_remove')}}" class="btn btn-danger">Remove</a>
 	
 </div>

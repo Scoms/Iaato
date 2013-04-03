@@ -2,7 +2,6 @@
 {% block body %}
 <div class="well">
 	<h6>Something wrong happenned, try again later.</h6>
-	<h6>{{ reason }}</h6>
 </div>
 
 

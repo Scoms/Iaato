@@ -2,7 +2,7 @@
 {% block body %}
 <div class="well">
 	<h6>The user "{{nom}}" has been removed succefully.</h6>
-	<a href="{{ path('admin_remove') }}" class="btn btn-primary">Back</a>
+	<a href="{{ path('admin_remove') }}">Back</a>
 </div>
 
 

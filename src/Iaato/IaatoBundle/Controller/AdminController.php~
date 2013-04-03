@@ -31,7 +31,7 @@ class AdminController extends Controller
 		$formBuilder
 			->add('username',	'text')
 			->add('roles', 'choice', array(
-        'choices' => array("ROLE_ADMIN"=>"Admin","ROLE_SECRETARIAT"=>"IAATO","ROLE_CAPITAINE"=>"Expedition Leader"),
+        'choices' => array("ROLE_ADMIN"=>"administrateur","ROLE_SECRETARIAT"=>"secretariat","ROLE_CAPITAINE"=>"capitaine"),
         'required' => false,'label'=>'Roles','multiple'=>true
     ))
 			->add('password', 'repeated', array(
