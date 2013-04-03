@@ -1,0 +1,14 @@
+
+{% extends '::base.html.twig' %}
+
+{% block body %}
+<div class="well">
+
+<ul class="nav">
+	<a class="btn btn-info" href="{{ path('iaato_society') }}" >Show</a>
+	<a class="btn btn-info" href="{{ path('iaato_society_add') }}" >Add</a>	
+	<a class="btn btn-info" href="{{ path('iaato_society_remove') }}" >Remove</a>
+</ul>
+<p>Add data</p>
+</div>
+{% endblock %}

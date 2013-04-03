@@ -11,7 +11,16 @@ class SocietyController extends Controller
 {
   public function indexAction()
   {
+  
     return $this->render('IaatoIaatoBundle:Society:index.html.twig');
+  }
+  public function addAction()
+  {
+    return $this->render('IaatoIaatoBundle:Society:add.html.twig');
+  }
+  public function removeAction()
+  {
+    return $this->render('IaatoIaatoBundle:Society:remove.html.twig');
   }
 }
 

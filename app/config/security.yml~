@@ -12,6 +12,7 @@ security:
             algorithm:   sha1
             iterations: 1
             encode_as_base64: false
+    
     role_hierarchy:
         ROLE_ADMIN:       [ROLE_CAPITAINE,ROLE_SECRETARIAT]
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
@@ -47,6 +48,8 @@ security:
             
             
     access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/secretariat, roles: ROLE_SECRETARIAT }
 #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         #
         # You must uncomment the two following rules to restrict access to paths
