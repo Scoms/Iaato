@@ -15,13 +15,14 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\Security\Core\SecurityContext;
 use Iaato\IaatoBundle\Entity\Ship;
+use Iaato\IaatoBundle\Entity\Society;
 
 class ShipController extends Controller {
 
 	public function indexAction(){
 		
 		$em = $this->getDoctrine()->getEntityManager();
-		$query = $em->createQuery('SELECT s FROM IaatoIaatoBundle:Ship s');
+		$query = $em->createQuery('SELECT s.code, s.nameShip, s.nbPassenger, t.labelType, so.labelSociety FROM IaatoIaatoBundle:Ship s LEFT JOIN s.idtype t LEFT JOIN s.society so');
 		$ships = $query->getResult();
 		return $this->render('IaatoIaatoBundle:Secretariat:ship.html.twig', array('ships' => $ships));
 	
@@ -29,11 +30,17 @@ class ShipController extends Controller {
 
 	public function addshipAction(){
 		$ship = new Ship();
+		$society = new Society();
+		$society = $this->getDoctrine()->getRepository('IaatoIaatoBundle:Society')->findAll();
+		
+		foreach($liste_roles as $role)
+			array_push($stack,$role->getNom());
+
 		$formBuilder = $this->createFormBuilder($ship);
 		$formBuilder
 			->add('code',	'text')
 			->add('nameShip',	'text')
-			->add('society',	'text')
+			->add('society',	'choice', array())
 			->add('nbPassenger',	'text')
 			->add('type',	'text')
 			->add('email',	'email')
@@ -68,7 +75,7 @@ class ShipController extends Controller {
 
 	public function deleteshipAction(){
 	
-		return $this->render('IaatoIaatoBundle:Secretariat:deleship.html.twig');
+		return $this->render('IaatoIaatoBundle:Secretariat:deleteship.html.twig');
 
 	}
 

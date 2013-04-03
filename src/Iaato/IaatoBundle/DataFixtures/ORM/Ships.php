@@ -25,24 +25,15 @@ class Ships extends AbstractFixture implements FixtureInterface{
 	*/
 	public function load(ObjectManager $manager){
 		
-		/*
-		$codes = array('C6WC2', 'UAUN', 'UAUO');
-		$namesShip = array('Alexander von Humboldt', 'Akademik Ioffe', 'Akademik Sergey Vavilov');
-		$nbs = array('150', '125', '190');
-		$types = array('ice-strengthned', 'standard', 'standard');
-		$societies = array('Club Cruise Fleet & Technical Department', 'Quark Expeditions', 'Quark Expeditions');
-		*/
-
 		$ship = new Ship;
 		$ship->setCode('C6WC2');
-    		$ship->setNameShip('Alexander von Humboldt');
-    		$ship->setNameSociety('Club Cruise Fleet & Technical Department');
-    		$ship->setNbPassenger('150');
+    	$ship->setNameShip('Alexander von Humboldt');
+    	$ship->setNbPassenger('150');
 		$ship->setType($this->getReference('standard'));
 		$ship->setSociety($this->getReference('Club Cruise Fleet & Technical Department'));
-    		$manager->persist($ship);
-		
-    		$manager->flush();
+    	
+    	$manager->persist($ship);		
+    	$manager->flush();
 
   	}
 
