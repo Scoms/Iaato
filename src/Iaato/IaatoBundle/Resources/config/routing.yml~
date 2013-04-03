@@ -1,7 +1,7 @@
 iaato_iaato_homepage:
     pattern:  /home
     defaults: { _controller: IaatoIaatoBundle:Home:index }
-    
+
 iaato_capitaine:
     pattern: /capitaine
     defaults: { _controller: IaatoIaatoBundle:Capitaine:index }
@@ -10,6 +10,22 @@ iaato_secretariat:
     pattern: /secretariat
     defaults: { _controller: IaatoIaatoBundle:Secretariat:index }
 
+iaato_ship:
+    pattern: /secretariat/ship
+    defaults: { _controller: IaatoIaatoBundle:Ship:index }
+
+iaato_ship_add:
+    pattern: /secretariat/ship/add
+    defaults: { _controller: IaatoIaatoBundle:Ship:addship }
+
+iaato_ship_change:
+    pattern: /secretariat/ship/change
+    defaults: { _controller: IaatoIaatoBundle:Ship:changeship }
+
+iaato_ship_delete:
+    pattern: /secretariat/ship/delete
+    defaults: { _controller: IaatoIaatoBundle:Ship:deleteship}
+
 iaato_connexion:
     pattern: /connexion
     defaults: { _controller: IaatoIaatoBundle:Connexion:index }
@@ -17,11 +33,23 @@ iaato_connexion:
 iaato_contact:
     pattern: /contact
     defaults: { _controller:IaatoIaatoBundle:Contact:index }
-    
+
 patch:
     pattern: /
-    defaults: { _controller:IaatoUserBundle:Home:index }
+    defaults: { _controller:IaatoIaatoBundle:Home:index }
 
-#contact_new:
-#    pattern: /add_contact
-#    defaults: { _controller:IaatoIaatoBundle:Contact:mailto }
+iaato_admin:
+    pattern: /admin
+    defaults: { _controller:IaatoIaatoBundle:Admin:index }
+    
+iaato_society:
+    pattern: /secretariat/society
+    defaults: { _controller:IaatoIaatoBundle:Society:index }
+
+iaato_society:
+    pattern: /secretariat/society
+    defaults: { _controller:IaatoIaatoBundle:Society:index }
+    
+iaato_society:
+    pattern: /secretariat/society
+    defaults: { _controller:IaatoIaatoBundle:Society:index }
