@@ -41,6 +41,15 @@ patch:
 iaato_admin:
     pattern: /admin
     defaults: { _controller:IaatoIaatoBundle:Admin:index }
-#contact_new:
-#    pattern: /add_contact
-#    defaults: { _controller:IaatoIaatoBundle:Contact:mailto }
+    
+iaato_society:
+    pattern: /secretariat/society
+    defaults: { _controller:IaatoIaatoBundle:Society:index }
+
+iaato_society_add:
+    pattern: /secretariat/society/add
+    defaults: { _controller:IaatoIaatoBundle:Society:add }
+    
+iaato_society_remove:
+    pattern: /secretariat/society/remove
+    defaults: { _controller:IaatoIaatoBundle:Society:remove }

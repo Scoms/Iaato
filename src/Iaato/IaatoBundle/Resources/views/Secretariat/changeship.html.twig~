@@ -8,7 +8,7 @@
 	<li><a href="{{ path('iaato_ship_add') }}" id="linkaddship">Add a ship</a></li>
 	<li><a href="{{ path('iaato_ship_delete') }}" id="linkdeleteship">Delete a ship</a></li>
 </ul>
-
-<p>Delete a ship</p>
 </div>
+<p>Change a ship</p>
+
 {% endblock %}

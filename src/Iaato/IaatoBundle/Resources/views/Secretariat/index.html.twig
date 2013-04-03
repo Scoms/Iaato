@@ -1,12 +1,17 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
+<div class="well">
+<h5>Categories</h5>
 <div class = "btn-group">
+	<button class="btn"><a href={{ path('iaato_society') }}>Society</a></button>
 	<button class="btn"><a method="post" href={{ path('iaato_ship') }}>Ship</a></button>
 	<button class="btn">Site</button>
 	<button class="btn">Activity</button>
 	<button class="btn">Type</button>
 </div>
-<h6>Hello ! {{content}}</h6>
+  <h5>Add Data with files</h5>
+  <a class="btn btn-warning">USE .CSV</a>
+</div>
 {% endblock %}
 

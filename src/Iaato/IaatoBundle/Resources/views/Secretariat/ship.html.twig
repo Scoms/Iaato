@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-
+<div class="well">
 <ul class="nav nav-pills">
 	<li class="active"><a href="{{ path('iaato_ship') }}" id="linklistship">See all ships</a></li>
 	<li><a href="{{ path('iaato_ship_change') }}" id="linkchangeship">Change a ship</a></li>
@@ -28,7 +28,7 @@
 		{% endfor %}
 	</table>
 </div>
-
+</div>
 {% endblock %}
 
 {#}
