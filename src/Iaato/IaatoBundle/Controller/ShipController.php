@@ -30,17 +30,17 @@ class ShipController extends Controller {
 
 	public function addshipAction(){
 		$ship = new Ship();
-		$society = new Society();
-		$society = $this->getDoctrine()->getRepository('IaatoIaatoBundle:Society')->findAll();
+		//$society = new Society();
+		//$society = $this->getDoctrine()->getRepository('IaatoIaatoBundle:Society')->findAll();
 		
-		foreach($liste_roles as $role)
-			array_push($stack,$role->getNom());
+		//foreach($liste_roles as $role)
+			//array_push($stack,$role->getNom());
 
 		$formBuilder = $this->createFormBuilder($ship);
 		$formBuilder
 			->add('code',	'text')
 			->add('nameShip',	'text')
-			->add('society',	'choice', array())
+			->add('society',	'text')
 			->add('nbPassenger',	'text')
 			->add('type',	'text')
 			->add('email',	'email')
