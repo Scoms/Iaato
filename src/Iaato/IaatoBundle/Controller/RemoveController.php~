@@ -40,18 +40,34 @@ class RemoveController extends Controller
 				$user = $em->getRepository('IaatoUserBundle:User')->findOneBy(array('username' => $nom));
 				if($user==NULL)
 				{
-				return $this->render('IaatoIaatoBundle:Remove:index.html.twig',array( 'remove_infos'=>'ERROR : User does not exist.','form_supp' => $form->createView(),'liste_user'=> $stack));
+				return $this->render('IaatoIaatoBundle:Remove:index.html.twig',array(
+				  'sucess'=>'',
+				  'error'=>'ERROR : User "'.$nom.'"does not exist.',
+				  'form_supp' => $form->createView(),
+				  'liste_user'=> $stack));
 				//  return $this->render('IaatoIaatoBundle:Remove:fail.html.twig',array('reason'=>'User do not exists'));		
 				}
 				$em->remove($user);
 				$em->flush();
-				return $this->render('IaatoIaatoBundle:Remove:sucess.html.twig',array('nom'=>$nom));
+				return $this->render('IaatoIaatoBundle:Remove:index.html.twig',array(
+				  'sucess'=>' User "'.$nom.'" added sucessfully.',
+				  'error'=>'',
+				  'form_supp' => $form->createView(),
+				  'liste_user'=> $stack));
 			}	
-			return $this->render('IaatoIaatoBundle:Remove:index.html.twig',array( 'remove_infos'=>'ERROE : Invalid form.','form_supp' => $form->createView(),'liste_user'=> $stack));
+			return $this->render('IaatoIaatoBundle:Remove:index.html.twig',array(
+			  'sucess'=>'',
+			  'error'=>'ERROR : Invalid form.',
+			  'form_supp' => $form->createView(),
+			  'liste_user'=> $stack));
 		}
 		else
 		{
-			return $this->render('IaatoIaatoBundle:Remove:index.html.twig',array( 'remove_infos'=>'','form_supp' => $form->createView(),'liste_user'=> $stack));
+			return $this->render('IaatoIaatoBundle:Remove:index.html.twig',array(
+			  'sucess'=>'',
+			  'error'=>'',
+			  'form_supp' => $form->createView(),
+			  'liste_user'=> $stack));
 		}
 	}
 	

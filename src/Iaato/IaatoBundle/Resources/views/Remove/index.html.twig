@@ -1,9 +1,14 @@
 {% extends '::base.html.twig' %}
 {% block body %}
 <div class="well">
-{% if remove_infos != '' %}
+{% if error != '' %}
 <div class="alert alert-error">
-	<p data-dismiss="alert">{{ remove_infos }}</p>
+	<p data-dismiss="alert">{{ error }}</p>
+</div>
+{%endif%}
+{% if sucess != '' %}
+<div class="alert alert-success">
+	<p data-dismiss="alert">{{ sucess }}</p>
 </div>
 {%endif%}
 	<h6>Choose the user you want to remove</h6>

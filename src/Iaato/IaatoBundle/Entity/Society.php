@@ -30,7 +30,7 @@ class Society
     /**
      * @var string
      *
-     * @ORM\Column(name="labelSociety", type="string", length=255)
+     * @ORM\Column(name="labelSociety", type="string", length=255,unique=true)
      */
     private $labelSociety;
 

@@ -8,7 +8,9 @@
 	<li><a href="{{ path('iaato_ship_add') }}" id="linkaddship">Add a ship</a></li>
 	<li><a href="{{ path('iaato_ship_delete') }}" id="linkdeleteship">Delete a ship</a></li>
 </ul>
-
+{% if message != '' %}
+  <p> {{ message }} </p>
+{% endif %}
 <div class="well" id="addship" style="width:60%; margin-left:auto; margin-right:auto; heigth:200px;">
 	<form method="post" {{ form_enctype(formaddship) }} class="form">
 	    {{ form_errors(formaddship) }}
@@ -23,7 +25,7 @@
 
 	    {{ form_rest(formaddship) }}
 	    <input type="submit" value="Envoyer" class="btn btn-primary" />
-	</form>#}
+	</form>
 </div>
 </div>
 {% endblock %}

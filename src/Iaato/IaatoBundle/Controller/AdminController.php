@@ -55,12 +55,23 @@ class AdminController extends Controller
 				$em = $this->getDoctrine()->getManager();
 				$user->setPassword(sha1($user->getPassword()));
 				$user->setSalt('');
+				if($entityManager->getRepository("IaatoUserBundle:User")->findBy(array('username'=>$user->getUsername()) )!=NULL)
+				  return $this->render('IaatoIaatoBundle:Admin:index.html.twig',array(
+				    'form_add' => $form->createView(),
+				    'error'=>'ERROR : The user "'.$user->getUsername().'" already exists.',
+				    'sucess'=>''));;
 				$em->persist($user);
 				$em->flush();
 			}			
-				return $this->render('IaatoIaatoBundle:Admin:sucess.html.twig');
+				return $this->render('IaatoIaatoBundle:Admin:index.html.twig',array(
+				    'form_add' => $form->createView(),
+				    'error'=>'',
+				    'sucess'=>'The user "'.$user->getUsername().'" has been added succesfully.'));
 		}
-		return $this->render('IaatoIaatoBundle:Admin:index.html.twig',array('form_add' => $form->createView()));
+		return $this->render('IaatoIaatoBundle:Admin:index.html.twig',array(
+		  'form_add' => $form->createView(),
+		  'error'=>'',
+		  'sucess'=>''));
 	}
 	
 }

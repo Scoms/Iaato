@@ -2,6 +2,18 @@
 {% block body %}
 <div class="well">
 	<p>You can add and remove users</p>
+
+{% if error != '' %}
+  <div class="alert alert-error">
+	<p data-dismiss="alert">{{ error }}</p>
+  </div>
+{% endif %}
+{% if sucess != '' %}
+  <div class="alert alert-success">
+	<p data-dismiss="alert">{{ sucess }}</p>
+  </div>
+{% endif %}
+	
 	<h3>Add a user</h3>
 	<form method="post" {{ form_enctype(form_add) }} class="form">
 		{{ form_errors(form_add) }}
