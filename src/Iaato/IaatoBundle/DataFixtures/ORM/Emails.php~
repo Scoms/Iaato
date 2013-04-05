@@ -26,7 +26,7 @@ class Emails extends AbstractFixture implements FixtureInterface{
 		
 		//$email->setShip($this->getReference('ship'));
 
-		//$manager->persist($ship);		
+		$manager->persist($ship);		
 		$manager->flush();
 
   	}

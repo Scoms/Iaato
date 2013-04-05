@@ -54,7 +54,7 @@ class RemoveController extends Controller
 				$em->flush();
 				$liste_user = $em->getRepository("IaatoUserBundle:User")->findAll();
 				$stack = array();
-				return $this->render('IaatoIaatoBundle:Remove:sucess.html.twig',array('nom' =>$util->getUsername()));
+				return $this->render('IaatoIaatoBundle:Remove:sucess.html.twig',array('nom' =>$nom));
 			}	
 			return $this->render('IaatoIaatoBundle:Remove:index.html.twig',array(
 			  'sucess'=>'',
