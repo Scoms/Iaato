@@ -13,11 +13,6 @@
 {%endif%}
 	<h6>Choose the user you want to remove</h6>
 
-<ul>Users :
-	{% for user in liste_user %}
-			<li>{{user}}</li>
-	{% endfor %}
-</ul>
 <form method="post" {{ form_enctype(form_supp) }} class="form">
 		{{ form_errors(form_supp) }}
 		{{ form_rest(form_supp) }}

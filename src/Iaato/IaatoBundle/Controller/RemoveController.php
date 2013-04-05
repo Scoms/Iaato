@@ -22,12 +22,15 @@ class RemoveController extends Controller
 		$liste_user = $em->getRepository("IaatoUserBundle:User")->findAll();
 		$stack = array();
 		foreach($liste_user as $util)
-			array_push($stack,$util->getUsername());
-		sort($stack);
+			$stack[$util->getUsername()] = $util->getUsername();
+		//sort($stack);
 		$user = new User();
 		$formBuilder = $this->createFormBuilder($user);
 		$formBuilder
-			->add('username', 'text');
+			->add('username', 'choice', array(
+        'choices' => $stack,
+        'required' => false,'label'=>'Roles','multiple'=>false
+    ));
 		$form = $formBuilder->getForm();
 		$request = $this->get('request');	
 		if ($request->getMethod() == 'POST')
@@ -49,11 +52,9 @@ class RemoveController extends Controller
 				}
 				$em->remove($user);
 				$em->flush();
-				return $this->render('IaatoIaatoBundle:Remove:index.html.twig',array(
-				  'sucess'=>' User "'.$nom.'" added sucessfully.',
-				  'error'=>'',
-				  'form_supp' => $form->createView(),
-				  'liste_user'=> $stack));
+				$liste_user = $em->getRepository("IaatoUserBundle:User")->findAll();
+				$stack = array();
+				return $this->render('IaatoIaatoBundle:Remove:sucess.html.twig',array('nom' =>$util->getUsername()));
 			}	
 			return $this->render('IaatoIaatoBundle:Remove:index.html.twig',array(
 			  'sucess'=>'',
