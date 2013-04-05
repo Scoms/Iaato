@@ -1,0 +1,14 @@
+
+{% extends '::base.html.twig' %}
+
+{% block body %}
+<div class="well">
+
+<ul class="nav">
+	<a class="btn btn-info" href="{{ path('iaato_site') }}" >Show</a>
+	<a class="btn btn-info" href="{{ path('iaato_site_add') }}" >Add</a>	
+	<a class="btn btn-info" href="{{ path('iaato_site_remove') }}" >Remove</a>
+</ul>
+<h3>INDEX-SITE</h3>
+</div>
+{% endblock %}

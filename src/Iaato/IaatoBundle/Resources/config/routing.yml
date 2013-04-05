@@ -53,3 +53,50 @@ iaato_society_add:
 iaato_society_remove:
     pattern: /secretariat/society/remove
     defaults: { _controller:IaatoIaatoBundle:Society:remove }
+    
+iaato_site:
+    pattern: /secretariat/site
+    defaults: { _controller:IaatoIaatoBundle:Site:index }
+
+iaato_site_add:
+    pattern: /secretariat/site/add
+    defaults: { _controller:IaatoIaatoBundle:Site:add }
+
+iaato_site_remove:
+    pattern: /secretariat/site/remove
+    defaults: { _controller:IaatoIaatoBundle:Site:remove }
+
+iaato_activity:
+    pattern: /secretariat/activity
+    defaults: { _controller:IaatoIaatoBundle:Activity:index }
+    
+
+iaato_activity_add:
+    pattern: /secretariat/activity/add
+    defaults: { _controller:IaatoIaatoBundle:Activity:add }
+
+
+iaato_activity_remove:
+    pattern: /secretariat/activity/remove
+    defaults: { _controller:IaatoIaatoBundle:Activity:remove }
+
+
+iaato_type:
+    pattern: /secretariat/type
+    defaults: { _controller:IaatoIaatoBundle:Type:index }
+    
+iaato_type_add:
+    pattern: /secretariat/type/add
+    defaults: { _controller:IaatoIaatoBundle:Type:add }
+    
+iaato_type_remove:
+    pattern: /secretariat/type/remove
+    defaults: { _controller:IaatoIaatoBundle:Type:remove }
+
+iaato_csv_download:
+    pattern: /secretariat/csv/download
+    defaults: { _controller:IaatoIaatoBundle:CSVDown:index }
+    
+iaato_csv_upload:
+    pattern: /secretariat/csv/upload
+    defaults: { _controller:IaatoIaatoBundle:CSVUp:index }
