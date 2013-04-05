@@ -43,18 +43,28 @@ class RemoveController extends Controller
 				$user = $em->getRepository('IaatoUserBundle:User')->findOneBy(array('username' => $nom));
 				if($user==NULL)
 				{
-				return $this->render('IaatoIaatoBundle:Remove:index.html.twig',array(
-				  'sucess'=>'',
-				  'error'=>'ERROR : User "'.$nom.'"does not exist.',
-				  'form_supp' => $form->createView(),
-				  'liste_user'=> $stack));
-				//  return $this->render('IaatoIaatoBundle:Remove:fail.html.twig',array('reason'=>'User do not exists'));		
+				  return $this->render('IaatoIaatoBundle:Remove:index.html.twig',array(
+				    'sucess'=>'',
+				    'error'=>'ERROR : User "'.$nom.'"does not exist.',
+				    'form_supp' => $form->createView(),
+				    'liste_user'=> $stack));
+				  //  return $this->render('IaatoIaatoBundle:Remove:fail.html.twig',array('reason'=>'User do not exists'));		
 				}
 				$em->remove($user);
 				$em->flush();
-				$liste_user = $em->getRepository("IaatoUserBundle:User")->findAll();
-				$stack = array();
-				return $this->render('IaatoIaatoBundle:Remove:sucess.html.twig',array('nom' =>$nom));
+				unset($stack[$nom]);
+				$formBuilder = $this->createFormBuilder($user);
+				$formBuilder
+					->add('username', 'choice', array(
+			'choices' => $stack,
+			'required' => false,'label'=>'Roles','multiple'=>false
+		    ));
+				$form = $formBuilder->getForm();
+				return $this->render('IaatoIaatoBundle:Remove:index.html.twig',array(
+				    'sucess'=>'User "'.$nom.'" has been removed succesfully.',
+				    'error'=>'',
+				    'form_supp' => $form->createView(),
+				    'liste_user'=> $stack));
 			}	
 			return $this->render('IaatoIaatoBundle:Remove:index.html.twig',array(
 			  'sucess'=>'',

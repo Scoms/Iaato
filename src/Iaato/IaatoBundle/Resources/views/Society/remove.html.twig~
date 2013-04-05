@@ -9,6 +9,22 @@
 	<a class="btn btn-info" href="{{ path('iaato_society_add') }}" >Add</a>	
 	<a class="btn btn-info" href="{{ path('iaato_society_remove') }}" >Remove</a>
 </ul>
-<p>Display data</p>
+{% if error != '' %}
+  <div class="alert alert-error">
+	<p data-dismiss="alert">{{ error }}</p>
+  </div>
+{% endif %}
+{% if success != '' %}
+  <div class="alert alert-success">
+	<p data-dismiss="alert">{{ success }}</p>
+  </div>
+{% endif %}
+<div class="well" id="addsociety" style="width:60%; margin-left:auto; margin-right:auto; heigth:200px;">
+	<form method="post" {{ form_enctype(form) }} class="form">
+	    {{ form_errors(form) }}
+	    {{ form_row(form.labelSociety) }}
+	    <input type="submit" value="Remove" class="btn btn-danger" />
+	</form>
+</div>
 </div>
 {% endblock %}

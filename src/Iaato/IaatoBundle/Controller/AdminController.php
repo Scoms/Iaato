@@ -41,9 +41,7 @@ class AdminController extends Controller
 			'required' => true,
 			'first_options'  => array('label' => 'Password'),
 			'second_options' => array('label' => 'Repeat Password'),
-				))
-			;
-				
+				));		
 		$form = $formBuilder->getForm();		
 		$request = $this->get('request');
 			
@@ -62,11 +60,16 @@ class AdminController extends Controller
 				    'sucess'=>''));;
 				$em->persist($user);
 				$em->flush();
-			}			
-				return $this->render('IaatoIaatoBundle:Admin:index.html.twig',array(
-				    'form_add' => $form->createView(),
-				    'error'=>'',
-				    'sucess'=>'The user "'.$user->getUsername().'" has been added succesfully.'));
+			}
+			if($user->getPassword() == '')
+			  return $this->render('IaatoIaatoBundle:Admin:index.html.twig',array(
+			    'form_add' => $form->createView(),
+			    'error'=>'Invalid passwords',
+			    'sucess'=>''));
+			return $this->render('IaatoIaatoBundle:Admin:index.html.twig',array(
+				  'form_add' => $form->createView(),
+				  'error'=>'',
+				  'sucess'=>'The user "'.$user->getUsername().'" has been added succesfully.'));
 		}
 		return $this->render('IaatoIaatoBundle:Admin:index.html.twig',array(
 		  'form_add' => $form->createView(),

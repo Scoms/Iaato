@@ -39,7 +39,7 @@ class SocietyController extends Controller
 	  $em->flush();
 	  return $this->render('IaatoIaatoBundle:Society:add.html.twig',array(
 	    'form'=>$form->createView(),
-	    'sucess'=>'Society "" added.',
+	    'sucess'=>'Society "'.$society->getLabelSociety().'" added.',
 	    'error'=>''));
 	}
 
@@ -51,10 +51,18 @@ class SocietyController extends Controller
   }
   public function removeAction()
   {
+    $em = $this->getDoctrine()->getEntityManager();
+    $liste_society = $em->getRepository("IaatoIaatoBundle:Society")->findAll();
+    $stack = array();
+    foreach($liste_society as $society)
+	    $stack[$society->getLabelSociety()] = $society->getLabelSociety();
     $society = new Society();
     $formBuilder = $this->createFormBuilder($society);
     $formBuilder
-	    ->add('labelSociety','text');
+	    ->add('labelSociety', 'choice', array(
+        'choices' => $stack,
+        'required' => false,'label'=>'Company','multiple'=>false
+    ));
     $form = $formBuilder->getForm();
     $request = $this->get('request');
     if ($request->getMethod() == 'POST')
@@ -62,14 +70,26 @@ class SocietyController extends Controller
 	$form->bind($request);
 	if ($form->isValid())
 	{
-	  $em = $this->getDoctrine()->getManager();
-	  $em->persist($society);
+	  unset($stack[$society->getLabelSociety()]);
+	  $society = $em->getRepository("IaatoIaatoBundle:Society")->findOneBy(array('labelSociety'=>$society->getLabelSociety()));
+	  $em->remove($society);
 	  $em->flush();
-	  return $this->render('IaatoIaatoBundle:Society:add.html.twig',array('form'=>$form->createView(),'message'=>'Society "" added.'));
+	  return $this->render('IaatoIaatoBundle:Society:remove.html.twig',array(
+	    'form'=>$form->createView(),
+	    'success'=>'The company "'.$society->getLabelSociety().'" has been removed succesfully.',
+	    'error'=>''));
 	}
+	return $this->render('IaatoIaatoBundle:Society:remove.html.twig',array(
+	    'form'=>$form->createView(),
+	    'success'=>'',
+	    'error'=>'ERROR : something wrong happened but i don\'t know what ! '));
+	
 
     }
-    return $this->render('IaatoIaatoBundle:Society:remove.html.twig');
+    return $this->render('IaatoIaatoBundle:Society:remove.html.twig',array(
+      'form'=>$form->createView(),
+      'success'=>'',
+      'error'=>''));
   }
 }
 
