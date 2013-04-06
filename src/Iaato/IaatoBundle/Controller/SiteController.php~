@@ -14,8 +14,7 @@ class SiteController extends Controller
   {
     $em = $this->getDoctrine()->getEntityManager();
     $list = $em->getRepository("IaatoIaatoBundle:Site")->findAll();
-    return $this->render('IaatoIaatoBundle:Site:index.html.twig',array(
-      'list'=>$list));
+    return $this->render('IaatoIaatoBundle:Site:index.html.twig');
   }
   public function addAction()
   {

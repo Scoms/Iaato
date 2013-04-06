@@ -18,7 +18,6 @@ $(document).ready(function () {
 	$('#linkdeleteship').click(function () {
 		$('#deleteship').slideDown('500')
 	});
-
 });
 
 

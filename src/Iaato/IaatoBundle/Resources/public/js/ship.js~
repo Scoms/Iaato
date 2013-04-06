@@ -2,14 +2,24 @@
  * @overview
  *
  * @author 
- * @version 2013/03/24
+ * @version 2013/03/28
  */
 
-
 $(document).ready(function () {
-			
-	$('#las').click(function () {
-		$('#as').animate({ height: "70px" }, 500).css('display','block');			
-	});	
-		
+
+	$('#linkaddship').click(function () {
+		$('#addship').slideDown('500')
+	});
+
+	$('#linkchangeship').click(function () {
+		$('#changeship').slideDown('500')
+	});
+
+	$('#linkdeleteship').click(function () {
+		$('#deleteship').slideDown('500')
+	});
+	alert("ok");
+
 });
+
+

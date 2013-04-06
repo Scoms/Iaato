@@ -233,4 +233,37 @@ class Site
     {
         return $this->zone;
     }
+
+    /**
+     * Add step
+     *
+     * @param \Iaato\IaatoBundle\Entity\Step $step
+     * @return Site
+     */
+    public function addStep(\Iaato\IaatoBundle\Entity\Step $step)
+    {
+        $this->step[] = $step;
+    
+        return $this;
+    }
+
+    /**
+     * Remove step
+     *
+     * @param \Iaato\IaatoBundle\Entity\Step $step
+     */
+    public function removeStep(\Iaato\IaatoBundle\Entity\Step $step)
+    {
+        $this->step->removeElement($step);
+    }
+
+    /**
+     * Get step
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStep()
+    {
+        return $this->step;
+    }
 }

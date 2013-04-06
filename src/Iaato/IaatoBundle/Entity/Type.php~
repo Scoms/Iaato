@@ -15,9 +15,9 @@ class Type
 
     /**
      * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\Ship",mappedBy="idtype")
+     * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\Zone",mappedBy="prout")
     */
     private $ship;
-
     /**
      * @var integer
      *

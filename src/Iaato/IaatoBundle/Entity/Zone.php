@@ -10,9 +10,10 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Iaato\IaatoBundle\Entity\ZoneRepository")
  * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({"subzone" = "SubZone"})
+ * @ORM\DiscriminatorColumn(name="x", type="string")
  */
+ 
+ // * @ORM\DiscriminatorMap({"subzone" = "SubZone"}) // Ligne )à rajouter mais génère des erreurs 
 class Zone
 {
 
@@ -21,7 +22,13 @@ class Zone
      * @ORM\JoinColumn(nullable=false) //Une zone est rattachée à au moins un site
     */
     private $site;
-
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Type", inversedBy="ship") //Un bateau a un seul type mais un type est rattaché à plusieurs bateaux
+     * @ORM\JoinColumn(nullable=false) //Interdit de créer un bateau sans son type
+    */
+    private $idtype;
+    
     /**
      * @var integer
      *
@@ -48,7 +55,7 @@ class Zone
     {
         return $this->id;
     }
-
+    
     /**
      * Set labelZone
      *
@@ -110,5 +117,50 @@ class Zone
     public function getSite()
     {
         return $this->site;
+    }
+    
+    /**
+     * Set type
+     *
+     * @param \Iaato\IaatoBundle\Entity\Type $type
+     * @return Zone
+     */
+    public function setType(\Iaato\IaatoBundle\Entity\Type $type)
+    {
+        $this->idtype = $type;
+    
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return \Iaato\IaatoBundle\Entity\Type 
+     */
+    public function getType()
+    {
+        return $this->idtype;
+    }
+    /**
+     * Set idtype
+     *
+     * @param \Iaato\IaatoBundle\Entity\Type $idtype
+     * @return Zone
+     */
+    public function setIdtype(\Iaato\IaatoBundle\Entity\Type $idtype)
+    {
+        $this->idtype = $idtype;
+    
+        return $this;
+    }
+
+    /**
+     * Get idtype
+     *
+     * @return \Iaato\IaatoBundle\Entity\Type 
+     */
+    public function getIdtype()
+    {
+        return $this->idtype;
     }
 }
