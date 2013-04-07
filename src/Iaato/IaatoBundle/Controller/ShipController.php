@@ -24,29 +24,44 @@ class ShipController extends Controller {
 		$em = $this->getDoctrine()->getEntityManager();
 		$query = $em->createQuery('SELECT s.code, s.nameShip, s.nbPassenger, t.labelType, so.labelSociety FROM IaatoIaatoBundle:Ship s LEFT JOIN s.idtype t LEFT JOIN s.society so');
 		$ships = $query->getResult();
-		return $this->render('IaatoIaatoBundle:Secretariat:ship.html.twig', array('ships' => $ships));
+		return $this->render('IaatoIaatoBundle:Ship:index.html.twig', array('ships' => $ships));
 	
 	}
 
-	public function addshipAction(){
-		$ship = new Ship();
-		//$society = new Society();
-		//$society = $this->getDoctrine()->getRepository('IaatoIaatoBundle:Society')->findAll();
+	public function addAction(){
 		
-		//foreach($liste_roles as $role)
-			//array_push($stack,$role->getNom());
+		$ship = new Ship();
+		$entityManager = $this->getDoctrine()->getEntityManager();
+		$societies = $entityManager->getRepository("IaatoIaatoBundle:Society")->findAll();
+		$stackSoc = array();
+		
+		$types = $entityManager->getRepository("IaatoIaatoBundle:Type")->findAll();
+		$stackType = array();
+
+		foreach($societies as $society)
+			array_push($stackSoc,$society->getLabelSociety());
+
+		foreach($types as $type)
+			array_push($stackType,$type->getLabelType());
 
 		$formBuilder = $this->createFormBuilder($ship);
 		$formBuilder
 			->add('code',	'text')
 			->add('nameShip',	'text')
-			->add('society',	'text')
+			->add('society', 'choice', array(
+        		'choices' => $stackSoc,
+        		'required' => false,'label'=>'Societies','multiple'=>true
+    		))
 			->add('nbPassenger',	'text')
-			->add('type',	'text')
+			->add('type', 'choice', array(
+        		'choices' => $stackType,
+        		'required' => false,'label'=>'Types','multiple'=>true
+    		))
 			->add('email',	'email')
 			->add('phone',	'text');
+			
 		$form = $formBuilder->getForm();
-		
+
 		// On récupère la requête
 		$request = $this->get('request');
 		
@@ -65,23 +80,17 @@ class ShipController extends Controller {
 				$em = persist($ship);
 				$em = flush();
 
-				return $this->render('IaatoIaatoBundle:Secretariat:ship.html.twig');
+				return $this->render('IaatoIaatoBundle:Ship:index.html.twig');
 			}
 
 		}
 	
-		return $this->render('IaatoIaatoBundle:Secretariat:addship.html.twig', array('formaddship' => $form->createView()));
+		return $this->render('IaatoIaatoBundle:Ship:add.html.twig', array('formaddship' => $form->createView()));
 	}
 
-	public function deleteshipAction(){
+	public function removeAction(){
 	
-		return $this->render('IaatoIaatoBundle:Secretariat:deleteship.html.twig');
-
-	}
-
-	public function changeshipAction(){
-
-		return $this->render('IaatoIaatoBundle:Secretariat:changeship.html.twig');
+		return $this->render('IaatoIaatoBundle:Ship:remove.html.twig');
 
 	}
 

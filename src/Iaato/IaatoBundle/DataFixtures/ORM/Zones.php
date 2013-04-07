@@ -25,7 +25,7 @@ class Zones extends AbstractFixture implements OrderedFixtureInterface{
 	 * {@inheritDoc}
 	*/
 	public function load(ObjectManager $manager){
-		$zones = array('Antartic Peninsula', 'Argentina', 'Falklands','South Georgia');
+		/*$zones = array('Antartic Peninsula', 'Argentina', 'Falklands','South Georgia');
 		foreach ($zones as $zone) 
 		{
 			$obj = new Zone;
@@ -34,6 +34,7 @@ class Zones extends AbstractFixture implements OrderedFixtureInterface{
     			$manager->persist($obj);
 		}
 		$manager->flush();
+		*/
   	}
   	public function getOrder()
 	{

@@ -10,10 +10,15 @@ use Symfony\Component\Security\Core\SecurityContext;
 
 class TypeController extends Controller
 {
-  public function indexAction()
-  {
-    return $this->render('IaatoIaatoBundle:Type:index.html.twig');
+  public function indexAction(){
+
+    $em = $this->getDoctrine()->getEntityManager();
+    $query = $em->createQuery('SELECT t.labelType FROM IaatoIaatoBundle:Type t');
+    $types = $query->getResult();
+    return $this->render('IaatoIaatoBundle:Type:index.html.twig', array('types' => $types));
+  
   }
+
   public function addAction()
   {
     return $this->render('IaatoIaatoBundle:Type:add.html.twig');
