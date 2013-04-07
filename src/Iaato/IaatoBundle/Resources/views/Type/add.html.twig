@@ -1,14 +1,35 @@
-
 {% extends '::base.html.twig' %}
 
 {% block body %}
+
 <div class="well">
 
 <ul class="nav">
-	<a class="btn btn-info" href="{{ path('iaato_type') }}" >Show</a>
-	<a class="btn btn-info" href="{{ path('iaato_type_add') }}" >Add</a>	
-	<a class="btn btn-info" href="{{ path('iaato_type_remove') }}" >Remove</a>
+	<a class="btn btn-info" href="{{ path('iaato_type') }}" >Show types</a>
+	<a class="btn btn-info" href="{{ path('iaato_type_add') }}" >Add a type</a>	
+	<a class="btn btn-info" href="{{ path('iaato_type_remove') }}" >Remove a type</a>
 </ul>
-<h3>ADD-TYPE</h3>
+
+{% if error != '' %}
+  	<div class="alert alert-error">
+		<p data-dismiss="alert">{{ error }}</p>
+  	</div>
+{% endif %}
+
+{% if sucess != '' %}
+  	<div class="alert alert-success">
+		<p data-dismiss="alert">{{ sucess }}</p>
+  	</div>
+{% endif %}
+
+<div class="well" style="width:60%; margin-left:auto; margin-right:auto; heigth:200px;">
+	<form method="post" {{ form_enctype(form) }} class="form">
+	    {{ form_errors(form) }}
+	    {{ form_rest(form) }}
+	    <input type="submit" value="Envoyer" class="btn btn-primary" />
+	</form>
 </div>
+
+</div>
+
 {% endblock %}

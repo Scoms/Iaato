@@ -1,14 +1,16 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
+
 <div class="well">
+
 <ul class="nav nav-pills">
 	<a class="btn btn-info" href="{{ path('iaato_ship') }}">Show ships</a>
 	<a class="btn btn-info" href="{{ path('iaato_ship_add') }}">Add a ship</a>
 	<a class="btn btn-info" href="{{ path('iaato_ship_remove') }}">Remove a ship</a>
 </ul>
 
-<div class="well" id="addship" style="width:60%; margin-left:auto; margin-right:auto; heigth:200px;">
+<div class="well" style="width:60%; margin-left:auto; margin-right:auto; heigth:200px;">
 	<form method="post" {{ form_enctype(formaddship) }} class="form">
 	    {{ form_errors(formaddship) }}
 
@@ -24,5 +26,7 @@
 	    <input type="submit" value="Envoyer" class="btn btn-primary" />
 	</form>
 </div>
+
 </div>
+
 {% endblock %}

@@ -25,19 +25,21 @@ class Zones extends AbstractFixture implements OrderedFixtureInterface{
 	 * {@inheritDoc}
 	*/
 	public function load(ObjectManager $manager){
-		/*$zones = array('Antartic Peninsula', 'Argentina', 'Falklands','South Georgia');
-		foreach ($zones as $zone) 
-		{
+		/*
+		$zones = array('Antartic Peninsula', 'Argentina', 'Falklands','South Georgia');
+		
+		foreach ($zones as $zone){
 			$obj = new Zone;
 			$obj->setLabelZone($zone);
 			$obj->setType($this->getReference('standard'));
     			$manager->persist($obj);
 		}
+
 		$manager->flush();
 		*/
   	}
-  	public function getOrder()
-	{
+
+  	public function getOrder(){
 	  return 2; // the order in which fixtures will be loaded
 	}
 

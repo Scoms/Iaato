@@ -1,14 +1,17 @@
-
 {% extends '::base.html.twig' %}
 
 {% block body %}
+
 <div class="well">
 
 <ul class="nav">
-	<a class="btn btn-info" href="{{ path('iaato_site') }}" >Show</a>
-	<a class="btn btn-info" href="{{ path('iaato_site_add') }}" >Add</a>	
-	<a class="btn btn-info" href="{{ path('iaato_site_remove') }}" >Remove</a>
+	<a class="btn btn-info" href="{{ path('iaato_site') }}" >Show sites</a>
+	<a class="btn btn-info" href="{{ path('iaato_site_add') }}" >Add a site</a>	
+	<a class="btn btn-info" href="{{ path('iaato_site_remove') }}" >Remove a site</a>
 </ul>
+
 <h3>ADD-SITE</h3>
+
 </div>
+
 {% endblock %}

@@ -1,30 +1,35 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
+
 <div class="well">
 
 <ul class="nav">
-	<a class="btn btn-info" href="{{ path('iaato_site') }}" >Show</a>
-	<a class="btn btn-info" href="{{ path('iaato_site_add') }}" >Add</a>	
-	<a class="btn btn-info" href="{{ path('iaato_site_remove') }}" >Remove</a>
+  <a class="btn btn-info" href="{{ path('iaato_site') }}" >Show sites</a>
+	<a class="btn btn-info" href="{{ path('iaato_site_add') }}" >Add a site</a>	
+	<a class="btn btn-info" href="{{ path('iaato_site_remove') }}" >Remove a site</a>
 </ul>
+
 <table class="table table-hover table-bordered" style="width: 80%;background-color:white;">
-<thead style="background-color:#49afcd">
-<tr>
-  <th >Name</th>
-  <th >Zone</th>
-  <th >lt</th>
-  <th >lg</th>
-  <th >iaato rules</th>
-</tr>
-</thead>
-<tbody>
-{% for el in list %}
-  <tr>
-    <td><p>{{ el.nameSite }}</p></td>
-  </tr>
-{% endfor %}
-</tbody>
+  <thead style="background-color:#49afcd">
+    <tr>
+      <th >Name</th>
+      <th >Zone</th>
+      <th >lt</th>
+      <th >lg</th>
+      <th >iaato rules</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    {% for el in list %}
+      <tr>
+        <td><p>{{ el.nameSite }}</p></td>
+      </tr>
+    {% endfor %}
+  </tbody>
 </table>
+
 </div>
+
 {% endblock %}
