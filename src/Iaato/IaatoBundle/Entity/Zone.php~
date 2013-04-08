@@ -11,8 +11,9 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Iaato\IaatoBundle\Entity\ZoneRepository")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="x", type="string")
-  * @ORM\DiscriminatorMap({"subzone" = "SubZone"})
  */
+ 
+ // * @ORM\DiscriminatorMap({"subzone" = "SubZone"}) // Ligne )à rajouter mais génère des erreurs 
 class Zone
 {
 
