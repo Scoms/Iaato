@@ -1,14 +1,42 @@
-
 {% extends '::base.html.twig' %}
 
 {% block body %}
+
 <div class="well">
 
-<ul class="nav">
-	<a class="btn btn-info" href="{{ path('iaato_type') }}" >Show</a>
-	<a class="btn btn-info" href="{{ path('iaato_type_add') }}" >Add</a>	
-	<a class="btn btn-info" href="{{ path('iaato_type_remove') }}" >Remove</a>
+<ul class = "nav nav-pills">
+  <li><a href={{ path('iaato_society') }}>Society</a></li>
+  <li><a href={{ path('iaato_ship') }}>Ship</a></li>
+  <li><a href={{ path('iaato_site') }}>Site</a></li>
+  <li><a href={{ path('iaato_activity') }}>Activity</a></li>
+  <li class = "active"><a href={{ path('iaato_type') }}>Type</a></li>
 </ul>
-<h3>INDEX-TYPE</h3>
+
+<ul class="nav">
+	<a class="btn btn-info" href="{{ path('iaato_type') }}" >Show types</a>
+	<a class="btn btn-info" href="{{ path('iaato_type_add') }}" >Add a type</a>	
+	<a class="btn btn-info" href="{{ path('iaato_type_remove') }}" >Remove a type</a>
+</ul>
+
+<table class="table table-hover table-bordered" style="width: 40%;background-color:white;">
+	<thead style="background-color:#49afcd">
+		<tr>
+  			<th style="color:iophyjkb">Types</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		{% for type in types %}
+  			<tr>
+    			<td><p>{{ type.labelType }}</p></td>
+  			</tr>
+  		{% else %}
+  			<p>No types</p>
+		{% endfor %}
+	</tbody>
+</table>
+
 </div>
+
 {% endblock %}
+

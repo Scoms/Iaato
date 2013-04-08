@@ -1,31 +1,44 @@
-
 {% extends '::base.html.twig' %}
 
 {% block body %}
+
 <div class="well">
 
-<ul class="nav">
-	<a class="btn btn-info" href="{{ path('iaato_site') }}" >Show</a>
-	<a class="btn btn-info" href="{{ path('iaato_site_add') }}" >Add</a>	
-	<a class="btn btn-info" href="{{ path('iaato_site_remove') }}" >Remove</a>
+<ul class = "nav nav-pills">
+  <li><a href={{ path('iaato_society') }}>Society</a></li>
+  <li><a href={{ path('iaato_ship') }}>Ship</a></li>
+  <li class = "active"><a href={{ path('iaato_site') }}>Site</a></li>
+  <li><a href={{ path('iaato_activity') }}>Activity</a></li>
+  <li><a href={{ path('iaato_type') }}>Type</a></li>
 </ul>
+
+<ul class="nav">
+  <a class="btn btn-info" href="{{ path('iaato_site') }}" >Show sites</a>
+	<a class="btn btn-info" href="{{ path('iaato_site_add') }}" >Add a site</a>	
+	<a class="btn btn-info" href="{{ path('iaato_site_remove') }}" >Remove a site</a>
+</ul>
+
+<h3>WARNING : Pas opérationnel</h3>
 <table class="table table-hover table-bordered" style="width: 80%;background-color:white;">
-<thead style="background-color:#49afcd">
-<tr>
-  <th >Name</th>
-  <th >Zone</th>
-  <th >lt</th>
-  <th >lg</th>
-  <th >iaato rules</th>
-</tr>
-</thead>
-<tbody>
-{% for el in list %}
-  <tr>
-    <td><p>{{ el.nameSite }}</p></td>
-  </tr>
-{% endfor %}
-</tbody>
+  <thead style="background-color:#49afcd">
+    <tr>
+      <th >Name</th>
+      <th >Zone</th>
+      <th >lt</th>
+      <th >lg</th>
+      <th >iaato rules</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    {% for el in list %}
+      <tr>
+        <td><p>{{ el.nameSite }}</p></td>
+      </tr>
+    {% endfor %}
+  </tbody>
 </table>
+
 </div>
+
 {% endblock %}

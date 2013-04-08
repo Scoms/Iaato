@@ -1,30 +1,35 @@
-
 {% extends '::base.html.twig' %}
 
 {% block body %}
+
 <div class="well">
 
 <ul class="nav">
-	<a class="btn btn-info" href="{{ path('iaato_society') }}" >Show</a>
-	<a class="btn btn-info" href="{{ path('iaato_society_add') }}" >Add</a>	
-	<a class="btn btn-info" href="{{ path('iaato_society_remove') }}" >Remove</a>
+	<a class="btn btn-info" href="{{ path('iaato_society') }}" >Show companys</a>
+	<a class="btn btn-info" href="{{ path('iaato_society_add') }}" >Add a company</a>	
+	<a class="btn btn-info" href="{{ path('iaato_society_remove') }}" >Remove a company</a>
 </ul>
+
 {% if error != '' %}
-  <div class="alert alert-error">
-	<p data-dismiss="alert">{{ error }}</p>
-  </div>
+  	<div class="alert alert-error">
+		<p data-dismiss="alert">{{ error }}</p>
+  	</div>
 {% endif %}
+
 {% if success != '' %}
-  <div class="alert alert-success">
-	<p data-dismiss="alert">{{ success }}</p>
-  </div>
+  	<div class="alert alert-success">
+		<p data-dismiss="alert">{{ success }}</p>
+ 	</div>
 {% endif %}
-<div class="well" id="addsociety" style="width:60%; margin-left:auto; margin-right:auto; heigth:200px;">
+
+<div class="well" style="width:60%; margin-left:auto; margin-right:auto; heigth:200px;">
 	<form method="post" {{ form_enctype(form) }} class="form">
 	    {{ form_errors(form) }}
 	    {{ form_rest(form) }}
 	    <input type="submit" value="Remove" class="btn btn-danger" />
 	</form>
 </div>
+
 </div>
+
 {% endblock %}

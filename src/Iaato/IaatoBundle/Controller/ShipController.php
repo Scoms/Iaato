@@ -24,64 +24,116 @@ class ShipController extends Controller {
 		$em = $this->getDoctrine()->getEntityManager();
 		$query = $em->createQuery('SELECT s.code, s.nameShip, s.nbPassenger, t.labelType, so.labelSociety FROM IaatoIaatoBundle:Ship s LEFT JOIN s.idtype t LEFT JOIN s.society so');
 		$ships = $query->getResult();
-		return $this->render('IaatoIaatoBundle:Secretariat:ship.html.twig', array('ships' => $ships));
+		return $this->render('IaatoIaatoBundle:Ship:index.html.twig', array('ships' => $ships));
 	
 	}
 
-	public function addshipAction(){
-		$ship = new Ship();
-		//$society = new Society();
-		//$society = $this->getDoctrine()->getRepository('IaatoIaatoBundle:Society')->findAll();
+	public function addAction(){
 		
-		//foreach($liste_roles as $role)
-			//array_push($stack,$role->getNom());
+		$ship = new Ship();
+		$entityManager = $this->getDoctrine()->getEntityManager();
+		$societies = $entityManager->getRepository("IaatoIaatoBundle:Society")->findAll();
+		$stackSoc = array();
+		
+		$types = $entityManager->getRepository("IaatoIaatoBundle:Type")->findAll();
+		$stackType = array();
+
+		foreach($societies as $society)
+			array_push($stackSoc,$society->getLabelSociety());
+
+		foreach($types as $type)
+			array_push($stackType,$type->getLabelType());
 
 		$formBuilder = $this->createFormBuilder($ship);
 		$formBuilder
 			->add('code',	'text')
 			->add('nameShip',	'text')
-			->add('society',	'text')
+			->add('society', 'choice', array(
+        		'choices' => $stackSoc,
+        		'required' => false,'label'=>'Societies','multiple'=>false
+    		))
 			->add('nbPassenger',	'text')
-			->add('type',	'text')
+			->add('type', 'choice', array(
+        		'choices' => $stackType,
+        		'required' => false,'label'=>'Types','multiple'=>false
+    		))
 			->add('email',	'email')
 			->add('phone',	'text');
+			
 		$form = $formBuilder->getForm();
-		
-		// On récupère la requête
+
 		$request = $this->get('request');
 		
-		// On vérifie qu'elle est de type POST
 		if ($request->getMethod() == 'POST'){
 
-			// On fait le lien requête / formulaire 
-			// La variable $ship contient les données entrées par l'utilisateur
 			$form->bind($request);
 			
-			// On vérifie que les valeurs sont correctes
 			if ($form->isValid()){
 
-				// On enregistre les données dans la BDD et retourne sur ship.html.twig
 				$em = $this->getDoctrine()->getManager();
 				$em = persist($ship);
 				$em = flush();
 
-				return $this->render('IaatoIaatoBundle:Secretariat:ship.html.twig');
+				return $this->render('IaatoIaatoBundle:Ship:index.html.twig');
 			}
 
 		}
 	
-		return $this->render('IaatoIaatoBundle:Secretariat:addship.html.twig', array('formaddship' => $form->createView()));
+		return $this->render('IaatoIaatoBundle:Ship:add.html.twig', array('formaddship' => $form->createView()));
 	}
 
-	public function deleteshipAction(){
+	public function removeAction(){
 	
-		return $this->render('IaatoIaatoBundle:Secretariat:deleteship.html.twig');
+		$em = $this->getDoctrine()->getEntityManager();
+	    $ships = $em->getRepository("IaatoIaatoBundle:Ship")->findAll();
+	    $stack = array();
 
-	}
+	    foreach($ships as $ship)
+		    $stack[$ship->getNameShip()] = $ship->getNameShip();	    
+	    $ship = new Ship();
 
-	public function changeshipAction(){
+	    $formBuilder = $this->createFormBuilder($ship);
+	    $formBuilder
+		    ->add('nameShip', 'choice', array(
+	        'choices' => $stack,
+	        'required' => false,'label'=>'Ship','multiple'=>false
+	    ));		    
+	    $form = $formBuilder->getForm();
+	    
+	    $request = $this->get('request');
 
-		return $this->render('IaatoIaatoBundle:Secretariat:changeship.html.twig');
+	    if ($request->getMethod() == 'POST'){
+			$form->bind($request);
+			if ($form->isValid()){
+		  		unset($stack[$ship->getNameShip()]);
+		  		
+		  		$ship = $em->getRepository("IaatoIaatoBundle:Ship")->findOneBy(array('nameShip'=>$ship->getNameShip()));
+		  		$formBuilder = $this->createFormBuilder($ship);
+		  		$formBuilder
+			    	->add('nameShip', 'choice', array(
+					'choices' => $stack,
+					'required' => false,'label'=>'Company','multiple'=>false
+		    	));
+		    	$form = $formBuilder->getForm();
+		  
+		  		$em->remove($ship);
+		  		$em->flush();
+		  		return $this->render('IaatoIaatoBundle:Ship:remove.html.twig',array(
+		    	'form'=>$form->createView(),
+		    	'success'=>'The ship "'.$ship->getNameShip().'" has been removed succesfully.',
+		    	'error'=>''));
+			}
+			
+			return $this->render('IaatoIaatoBundle:Ship:remove.html.twig',array(
+		    'form'=>$form->createView(),
+		    'success'=>'',
+		    'error'=>'ERROR : something wrong happened but i don\'t know what ! '));
+	    }
+
+	    return $this->render('IaatoIaatoBundle:Ship:remove.html.twig',array(
+	      'form'=>$form->createView(),
+	      'success'=>'',
+	      'error'=>''));
 
 	}
 
