@@ -27,7 +27,7 @@ class Ship
     
     /**
      * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Society", inversedBy="ship")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true, onDelete="set null")
     */
     private $society;
 

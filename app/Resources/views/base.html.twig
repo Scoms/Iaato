@@ -1,53 +1,71 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title>{% block title %}{% endblock %}</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Bootstrap -->
-  <link href="/Iaato/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
-  <link href="/Iaato/css/stylecontact.css" rel="stylesheet" media="screen">
-  <link href="/Iaato/css/background.css" rel="stylesheet" media="screen">
-  <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>-->
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="/Iaato/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="/Iaato/css/stylecontact.css" rel="stylesheet" media="screen">
+    <link href="/Iaato/css/background.css" rel="stylesheet" media="screen">
+    <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>-->
 </head>
+
 <body class="container">
 <!-- Debut du header-->
-<header>
-  <img style="margin:0 auto; display:block;" src="/Iaato/img/iaato.png">
-</header><!-- bar de navigation -->
-<div class="navbar">
-<div class="navbar-inner">
-        <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="brand" href="{{ path('iaato_iaato_homepage') }}">Welcome</a>
-          <div class="nav-collapse collapse">
-            <ul class="nav"> 
+  <header>
+    <img style="margin:0 auto; display:block;" src="/Iaato/img/iaato.png">
+  </header><!-- bar de navigation -->
+
+  <div class="navbar">
+    <div class="navbar-inner">
+      
+      <div class="container">
+        <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        
+        <a class="brand" href="{{ path('iaato_iaato_homepage') }}">Welcome</a>
+        
+        <div class="nav-collapse collapse">
+          <ul class="nav">
             <li ><a href="{{ path('iaato_iaato_homepage') }}">Home</a></li>
-			<li><a href="{{ path('iaato_capitaine') }}">Expedition Leader</a></li>
-			<li><a href="{{ path('iaato_secretariat') }}">IAATO</a></li>
-			<li><a href="{{ path('iaato_contact') }}">Contact</a></li>
-			{% if is_granted('ROLE_ADMIN') %}
-			<li><a href="{{ path('iaato_admin') }}"><i class="icon-cog" ></i></a></li>
+            <li><a href="{{ path('iaato_capitaine') }}">Expedition Leader</a></li>
+            <li><a href="{{ path('iaato_secretariat') }}">IAATO</a></li>
+            <li><a href="{{ path('iaato_contact') }}">Contact</a></li>
+            {% if is_granted('ROLE_ADMIN') %}
+            <li><a href="{{ path('iaato_admin') }}"><i class="icon-cog" ></i></a></li>
             {% endif %}
-            </ul>
-            <a class="btn btn-primary" href="{{ path('login') }}">Login</a>
-            {% block connexion %}
+          </ul>
+          <a class="btn btn-primary" href="{{ path('login') }}">Login</a>
+          {% block connexion %}
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-            <a class="btn btn-danger"  href="{{ path('logout') }}">Logout</a>
+              <a class="btn btn-danger"  href="{{ path('logout') }}">Logout</a>
             {% endif %}
-            {% endblock %}
-          
-          </div><!--/.nav-collapse -->
-        </div>
+          {% endblock %}          
+        </div><!--/.nav-collapse -->
       </div>
-</div>
+
+    </div>
+  </div>
+
 {% block body%}{% endblock %}
+
 {% block javascripts %}{% endblock %}
+
 </body>
+
 <footer>
+  <address style="text-align:center; line-height:normal; margin:0">
+    Steve Wellmeier &middot; Administrative Director
+    <br />
+    11 South Angell St., Box 302 &middot; Providence, RI 02906
+    <br />
+    Tel. : 401 272 2152 Fax : 401 272 2154
+  </address>
 </footer>
+
 </html>
 

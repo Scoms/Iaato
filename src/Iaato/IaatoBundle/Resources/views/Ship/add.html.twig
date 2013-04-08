@@ -12,18 +12,18 @@
 
 <h3>WARNING : Pas opérationnel</h3>
 <div class="well" style="width:60%; margin-left:auto; margin-right:auto; heigth:200px;">
-	<form method="post" {{ form_enctype(formaddship) }} class="form">
-	    {{ form_errors(formaddship) }}
+	<form method="post" {{ form_enctype(form) }} class="form">
+	    {{ form_errors(form) }}
 
-	    {{ form_row(formaddship.code) }}
-	    {{ form_row(formaddship.nameShip) }}
-	    {{ form_row(formaddship.society) }}
-	    {{ form_row(formaddship.nbPassenger) }}
-	    {{ form_row(formaddship.type) }}
-	    {{ form_row(formaddship.email) }}
-	    {{ form_row(formaddship.phone) }}
+	    {{ form_row(form.code) }}
+	    {{ form_row(form.nameShip) }}
+	    {{ form_row(form.society) }}
+	    {{ form_row(form.nbPassenger) }}
+	    {{ form_row(form.type) }}
+	    {{ form_row(form.email) }}
+	    {{ form_row(form.phone) }}
 
-	    {{ form_rest(formaddship) }}
+	    {{ form_rest(form) }}
 	    <input type="submit" value="Envoyer" class="btn btn-primary" />
 	</form>
 </div>

@@ -60,26 +60,41 @@ class ShipController extends Controller {
 			->add('email',	'email')
 			->add('phone',	'text');
 			
-		$form = $formBuilder->getForm();
-
-		$request = $this->get('request');
-		
-		if ($request->getMethod() == 'POST'){
-
-			$form->bind($request);
+	    $form = $formBuilder->getForm();
+	    $request = $this->get('request');
+	    
+	    if ($request->getMethod() == 'POST'){
 			
+			$form->bind($request);
+
 			if ($form->isValid()){
-
-				$em = $this->getDoctrine()->getManager();
-				$em = persist($ship);
-				$em = flush();
-
-				return $this->render('IaatoIaatoBundle:Ship:index.html.twig');
+		  		$em = $this->getDoctrine()->getManager();
+		  		
+		  		if($em->getRepository("IaatoIaatoBundle:Ship")->findOneBy(array('code' => $ship->getCode()))!=NULL)
+		    		return $this->render('IaatoIaatoBundle:Ship:add.html.twig',array(
+		      			'form'=>$form->createView(),
+		      			'error'=>'Ship "'.$ship->getCode().'" not added : Code already exists',
+		      			'sucess'=>''
+		      		));
+		  		
+		  		$em->persist($ship);
+		  		$em->flush();
+		  	
+		  		return $this->render('IaatoIaatoBundle:Ship:add.html.twig',array(
+		    		'form'=>$form->createView(),
+		    		'sucess'=>'Ship "'.$ship->getCode().'" added.',
+		    		'error'=>''
+		    	));	    	
 			}
 
-		}
-	
-		return $this->render('IaatoIaatoBundle:Ship:add.html.twig', array('formaddship' => $form->createView()));
+	    }
+
+	    return $this->render('IaatoIaatoBundle:Ship:add.html.twig',array(
+	    	'form'=>$form->createView(),
+	      	'error'=>'',
+	      	'sucess'=>''
+	    ));
+
 	}
 
 	public function removeAction(){
