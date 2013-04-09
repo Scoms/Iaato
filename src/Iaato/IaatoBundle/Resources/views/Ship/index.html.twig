@@ -9,7 +9,7 @@
 <div class="well">
 
 <ul class = "nav nav-pills">
-  <li><a href={{ path('iaato_society') }}>Society</a></li>
+  <li><a href={{ path('iaato_society') }}>Company</a></li>
   <li class = "active"><a href={{ path('iaato_ship') }}>Ship</a></li>
   <li><a href={{ path('iaato_site') }}>Site</a></li>
   <li><a href={{ path('iaato_activity') }}>Activity</a></li>
@@ -22,31 +22,40 @@
 	<a class="btn btn-info" href="{{ path('iaato_ship_remove') }}">Remove a ship</a>
 </ul>
 
-<table class="table table-hover table-bordered" style="width: 100%;background-color:white;">
-	<thead style="background-color:#49afcd">
-		<tr>
-  			<th style="color:iophyjkb">Code</th>
-  			<th style="color:iophyjkb">Name</th>
-  			<th style="color:iophyjkb">Number of passenger</th>
-  			<th style="color:iophyjkb">Type</th>
-  			<th style="color:iophyjkb">Compagny</th>
-		</tr>
-	</thead>
+{% block bodyship %}
 
-	<tbody>
-		{% for ship in ships %}
-  			<tr>
-    			<td><p>{{ ship.code }}</p></td>
-    			<td><p>{{ ship.nameShip }}</p></td>
-    			<td><p>{{ ship.nbPassenger }}</p></td>
-    			<td><p>{{ ship.labelType }}</p></td>
-    			<td><p>{{ ship.labelSociety }}</p></td>
-  			</tr>
-  		{% else %}
-  			<p>No ships</p>
-		{% endfor %}
-	</tbody>
-</table>
+{% if ships is empty %}
+  <p>No ships</p>
+
+{% else %}
+  <table class="table table-hover table-bordered" style="width: 100%;background-color:white;">
+    
+    <thead style="background-color:#49afcd">
+  		<tr>
+    			<th style="color:iophyjkb">Code</th>
+    			<th style="color:iophyjkb">Name</th>
+    			<th style="color:iophyjkb">Number of passenger</th>
+    			<th style="color:iophyjkb">Type</th>
+    			<th style="color:iophyjkb">Compagny</th>
+  		</tr>
+  	</thead>
+
+  	<tbody>
+  		{% for ship in ships %}
+    			<tr>
+      			<td><p>{{ ship.code }}</p></td>
+      			<td><p>{{ ship.nameShip }}</p></td>
+      			<td><p>{{ ship.nbPassenger }}</p></td>
+      			<td><p>{{ ship.labelType }}</p></td>
+      			<td><p>{{ ship.labelSociety }}</p></td>
+    			</tr>
+      {% endfor %}
+  	</tbody>
+
+  </table>
+{% endif %}
+
+{% endblock %}
 
 </div>
 

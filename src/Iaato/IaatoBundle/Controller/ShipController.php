@@ -32,6 +32,7 @@ class ShipController extends Controller {
 		
 		$ship = new Ship();
 		$entityManager = $this->getDoctrine()->getEntityManager();
+		
 		$societies = $entityManager->getRepository("IaatoIaatoBundle:Society")->findAll();
 		$stackSoc = array();
 		
@@ -50,12 +51,12 @@ class ShipController extends Controller {
 			->add('nameShip',	'text')
 			->add('society', 'choice', array(
         		'choices' => $stackSoc,
-        		'required' => false,'label'=>'Societies','multiple'=>false
+        		'required' => false,'label'=>'Societies','multiple'=>false, 'empty_value' => '-- Choose a society --'
     		))
 			->add('nbPassenger',	'text')
 			->add('type', 'choice', array(
         		'choices' => $stackType,
-        		'required' => false,'label'=>'Types','multiple'=>false
+        		'required' => false,'label'=>'Types','multiple'=>false, 'empty_value' => '-- Choose a type --'
     		))
 			->add('email',	'email')
 			->add('phone',	'text');

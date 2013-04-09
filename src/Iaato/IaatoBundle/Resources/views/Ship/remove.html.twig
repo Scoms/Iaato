@@ -1,14 +1,6 @@
-{% extends '::base.html.twig' %}
+{% extends 'IaatoIaatoBundle:Ship:index.html.twig' %}
 
-{% block body %}
-
-<div class="well">
-
-<ul class="nav nav-pills">
-	<a class="btn btn-info" href="{{ path('iaato_ship') }}">Show ships</a>
-	<a class="btn btn-info" href="{{ path('iaato_ship_add') }}">Add a ship</a>
-	<a class="btn btn-info" href="{{ path('iaato_ship_remove') }}">Remove a ship</a>
-</ul>
+{% block bodyship %}
 
 {% if error != '' %}
 	<div class="alert alert-error">
@@ -28,8 +20,6 @@
 	    {{ form_rest(form) }}
 	    <input type="submit" value="Remove" class="btn btn-danger" />
 	</form>
-</div>
-
 </div>
 
 {% endblock %}

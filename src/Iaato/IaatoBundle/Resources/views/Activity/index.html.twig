@@ -9,7 +9,7 @@
 <div class="well">
 
 <ul class = "nav nav-pills">
-	<li><a href={{ path('iaato_society') }}>Society</a></li>
+	<li><a href={{ path('iaato_society') }}>Company</a></li>
 	<li><a href={{ path('iaato_ship') }}>Ship</a></li>
 	<li><a href={{ path('iaato_site') }}>Site</a></li>
 	<li class = "active"><a href={{ path('iaato_activity') }}>Activity</a></li>
@@ -22,23 +22,32 @@
 	<a class="btn btn-info" href="{{ path('iaato_activity_remove') }}" >Remove a activity</a>
 </ul>
 
-<table class="table table-hover table-bordered" style="width: 40%;background-color:white;">
-	<thead style="background-color:#49afcd">
-		<tr>
-  			<th style="color:iophyjkb">Activities</th>
-		</tr>
-	</thead>
+{% block bodyact%}
 
-	<tbody>
-		{% for activity in activities %}
-  			<tr>
-    			<td><p>{{ activity.labelActivity }}</p></td>
-  			</tr>
-  		{% else %}
-  			<p>No activities</p>
-		{% endfor %}
-	</tbody>
-</table>
+{% if activities is empty %}
+  <p>No activities</p>
+
+{% else %}
+	<table class="table table-hover table-bordered" style="width: 40%;background-color:white;">
+		
+		<thead style="background-color:#49afcd">
+			<tr>
+	  			<th style="color:iophyjkb">Activities</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			{% for activity in activities %}
+	  			<tr>
+	    			<td><p>{{ activity.labelActivity }}</p></td>
+	  			</tr>
+			{% endfor %}
+		</tbody>
+
+	</table>
+{% endif %}
+
+{% endblock %}
 
 </div>
 

@@ -1,36 +1,37 @@
 {% extends '::base.html.twig' %}
 
 {% block title%}
-Page de contact
+  Contact
 {% endblock %}
+
 
 {% block body %}
 
 <div class="hero-unit" style="text-align:justify; padding: 10px 10px;">
-<h3>Contact Us</h3>
+  <h3>Contact Us</h3>
 
-<i style=font-weight:bold>In order to further assist you, please use the following references : </i><br/><br/>
-<p>For tours to Antarctica, brochures, contact names telephone numbers, employment, or company specific information about IAATO Members, Member Vessels and Company Descriptions, please go to our Memmbership Directory.</p>
-<p>For information on tourism trends and information papers on Antarctic Tourism, go to these pages of our web site : Tourism Statistics ans Guidelines & Resources.</p>
-<p>To become a member of IAATO, click here.</p>
+  <i style=font-weight:bold>In order to further assist you, please use the following references : </i><br/><br/>
+  <p>For tours to Antarctica, brochures, contact names telephone numbers, employment, or company specific information about IAATO Members, Member Vessels and Company Descriptions, please go to our Memmbership Directory.</p>
+  <p>For information on tourism trends and information papers on Antarctic Tourism, go to these pages of our web site : Tourism Statistics ans Guidelines & Resources.</p>
+  <p>To become a member of IAATO, click here.</p>
 
-<address>
-   Steve Wellmeier<br/>
-   Administrative Director<br/>
-   11 South Angell St., Box 302<br/>
-   Providence, RI 02906<br/>
-   Tel: 401 272 2152<br/>
-   Fax: 401 272 2154
-</address>
+  <address>
+     Steve Wellmeier<br/>
+     Administrative Director<br/>
+     11 South Angell St., Box 302<br/>
+     Providence, RI 02906<br/>
+     Tel: 401 272 2152<br/>
+     Fax: 401 272 2154
+  </address>
 
-<i style=font-weight:bold>For specific enquiries about one of the following as appropriate :</i><br/><br/>
-<p>General Information, Press Requests, Science Support or Transport : IAATO</p>
-<p>Environmental & Operational Issues : Kim Crosbie</p>
-<p>Policy and Students Requests : John Spletts</p>
+  <i style=font-weight:bold>For specific enquiries about one of the following as appropriate :</i><br/><br/>
+  <p>General Information, Press Requests, Science Support or Transport : IAATO</p>
+  <p>Environmental & Operational Issues : Kim Crosbie</p>
+  <p>Policy and Students Requests : John Spletts</p>
 </div>
 
 <div class="well" style="width:60%; margin-left:auto; margin-right:auto">
-<form method="post" {{ form_enctype(form) }} class="form">
+  <form method="post" {{ form_enctype(form) }} class="form">
     {{ form_errors(form) }}
 
     {{ form_row(form.nom) }}
@@ -40,7 +41,7 @@ Page de contact
 
     {{ form_rest(form) }}
     <input type="submit" value="Envoyer" class="btn btn-primary" />
-</form>
+  </form>
 </div>
 
 {% endblock %}

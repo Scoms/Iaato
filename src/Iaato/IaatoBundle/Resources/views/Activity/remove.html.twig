@@ -1,14 +1,6 @@
-{% extends '::base.html.twig' %}
+{% extends 'IaatoIaatoBundle:Activity:index.html.twig' %}
 
-{% block body %}
-
-<div class="well">
-
-<ul class="nav">
-	<a class="btn btn-info" href="{{ path('iaato_activity') }}" >Show activities</a>
-	<a class="btn btn-info" href="{{ path('iaato_activity_add') }}" >Add a activity</a>	
-	<a class="btn btn-info" href="{{ path('iaato_activity_remove') }}" >Remove a activity</a>
-</ul>
+{% block bodyact %}
 
 {% if error != '' %}
 	<div class="alert alert-error">
@@ -28,8 +20,6 @@
 	    {{ form_rest(form) }}
 	    <input type="submit" value="Remove" class="btn btn-danger" />
 	</form>
-</div>
-
 </div>
 
 {% endblock %}

@@ -1,14 +1,10 @@
-{% extends '::base.html.twig' %}
+{% extends 'IaatoIaatoBundle:Society:index.html.twig' %}
 
-{% block body %}
+{% block bodysoc %}
 
-<div class="well">
-
-<ul class="nav">
-	<a class="btn btn-info" href="{{ path('iaato_society') }}" >Show companys</a>
-	<a class="btn btn-info" href="{{ path('iaato_society_add') }}" >Add a company</a>	
-	<a class="btn btn-info" href="{{ path('iaato_society_remove') }}" >Remove a company</a>
-</ul>
+<div class="alert alert-error">
+	<strong>Warning!</strong> If you remove a company, you remove every ships of this company.
+</div>
 
 {% if error != '' %}
   	<div class="alert alert-error">
@@ -28,8 +24,6 @@
 	    {{ form_rest(form) }}
 	    <input type="submit" value="Remove" class="btn btn-danger" />
 	</form>
-</div>
-
 </div>
 
 {% endblock %}

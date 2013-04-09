@@ -21,13 +21,13 @@ class Ship
 
     /**
      * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Type", inversedBy="ship") //Un bateau a un seul type mais un type est rattaché à plusieurs bateaux
-     * @ORM\JoinColumn(nullable=false) //Interdit de créer un bateau sans son type
+     * @ORM\JoinColumn(nullable=false) //Champ type de ship à null si suppression d'un type
     */
     private $idtype;
     
     /**
      * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Society", inversedBy="ship")
-     * @ORM\JoinColumn(nullable=true, onDelete="set null")
+     * @ORM\JoinColumn(nullable=false)
     */
     private $society;
 
