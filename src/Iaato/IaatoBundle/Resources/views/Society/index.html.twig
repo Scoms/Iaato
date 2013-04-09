@@ -1,11 +1,15 @@
 {% extends '::base.html.twig' %}
 
+{% block title %}
+	Society
+{% endblock %}
+
 {% block body %}
 
 <div class="well">
 
 <ul class = "nav nav-pills">
-	<li class = "active"><a href={{ path('iaato_society') }}>Society</a></li>
+	<li class = "active"><a href={{ path('iaato_society') }}>Company</a></li>
 	<li><a href={{ path('iaato_ship') }}>Ship</a></li>
 	<li><a href={{ path('iaato_site') }}>Site</a></li>
 	<li><a href={{ path('iaato_activity') }}>Activity</a></li>
@@ -13,26 +17,37 @@
 </ul>
 
 <ul class="nav">
-	<a class="btn btn-info" href="{{ path('iaato_society') }}" >Show companys</a>
+	<a class="btn btn-info" href="{{ path('iaato_society') }}" >Show companies</a>
 	<a class="btn btn-info" href="{{ path('iaato_society_add') }}" >Add a company</a>	
 	<a class="btn btn-info" href="{{ path('iaato_society_remove') }}" >Remove a company</a>
 </ul>
 
-<table class="table table-hover table-bordered" style="width: 45%;background-color:white;">
-	<thead style="background-color:#49afcd">
-		<tr>
-  			<th style="color:iophyjkb">Companys</th>
-		</tr>
-	</thead>
+{% block bodysoc %}
 
-	<tbody>
-		{% for society in society_list %}
-  			<tr>
-    			<td><p>{{ society.labelSociety }}</p></td>
-  			</tr>
-		{% endfor %}
-	</tbody>
-</table>
+{% if society_list is empty %}
+  <p>No companies</p>
+
+{% else %}
+	<table class="table table-hover table-bordered" style="width: 45%;background-color:white;">
+		
+		<thead style="background-color:#49afcd">
+			<tr>
+	  			<th style="color:iophyjkb">Companies</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			{% for society in society_list %}
+	  			<tr>
+	    			<td><p>{{ society.labelSociety }}</p></td>
+	  			</tr>
+			{% endfor %}
+		</tbody>
+
+	</table>
+{% endif %}
+
+{% endblock %}
 
 </div>
 

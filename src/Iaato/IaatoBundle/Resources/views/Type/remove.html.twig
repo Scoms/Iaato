@@ -1,14 +1,6 @@
-{% extends '::base.html.twig' %}
+{% extends 'IaatoIaatoBundle:Type:index.html.twig' %}
 
-{% block body %}
-
-<div class="well">
-
-<ul class="nav">
-	<a class="btn btn-info" href="{{ path('iaato_type') }}" >Show types</a>
-	<a class="btn btn-info" href="{{ path('iaato_type_add') }}" >Add a type</a>	
-	<a class="btn btn-info" href="{{ path('iaato_type_remove') }}" >Remove a type</a>
-</ul>
+{% block bodytype %}
 
 {% if error != '' %}
 	<div class="alert alert-error">
@@ -28,8 +20,6 @@
 	    {{ form_rest(form) }}
 	    <input type="submit" value="Remove" class="btn btn-danger" />
 	</form>
-</div>
-
 </div>
 
 {% endblock %}

@@ -14,7 +14,7 @@ class Society
 {
 
     /**
-     * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\Ship",mappedBy="society")
+     * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\Ship",mappedBy="society", cascade={"remove"})
     */
     private $ship;
 
