@@ -24,6 +24,6 @@ class StepController extends Controller
     public function removeAction()
     {
       $em = $this->getDoctrine()->getEntityManager();
-      return $this->render('IaatoIaatoBundle:Step:show.html.twig');
+      return $this->render('IaatoIaatoBundle:Step:remove.html.twig');
     }
 }

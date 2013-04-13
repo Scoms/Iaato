@@ -12,7 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Ship
 {
-    
+     /**
+     * @ORM\OneToOne(targetEntity="Iaato\IaatoBundle\Entity\Society", inversedBy="ship")
+     * @ORM\JoinColumn(nullable=false)
+    */
+    private $el;
     /**
      * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\Step", mappedBy="ship")
      * @ORM\JoinColumn(nullable=false)
