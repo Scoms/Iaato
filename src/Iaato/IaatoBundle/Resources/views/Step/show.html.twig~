@@ -1,0 +1,21 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}
+	Expedition Leader
+{% endblock %}
+
+{% block body %}
+
+<div class="well">
+<ul class="nav">
+  <a class="btn btn-warning" href={{ path('iaato_map_homepage') }}>Map</a>
+  <a class="btn btn-warning" href={{ path('iaato_step_list') }}>List</a>
+</ul>
+<ul class="nav">
+	<a class="btn btn-info" href="{{ path('iaato_step_list') }}" >Show steps</a>
+	<a class="btn btn-info" href="{{ path('iaato_step_list_add') }}" >Add a step</a>	
+	<a class="btn btn-info" href="{{ path('iaato_step_list_remove') }}" >Remove a step</a>
+</ul>
+<h6>Add </h6>
+</div>
+{% endblock %}

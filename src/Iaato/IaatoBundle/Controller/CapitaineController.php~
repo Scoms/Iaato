@@ -4,7 +4,6 @@
 
 namespace Iaato\IaatoBundle\Controller;
 
-use Iaato\MapBundle\Controller\DefaultController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use JMS\SecurityExtraBundle\Annotation\Secure;
@@ -24,7 +23,7 @@ class CapitaineController extends Controller
 	//BON ROLE
 	  if( ($role->isGranted('ROLE_CAPITAINE') || $role->isGranted('ROLE_ADMIN')))
 	  {
-	     return $this->render('IaatoMapBundle:Default:index.html.twig');
+	     return $this->render('IaatoIaatoBundle:Capitaine:index.html.twig');
 	  }
 	  // MAUVAIS ROLE
 	}
@@ -44,5 +43,9 @@ class CapitaineController extends Controller
 	  //Authentification
 	  return $this->render('IaatoUserBundle:Security:login.html.twig', array('last_username' => $session->get(SecurityContext::LAST_USERNAME),'error'=> $error,));
     }
-
+    
+    public function listAction()
+    {
+      return $this->render('IaatoIaatoBundle:Capitaine:list.html.twig');
+    }
 }

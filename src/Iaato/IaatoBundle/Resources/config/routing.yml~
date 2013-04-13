@@ -5,6 +5,18 @@ iaato_iaato_homepage:
 iaato_capitaine:
     pattern: /capitaine
     defaults: { _controller: IaatoIaatoBundle:Capitaine:index }
+    
+iaato_step_list:
+    pattern: /capitaine/list
+    defaults: { _controller: IaatoIaatoBundle:Step:index }
+
+iaato_step_add:
+    pattern: /capitaine/list_add
+    defaults: { _controller: IaatoIaatoBundle:Step:add }
+
+iaato_step_remove:
+    pattern: /capitaine/list_remove
+    defaults: { _controller: IaatoIaatoBundle:Step:remove }
 
 iaato_secretariat:
     pattern: /secretariat

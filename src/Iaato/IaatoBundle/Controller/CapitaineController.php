@@ -43,5 +43,10 @@ class CapitaineController extends Controller
 	  //Authentification
 	  return $this->render('IaatoUserBundle:Security:login.html.twig', array('last_username' => $session->get(SecurityContext::LAST_USERNAME),'error'=> $error,));
     }
-
+    
+    public function listAction()
+    {
+      $em = $this->getDoctrine()->getEntityManager();
+      return $this->render('IaatoIaatoBundle:Capitaine:list.html.twig');
+    }
 }
