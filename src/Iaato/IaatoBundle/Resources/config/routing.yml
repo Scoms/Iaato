@@ -4,7 +4,7 @@ iaato_iaato_homepage:
 
 iaato_capitaine:
     pattern: /capitaine
-    defaults: { _controller: IaatoMapBundle:Default:index }
+    defaults: { _controller: IaatoIaatoBundle:Capitaine:index }
 
 iaato_secretariat:
     pattern: /secretariat

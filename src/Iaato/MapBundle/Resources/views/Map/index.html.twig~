@@ -1,0 +1,16 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}
+	Expedition Leader
+{% endblock %}
+
+
+{% block body %}
+
+<div class="well">  
+  <div id="map" onClick="document.getElementById('lat').value=getCurrentLat();document.getElementById('lng').value=getCurrentLng();">
+  </div>
+</div>
+
+{% endblock %}
+

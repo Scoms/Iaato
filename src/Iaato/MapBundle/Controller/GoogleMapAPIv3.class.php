@@ -13,8 +13,7 @@
  *
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-namespace Iaato\MapBundle\Controller;
- 
+ namespace Iaato\MapBundle\Controller;
 /**
  * Class to use the Google Maps v3 API
  *
