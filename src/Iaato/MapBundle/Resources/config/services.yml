@@ -1,0 +1,7 @@
+parameters:
+#    iaato_map.example.class: Iaato\MapBundle\Example
+
+services:
+#    iaato_map.example:
+#        class: %iaato_map.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

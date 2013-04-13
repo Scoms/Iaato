@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new Iaato\UserBundle\IaatoUserBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             //new FOS\UserBundle\FOSUserBundle(),
+            new Iaato\MapBundle\IaatoMapBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

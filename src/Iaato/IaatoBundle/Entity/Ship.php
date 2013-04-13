@@ -19,7 +19,7 @@ class Ship
     */
     private $step;
 
-    /**
+	/**
      * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Type", inversedBy="ship") //Un bateau a un seul type mais un type est rattaché à plusieurs bateaux
      * @ORM\JoinColumn(nullable=false) //Champ type de ship à null si suppression d'un type
     */

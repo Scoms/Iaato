@@ -23,7 +23,7 @@ class CapitaineController extends Controller
 	//BON ROLE
 	  if( ($role->isGranted('ROLE_CAPITAINE') || $role->isGranted('ROLE_ADMIN')))
 	  {
-	     return $this->render('IaatoIaatoBundle:Capitaine:index.html.twig',array('content' => 'Capitaine'));
+	     return $this->render('IaatoMapBundle:Default:index.html.twig');
 	  }
 	  // MAUVAIS ROLE
 	}
