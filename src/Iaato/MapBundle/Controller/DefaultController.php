@@ -39,7 +39,7 @@ class DefaultController extends Controller
                 $gmap->addArrayMarkerByAddress($coordtab,'cat2');
 
                 $gmap->generate();
-                
-        return $this->render('IaatoMapBundle:Default:index.html.twig',array( 'gmap' => $gmap ));
+                fopen("gmap.js", "w+");
+        return $this->render('IaatoMapBundle:Default:index.html.twig',array($gmap="alert('ok');"));
     }
 }
