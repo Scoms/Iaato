@@ -9,13 +9,15 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Iaato\IaatoBundle\Entity\ZoneRepository")
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="x", type="string")
- */
- 
- // * @ORM\DiscriminatorMap({"subzone" = "SubZone"}) // Ligne )à rajouter mais génère des erreurs 
+ */ 
 class Zone
 {
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\SubZone", inversedBy="zone")
+     * @ORM\JoinColumn(nullable=false)
+    */
+    private $subZone;
 
     /**
      * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\Site", mappedBy="zone")

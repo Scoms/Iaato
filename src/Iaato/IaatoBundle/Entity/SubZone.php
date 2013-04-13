@@ -10,8 +10,24 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Iaato\IaatoBundle\Entity\SubZoneRepository")
  */
-class SubZone extends Zone
+class SubZone
 {
+
+    /**
+     * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\Zone", mappedBy="subZone")
+     * @ORM\JoinColumn(nullable=false)
+    */
+    private $zone;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
 
     /**
      * @var string
