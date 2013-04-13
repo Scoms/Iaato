@@ -9,25 +9,21 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Iaato\IaatoBundle\Entity\ZoneRepository")
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="x", type="string")
- */
- 
- // * @ORM\DiscriminatorMap({"subzone" = "SubZone"}) // Ligne )à rajouter mais génère des erreurs 
+ */ 
 class Zone
 {
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\SubZone", inversedBy="zone")
+     * @ORM\JoinColumn(nullable=false)
+    */
+    private $subZone;
 
     /**
      * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\Site", mappedBy="zone")
      * @ORM\JoinColumn(nullable=false) //Une zone est rattachée à au moins un site
     */
     private $site;
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Type", inversedBy="ship") //Un bateau a un seul type mais un type est rattaché à plusieurs bateaux
-     * @ORM\JoinColumn(nullable=false) //Interdit de créer un bateau sans son type
-    */
-    private $idtype;
     
     /**
      * @var integer

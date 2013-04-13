@@ -22,7 +22,7 @@ class AppKernel extends Kernel
             new Iaato\IaatoBundle\IaatoIaatoBundle(),
             new Iaato\UserBundle\IaatoUserBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
-            //new FOS\UserBundle\FOSUserBundle(),
+            #new FOS\UserBundle\FOSUserBundle(),
             new Iaato\MapBundle\IaatoMapBundle(),
         );
 

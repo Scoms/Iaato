@@ -26,12 +26,6 @@ class Zone
     private $site;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Type", inversedBy="ship") //Un bateau a un seul type mais un type est rattaché à plusieurs bateaux
-     * @ORM\JoinColumn(nullable=false) //Interdit de créer un bateau sans son type
-    */
-    private $idtype;
-    
-    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
@@ -164,5 +158,28 @@ class Zone
     public function getIdtype()
     {
         return $this->idtype;
+    }
+
+    /**
+     * Set subZone
+     *
+     * @param \Iaato\IaatoBundle\Entity\SubZone $subZone
+     * @return Zone
+     */
+    public function setSubZone(\Iaato\IaatoBundle\Entity\SubZone $subZone)
+    {
+        $this->subZone = $subZone;
+    
+        return $this;
+    }
+
+    /**
+     * Get subZone
+     *
+     * @return \Iaato\IaatoBundle\Entity\SubZone 
+     */
+    public function getSubZone()
+    {
+        return $this->subZone;
     }
 }
