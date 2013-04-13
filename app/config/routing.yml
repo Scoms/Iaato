@@ -1,4 +1,6 @@
-
+iaato_map:
+    resource: "@IaatoMapBundle/Resources/config/routing.yml"
+    prefix:   /
 
 iaato_iaato:
     resource: "@IaatoIaatoBundle/Resources/config/routing.yml"
