@@ -58,7 +58,7 @@ class TimeSlot
      */
     public function setLabelTimeSlot($labelTimeSlot)
     {
-        $this->labelTimeSlot = $labelTimeSlot;
+        $this->label = $labelTimeSlot;
     
         return $this;
     }

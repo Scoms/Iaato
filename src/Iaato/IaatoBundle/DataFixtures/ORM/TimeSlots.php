@@ -14,7 +14,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Iaato\IaatoBundle\Entity\TimeSlot;
-
+use Iaato\IaatoBundle\Entity\TimeSlotLabel;
 
 
 class TimeSlots extends AbstractFixture implements OrderedFixtureInterface{
@@ -30,11 +30,12 @@ class TimeSlots extends AbstractFixture implements OrderedFixtureInterface{
 	  {
 	    foreach($label_list as $label)
 	    {
-	      $ts = new TimeSlot;
-	      $ts->setLabelTimeSlot($label);
-	      $ts->setDate($date);
-	      $manager->persist($ts);	
-	      $manager->flush();
+		$ts = new TimeSlot;
+		$ts->setLabelTimeSlot($label);
+		$ts->setDate($date);
+		$manager->persist($ts);	
+		$manager->flush();
+	    
 	    }
 	  }
 	}
