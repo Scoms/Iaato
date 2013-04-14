@@ -12,6 +12,16 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class TimeSlot
 {
+    /**
+     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Date", inversedBy="label")
+     * @ORM\JoinColumn(nullable=false)
+    */
+    private $date;
+    /**
+     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\TimeSlotLabel", inversedBy="label")
+     * @ORM\JoinColumn(nullable=false)
+    */
+    private $label;
 
     /**
      * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\Step", mappedBy="timeslot")
@@ -19,11 +29,6 @@ class TimeSlot
     */
     private $step;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Date", inversedBy="timeslot")
-     * @ORM\JoinColumn(nullable=false)
-    */
-    private $date;
 
     /**
      * @var integer
@@ -33,13 +38,6 @@ class TimeSlot
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="labelTimeSlot", type="string", length=255)
-     */
-    private $labelTimeSlot;
 
 
     /**
@@ -73,5 +71,68 @@ class TimeSlot
     public function getLabelTimeSlot()
     {
         return $this->labelTimeSlot;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->step = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add step
+     *
+     * @param \Iaato\IaatoBundle\Entity\Step $step
+     * @return TimeSlot
+     */
+    public function addStep(\Iaato\IaatoBundle\Entity\Step $step)
+    {
+        $this->step[] = $step;
+    
+        return $this;
+    }
+
+    /**
+     * Remove step
+     *
+     * @param \Iaato\IaatoBundle\Entity\Step $step
+     */
+    public function removeStep(\Iaato\IaatoBundle\Entity\Step $step)
+    {
+        $this->step->removeElement($step);
+    }
+
+    /**
+     * Get step
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStep()
+    {
+        return $this->step;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \Iaato\IaatoBundle\Entity\Date $date
+     * @return TimeSlot
+     */
+    public function setDate(\Iaato\IaatoBundle\Entity\Date $date)
+    {
+        $this->date = $date;
+    
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \Iaato\IaatoBundle\Entity\Date 
+     */
+    public function getDate()
+    {
+        return $this->date;
     }
 }

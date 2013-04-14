@@ -1,0 +1,110 @@
+<?php
+
+namespace Iaato\IaatoBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * TimeSlotLabel
+ *
+  * @ORM\Table()
+ * @ORM\Entity(repositoryClass="Iaato\IaatoBundle\Entity\ShipRepository")
+ */
+class TimeSlotLabel
+{
+
+    /**
+     * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\TimeSlot", mappedBy="label")
+    */
+    private $timeSlot;
+
+        /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+        /**
+     * @var string
+     *
+     * @ORM\Column(name="label",type="string", length=255)
+     */
+    private $tslabel;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set timeSlotLabel
+     *
+     * @param string $timeSlotLabel
+     * @return TimeSlotLabel
+     */
+    public function setTimeSlotLabel($timeSlotLabel)
+    {
+        $this->tslabel = $timeSlotLabel;
+    
+        return $this;
+    }
+
+    /**
+     * Get timeSlotLabel
+     *
+     * @return string 
+     */
+    public function getTimeSlotLabel()
+    {
+        return $this->tslabel;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->timeSlot = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add timeSlot
+     *
+     * @param \Iaato\IaatoBundle\Entity\TimeSlot $timeSlot
+     * @return TimeSlotLabel
+     */
+    public function addTimeSlot(\Iaato\IaatoBundle\Entity\TimeSlot $timeSlot)
+    {
+        $this->timeSlot[] = $timeSlot;
+    
+        return $this;
+    }
+
+    /**
+     * Remove timeSlot
+     *
+     * @param \Iaato\IaatoBundle\Entity\TimeSlot $timeSlot
+     */
+    public function removeTimeSlot(\Iaato\IaatoBundle\Entity\TimeSlot $timeSlot)
+    {
+        $this->timeSlot->removeElement($timeSlot);
+    }
+
+    /**
+     * Get timeSlot
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTimeSlot()
+    {
+        return $this->timeSlot;
+    }
+}

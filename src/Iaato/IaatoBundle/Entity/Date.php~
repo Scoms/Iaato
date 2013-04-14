@@ -30,7 +30,7 @@ class Date
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="date",unique="true")
+     * @ORM\Column(name="date", type="date",unique=true)
      */
     private $date;
 

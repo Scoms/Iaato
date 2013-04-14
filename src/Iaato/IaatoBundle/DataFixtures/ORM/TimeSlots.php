@@ -25,32 +25,19 @@ class TimeSlots extends AbstractFixture implements OrderedFixtureInterface{
 	public function load(ObjectManager $manager)
 	{
 	  $date_list = $manager->getRepository('IaatoIaatoBundle:Date')->findAll();
+	  $label_list = $manager->getRepository('IaatoIaatoBundle:TimeSlotLabel')->findAll();
 	  foreach($date_list as $date)
 	  {
-	    $ts = new TimeSlot;
-	    $ts->setLabelTimeSlot("early morning");
-	    $ts->setDate($date);
-	    $manager->persist($ts);	
-	    $ts = new TimeSlot;
-	    $ts->setLabelTimeSlot("morning");
-	    $ts->setDate($date);
-	    $manager->persist($ts);	
-	    $ts = new TimeSlot;
-	    $ts->setLabelTimeSlot("afternoon");
-	    $ts->setDate($date);
-	    $manager->persist($ts);	
-	    $ts = new TimeSlot;
-	    $ts->setLabelTimeSlot("evening");
-	    $ts->setDate($date);
-	    $manager->persist($ts);	
-	    $ts = new TimeSlot;
-	    $ts->setLabelTimeSlot("overnight");
-	    $ts->setDate($date);
-	    $manager->persist($ts);	
-	    $manager->flush();
+	    foreach($label_list as $label)
+	    {
+	      $ts = new TimeSlot;
+	      $ts->setLabelTimeSlot($label);
+	      $ts->setDate($date);
+	      $manager->persist($ts);	
+	      $manager->flush();
+	    }
 	  }
-  	}
-
+	}
   	public function getOrder(){
 	  return 2; // the order in which fixtures will be loaded
 	}

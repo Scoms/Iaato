@@ -12,6 +12,16 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class TimeSlot
 {
+    /**
+     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Date", inversedBy="timeslot")
+     * @ORM\JoinColumn(nullable=false)
+    */
+    private $date;
+    /**
+     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\TimeSlotLabel", inversedBy="label")
+     * @ORM\JoinColumn(nullable=false)
+    */
+    private $label;
 
     /**
      * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\Step", mappedBy="timeslot")
@@ -19,11 +29,6 @@ class TimeSlot
     */
     private $step;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Date", inversedBy="timeslot")
-     * @ORM\JoinColumn(nullable=false)
-    */
-    private $date;
 
     /**
      * @var integer
@@ -33,13 +38,6 @@ class TimeSlot
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="labelTimeSlot", type="string", length=255)
-     */
-    private $labelTimeSlot;
 
 
     /**
