@@ -14,7 +14,21 @@ class StepController extends Controller
     public function indexAction()
     {
       $em = $this->getDoctrine()->getEntityManager();
-      return $this->render('IaatoIaatoBundle:Step:show.html.twig');
+      $user = $this->get('security.context')->getToken()->getUser();
+      $ship = $user->getShip();
+      if($ship==NULL)
+      {
+	//Display a choice box
+	$ship = "unkown";
+      }
+      else
+      {
+	$ship = $ship->getNameShip();
+      }
+      
+      return $this->render('IaatoIaatoBundle:Step:show.html.twig',array(
+	'ship'=>$ship
+      ));
     }
     public function addAction()
     {

@@ -10,13 +10,14 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="Iaato\UserBundle\Entity\UserRepository")
  */
-class User implements UserInterface
+class User implements UserInterface, \Serializable 
 {
       /**
    * @ORM\OneToOne(targetEntity="Iaato\IaatoBundle\Entity\Ship")
    */
   private $ship;
   /**
+   * @var integer $id 
    * @ORM\Column(name="id", type="integer")
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
@@ -156,4 +157,15 @@ class User implements UserInterface
     {
         $this->ship->removeElement($ship);
     }
+ 
+    public function serialize()
+    {
+	  return serialize($this->id);
+    }
+
+    public function unserialize($data)
+    {
+	  $this->id = unserialize($data);
+    }
+
 }

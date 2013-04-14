@@ -16,6 +16,7 @@
 	<a class="btn btn-info" href="{{ path('iaato_step_list_add') }}" >Add a step</a>	
 	<a class="btn btn-info" href="{{ path('iaato_step_list_remove') }}" >Remove a step</a>
 </ul>
-<h6>Add </h6>
+<h6>Show --
+Your ship : {{ ship }}</h6>
 </div>
 {% endblock %}

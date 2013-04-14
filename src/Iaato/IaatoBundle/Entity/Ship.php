@@ -14,6 +14,7 @@ class Ship
 {
 
     /**
+     * 
      * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\Step", mappedBy="ship")
      * @ORM\JoinColumn(nullable=false)
     */
