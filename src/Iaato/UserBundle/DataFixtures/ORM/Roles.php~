@@ -9,7 +9,7 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Iaato\UserBundle\Entity\Role; 
 
-class Roles extends AbstractFixture implements OrderedFixtureInterface
+class Roles implements OrderedFixtureInterface
 {
   public function load(ObjectManager $manager)
   {

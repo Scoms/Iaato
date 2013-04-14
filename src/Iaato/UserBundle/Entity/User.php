@@ -12,10 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User implements UserInterface
 {
-   /**
-     * @ORM\OneToOne(targetEntity="Iaato\IaatoBundle\Entity\Ship")
-    */
-    private $ship;
+      /**
+   * @ORM\OneToOne(targetEntity="Iaato\IaatoBundle\Entity\Ship")
+   */
+  private $ship;
   /**
    * @ORM\Column(name="id", type="integer")
    * @ORM\Id
@@ -109,4 +109,51 @@ class User implements UserInterface
   public function eraseCredentials()
   {
   }
+
+
+    /**
+     * Set ship
+     *
+     * @param \Iaato\IaatoBundle\Entity\Ship $ship
+     * @return User
+     */
+    public function setShip(\Iaato\IaatoBundle\Entity\Ship $ship = null)
+    {
+        $this->ship = $ship;
+    
+        return $this;
+    }
+
+    /**
+     * Get ship
+     *
+     * @return \Iaato\IaatoBundle\Entity\Ship 
+     */
+    public function getShip()
+    {
+        return $this->ship;
+    }
+
+    /**
+     * Add ship
+     *
+     * @param \Iaato\IaatoBundle\Entity\Ship $ship
+     * @return User
+     */
+    public function addShip(\Iaato\IaatoBundle\Entity\Ship $ship)
+    {
+        $this->ship[] = $ship;
+    
+        return $this;
+    }
+
+    /**
+     * Remove ship
+     *
+     * @param \Iaato\IaatoBundle\Entity\Ship $ship
+     */
+    public function removeShip(\Iaato\IaatoBundle\Entity\Ship $ship)
+    {
+        $this->ship->removeElement($ship);
+    }
 }

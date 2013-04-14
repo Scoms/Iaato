@@ -3,11 +3,13 @@
  
 namespace Iaato\UserBundle\DataFixtures\ORM;
  
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Iaato\UserBundle\Entity\User; 
 
-class Users implements FixtureInterface
+class Users extends AbstractFixture implements OrderedFixtureInterface
 {
   public function load(ObjectManager $manager)
   {
@@ -28,6 +30,7 @@ class Users implements FixtureInterface
     $user->setPassword(sha1('pass'));
     $user->setSalt('');
 	$user->setRoles(array('ROLE_CAPITAINE'));
+	$user->setShip($manager->getRepository('IaatoIaatoBundle:Ship')->findOneBy(array('nameShip'=>'Alexander von Humboldt')));
     $manager->persist($user);
     
     /*
@@ -38,4 +41,10 @@ class Users implements FixtureInterface
 	}*/
 	$manager->flush();
   }
+  public function getOrder()
+  {
+    return 3; // the order in which fixtures will be loaded
+  }
 }
+
+?>
