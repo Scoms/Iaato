@@ -2,6 +2,20 @@
 
 {% block bodysite %}
 
-<h3>ADD-SITE</h3>
+<h3>WARNING : Pas opérationnel</h3>
+<div class="well" style="width:60%; margin-left:auto; margin-right:auto; heigth:200px;">
+	<form method="post" {{ form_enctype(form) }} class="form">
+	    {{ form_errors(form) }}
+
+	    {{ form_row(form.nameSite) }}
+	    {{ form_row(form.latitude) }}
+	    {{ form_row(form.longitude) }}
+	    {{ form_row(form.IAATO) }}
+	    {{ form_row(form.zone) }}
+
+	    {{ form_rest(form) }}
+	    <input type="submit" value="Envoyer" class="btn btn-primary" />
+	</form>
+</div>
 
 {% endblock %}

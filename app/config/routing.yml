@@ -9,13 +9,13 @@ iaato_iaato:
 login:
     pattern: /login
     defaults: { _controller: IaatoUserBundle:Security:login }
-    
+
 login_check:
     pattern: /login_check
-    
+
 logout:
     pattern: /logout
-    
+
 admin_remove:
     pattern: /admin/remove
     defaults: { _controller: IaatoIaatoBundle:Remove:index }
