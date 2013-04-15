@@ -2,12 +2,12 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-<div class="well">
+	<div class="well">
 
-<ul class="nav">
-	<a class="btn btn-info" href="{{ path('iaato_secretariat') }}" >Back</a>	
-	<a class="btn btn-info" href="{{ path('iaato_csv_upload') }}" >Upload</a>	
-</ul>
-<h3>DOWNLOAD-CSV</h3>
-</div>
+		<ul class="nav">
+			<a class="btn btn-info" href="{{ path('iaato_secretariat') }}" >Back</a>	
+			<a class="btn btn-info" href="{{ path('iaato_csv_upload') }}" >Upload</a>	
+		</ul>
+		<h3>Generation of the CSV</h3>
+	</div>
 {% endblock %}

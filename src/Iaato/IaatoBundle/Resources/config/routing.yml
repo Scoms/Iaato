@@ -93,6 +93,10 @@ iaato_csv_download:
     pattern: /secretariat/csv/download
     defaults: { _controller:IaatoIaatoBundle:CSVDown:index }
     
+iaato_csv_show:
+    pattern: /secretariat/csv/show
+    defaults : { _controller:IaatoIaatoBundle:CSVUp:show }
+    
 iaato_csv_upload:
     pattern: /secretariat/csv/upload
     defaults: { _controller:IaatoIaatoBundle:CSVUp:index }
