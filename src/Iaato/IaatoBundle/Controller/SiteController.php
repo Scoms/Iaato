@@ -6,14 +6,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Iaato\IaatoBundle\Entity\Site;
+use Iaato\IaatoBundle\Entity\Zone;
 use Symfony\Component\Security\Core\SecurityContext;
 
-class SiteController extends Controller
-{
+class SiteController extends Controller{
+
   public function indexAction(){
 
     $em = $this->getDoctrine()->getEntityManager();
-    $sites = $em->getRepository("IaatoIaatoBundle:Site")->findAll();    
+    $query = $em->createQuery('SELECT si.nameSite, si.latitude, si.longitude, si.iaato, z.labelZone FROM IaatoIaatoBundle:Site si LEFT JOIN si.zone z');
+    $sites = $query->getResult();    
     return $this->render('IaatoIaatoBundle:Site:index.html.twig', array('sites' => $sites));
   
   }
@@ -21,13 +23,24 @@ class SiteController extends Controller
   public function addAction(){
 
       $site = new Site();
+
+      $entityManager = $this->getDoctrine()->getEntityManager();
+      $zones = $entityManager->getRepository("IaatoIaatoBundle:Zone")->findAll();
+      $stackZone = array();
+
+      foreach($zones as $zone)
+        array_push($stackZone,$zone->getLabelZone());
+
       $formBuilder = $this->createFormBuilder($site);
       $formBuilder
         ->add('nameSite','text')
         ->add('latitude', 'text')
         ->add('longitude', 'text')
-        ->add('IAATO', 'checkbox')
-        ->add('zone', 'choice');
+        ->add('iaato', 'checkbox')
+        ->add('zone', 'choice', array(
+              'choices' => $stackZone,
+              'required' => false,'label'=>'Zones','multiple'=>false, 'empty_value' => '-- Choose a zone --'
+          ));
       $form = $formBuilder->getForm();
       $request = $this->get('request');
       

@@ -36,9 +36,11 @@ class Ships extends AbstractFixture implements OrderedFixtureInterface{
     	$manager->flush();
 
   	}
-  	public function getOrder()
-	{
+
+  	public function getOrder(){
+
 	  return 2; // the order in which fixtures will be loaded
+	
 	}
 
 }
