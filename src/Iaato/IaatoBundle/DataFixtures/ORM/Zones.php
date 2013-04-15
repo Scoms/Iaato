@@ -32,6 +32,7 @@ class Zones extends AbstractFixture implements OrderedFixtureInterface{
 			$obj = new Zone;
 			$obj->setLabelZone($zone);
 			$obj->setType($this->getReference('standard'));
+			$obj->setLabelSubZ("x");
     			$manager->persist($obj);
 		}
 

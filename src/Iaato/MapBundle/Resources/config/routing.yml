@@ -1,0 +1,3 @@
+iaato_map_homepage:
+    pattern:  /capitaine/map
+    defaults: { _controller: IaatoMapBundle:Default:index }

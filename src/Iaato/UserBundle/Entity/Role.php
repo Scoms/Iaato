@@ -20,14 +20,14 @@ class Role
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
    */
-  private $id;
+  protected $id;
  
   /**
    * @var string $nom 
    * 
    * @ORM\Column(name="nom", type="string", length=255, unique=true)
    */
-  private $nom;
+  protected $nom;
    
    /**
     * Get id

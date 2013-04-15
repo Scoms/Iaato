@@ -10,9 +10,14 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="Iaato\UserBundle\Entity\UserRepository")
  */
-class User implements UserInterface
+class User implements UserInterface, \Serializable 
 {
+      /**
+   * @ORM\OneToOne(targetEntity="Iaato\IaatoBundle\Entity\Ship")
+   */
+  private $ship;
   /**
+   * @var integer $id 
    * @ORM\Column(name="id", type="integer")
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
@@ -105,4 +110,62 @@ class User implements UserInterface
   public function eraseCredentials()
   {
   }
+
+
+    /**
+     * Set ship
+     *
+     * @param \Iaato\IaatoBundle\Entity\Ship $ship
+     * @return User
+     */
+    public function setShip(\Iaato\IaatoBundle\Entity\Ship $ship = null)
+    {
+        $this->ship = $ship;
+    
+        return $this;
+    }
+
+    /**
+     * Get ship
+     *
+     * @return \Iaato\IaatoBundle\Entity\Ship 
+     */
+    public function getShip()
+    {
+        return $this->ship;
+    }
+
+    /**
+     * Add ship
+     *
+     * @param \Iaato\IaatoBundle\Entity\Ship $ship
+     * @return User
+     */
+    public function addShip(\Iaato\IaatoBundle\Entity\Ship $ship)
+    {
+        $this->ship[] = $ship;
+    
+        return $this;
+    }
+
+    /**
+     * Remove ship
+     *
+     * @param \Iaato\IaatoBundle\Entity\Ship $ship
+     */
+    public function removeShip(\Iaato\IaatoBundle\Entity\Ship $ship)
+    {
+        $this->ship->removeElement($ship);
+    }
+ 
+    public function serialize()
+    {
+	  return serialize($this->id);
+    }
+
+    public function unserialize($data)
+    {
+	  $this->id = unserialize($data);
+    }
+
 }

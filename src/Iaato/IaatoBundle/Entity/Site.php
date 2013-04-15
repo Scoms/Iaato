@@ -26,8 +26,7 @@ class Site
     private $zone;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Iaato\IaatoBundle\Entity\Activity",
-     cascade={"persist"}) //Un site propose plusieurs activités et une activité est rattachée à plusieurs sites
+     * @ORM\ManyToMany(targetEntity="Iaato\IaatoBundle\Entity\Activity",cascade={"persist"}) //Un site propose plusieurs activités et une activité est rattachée à plusieurs sites
     */
     private $activity;
 

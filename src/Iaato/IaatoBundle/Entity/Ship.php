@@ -12,15 +12,16 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Ship
 {
-    
+
     /**
+     * 
      * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\Step", mappedBy="ship")
      * @ORM\JoinColumn(nullable=false)
     */
     private $step;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Type", inversedBy="ship") //Un bateau a un seul type mais un type est rattaché à plusieurs bateaux
+	/**
+    * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Type", inversedBy="ship") //Un bateau a un seul type mais un type est rattaché à plusieurs bateaux
      * @ORM\JoinColumn(nullable=false) //Champ type de ship à null si suppression d'un type
     */
     private $idtype;
@@ -349,5 +350,78 @@ class Ship
     public function getStep()
     {
         return $this->step;
+    }
+
+    /**
+     * Set el
+     *
+     * @param \Iaato\UserBundle\Entity\User $el
+     * @return Ship
+     */
+    public function setEl(\Iaato\UserBundle\Entity\User $el = null)
+    {
+        $this->el = $el;
+    
+        return $this;
+    }
+
+    /**
+     * Get el
+     *
+     * @return \Iaato\UserBundle\Entity\User 
+     */
+    public function getEl()
+    {
+        return $this->el;
+    }
+
+    /**
+     * Add el
+     *
+     * @param \Iaato\UserBundle\Entity\User $el
+     * @return Ship
+     */
+    public function addEl(\Iaato\UserBundle\Entity\User $el)
+    {
+        $this->el[] = $el;
+    
+        return $this;
+    }
+
+    /**
+     * Remove el
+     *
+     * @param \Iaato\UserBundle\Entity\User $el
+     */
+    public function removeEl(\Iaato\UserBundle\Entity\User $el)
+    {
+        $this->el->removeElement($el);
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Iaato\UserBundle\Entity\User $user
+     * @return Ship
+     */
+    public function setUser(\Iaato\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Iaato\UserBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+    public function __toString()
+    {
+      return $this->getNameShip();
     }
 }

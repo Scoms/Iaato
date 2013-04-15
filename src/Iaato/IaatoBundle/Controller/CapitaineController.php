@@ -23,7 +23,7 @@ class CapitaineController extends Controller
 	//BON ROLE
 	  if( ($role->isGranted('ROLE_CAPITAINE') || $role->isGranted('ROLE_ADMIN')))
 	  {
-	     return $this->render('IaatoIaatoBundle:Capitaine:index.html.twig',array('content' => 'Capitaine'));
+	     return $this->render('IaatoIaatoBundle:Capitaine:index.html.twig');
 	  }
 	  // MAUVAIS ROLE
 	}
@@ -43,5 +43,10 @@ class CapitaineController extends Controller
 	  //Authentification
 	  return $this->render('IaatoUserBundle:Security:login.html.twig', array('last_username' => $session->get(SecurityContext::LAST_USERNAME),'error'=> $error,));
     }
-
+    
+    public function listAction()
+    {
+      $em = $this->getDoctrine()->getEntityManager();
+      return $this->render('IaatoIaatoBundle:Capitaine:list.html.twig');
+    }
 }

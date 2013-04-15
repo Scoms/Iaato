@@ -6,6 +6,18 @@ iaato_capitaine:
     pattern: /capitaine
     defaults: { _controller: IaatoIaatoBundle:Capitaine:index }
 
+iaato_step_list:
+    pattern: /capitaine/list
+    defaults: { _controller: IaatoIaatoBundle:Step:index }
+
+iaato_step_list_add:
+    pattern: /capitaine/list_add
+    defaults: { _controller: IaatoIaatoBundle:Step:add }
+
+iaato_step_list_remove:
+    pattern: /capitaine/list_remove
+    defaults: { _controller: IaatoIaatoBundle:Step:remove }
+
 iaato_secretariat:
     pattern: /secretariat
     defaults: { _controller: IaatoIaatoBundle:Secretariat:index }
@@ -37,7 +49,7 @@ patch:
 iaato_admin:
     pattern: /admin
     defaults: { _controller:IaatoIaatoBundle:Admin:index }
-    
+
 iaato_society:
     pattern: /secretariat/society
     defaults: { _controller:IaatoIaatoBundle:Society:index }
@@ -45,11 +57,11 @@ iaato_society:
 iaato_society_add:
     pattern: /secretariat/society/add
     defaults: { _controller:IaatoIaatoBundle:Society:add }
-    
+
 iaato_society_remove:
     pattern: /secretariat/society/remove
     defaults: { _controller:IaatoIaatoBundle:Society:remove }
-    
+
 iaato_site:
     pattern: /secretariat/site
     defaults: { _controller:IaatoIaatoBundle:Site:index }
@@ -65,7 +77,6 @@ iaato_site_remove:
 iaato_activity:
     pattern: /secretariat/activity
     defaults: { _controller:IaatoIaatoBundle:Activity:index }
-    
 
 iaato_activity_add:
     pattern: /secretariat/activity/add

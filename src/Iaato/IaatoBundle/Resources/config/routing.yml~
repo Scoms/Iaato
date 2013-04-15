@@ -5,6 +5,18 @@ iaato_iaato_homepage:
 iaato_capitaine:
     pattern: /capitaine
     defaults: { _controller: IaatoIaatoBundle:Capitaine:index }
+    
+iaato_step_list:
+    pattern: /capitaine/list
+    defaults: { _controller: IaatoIaatoBundle:Step:index }
+
+iaato_step_add:
+    pattern: /capitaine/list_add
+    defaults: { _controller: IaatoIaatoBundle:Step:add }
+
+iaato_step_remove:
+    pattern: /capitaine/list_remove
+    defaults: { _controller: IaatoIaatoBundle:Step:remove }
 
 iaato_secretariat:
     pattern: /secretariat
@@ -16,15 +28,11 @@ iaato_ship:
 
 iaato_ship_add:
     pattern: /secretariat/ship/add
-    defaults: { _controller: IaatoIaatoBundle:Ship:addship }
+    defaults: { _controller: IaatoIaatoBundle:Ship:add }
 
-iaato_ship_change:
-    pattern: /secretariat/ship/change
-    defaults: { _controller: IaatoIaatoBundle:Ship:changeship }
-
-iaato_ship_delete:
+iaato_ship_remove:
     pattern: /secretariat/ship/delete
-    defaults: { _controller: IaatoIaatoBundle:Ship:deleteship}
+    defaults: { _controller: IaatoIaatoBundle:Ship:remove }
 
 iaato_connexion:
     pattern: /connexion
@@ -95,8 +103,8 @@ iaato_type_remove:
 
 iaato_csv_download:
     pattern: /secretariat/csv/download
-    defaults: { _controller:IaatoIaatoBundle:CSV_Down:index }
+    defaults: { _controller:IaatoIaatoBundle:CSVDown:index }
     
 iaato_csv_upload:
     pattern: /secretariat/csv/upload
-    defaults: { _controller:IaatoIaatoBundle:CSV_Up:index }
+    defaults: { _controller:IaatoIaatoBundle:CSVUp:index }

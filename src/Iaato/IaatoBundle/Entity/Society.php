@@ -67,6 +67,7 @@ class Society
     {
         return $this->labelSociety;
     }
+    
     /**
      * Constructor
      */

@@ -2,12 +2,14 @@
 // src/Iaato/UserBundle/DataFixtures/ORM/Roles.php
  
 namespace Iaato\UserBundle\DataFixtures\ORM;
- 
+
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Iaato\UserBundle\Entity\Role; 
 
-class Roles implements FixtureInterface
+class Roles extends AbstractFixture implements OrderedFixtureInterface
 {
   public function load(ObjectManager $manager)
   {
@@ -24,4 +26,10 @@ class Roles implements FixtureInterface
     $manager->persist($userRole);
     $manager->flush();
   }
+  public function getOrder()
+  {
+    return 3; // the order in which fixtures will be loaded
+  }
 }
+
+?>

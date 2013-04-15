@@ -1,12 +1,12 @@
+iaato_map:
+    resource: "@IaatoMapBundle/Resources/config/routing.yml"
+    prefix:   /
+
 
 
 iaato_iaato:
     resource: "@IaatoIaatoBundle/Resources/config/routing.yml"
     prefix:   /
-
-sdz_blog:
-    resource:    "@SdzBlogBundle/Resources/config/routing.yml"
-    prefix:  /blog
 
 login:
     pattern: /login
@@ -17,6 +17,10 @@ login_check:
     
 logout:
     pattern: /logout
+    
+admin_remove:
+    pattern: /admin/remove
+    defaults: { _controller: IaatoIaatoBundle:Remove:index }
 
 # Internal routing configuration to handle ESI
 # ****** WARNING ******

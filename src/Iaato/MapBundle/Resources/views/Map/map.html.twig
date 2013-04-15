@@ -1,0 +1,20 @@
+{% extends '::base.html.twig' %}
+
+
+{% block menu %}
+ <h6>z</h6>
+{% endblock %}
+{% block body %}
+<div class="well">
+  <a class="btn btn-warning" href={{ path('iaato_map_homepage') }}>Map</a>
+  <a class="btn btn-warning" href={{ path('iaato_step_list') }}>List</a>
+<h6>Map</h6>
+  	<div id="gmap-div" style="width: 800px; height: 600px;"></div>
+</div>
+
+{% endblock %}
+{% block javascripts %}
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false" /></script>
+	<script type="text/javascript" src="{{ asset('javascripts/gmap.js') }}" ></script>
+{% endblock %}

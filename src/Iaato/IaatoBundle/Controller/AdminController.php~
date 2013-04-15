@@ -12,6 +12,7 @@ namespace Iaato\IaatoBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Iaato\UserBundle\Entity\User;
+use Symfony\Bridge\Doctrine\Form\ChoiceList\EntityChoiceList;
 
 class AdminController extends Controller
 {
@@ -24,16 +25,21 @@ class AdminController extends Controller
 		 */
 		$liste_roles = $entityManager->getRepository("IaatoUserBundle:Role")->findAll();
 		$stack = array();
+		
 		foreach($liste_roles as $role)
 			array_push($stack,$role->getNom());
+		
+		$ship_list = new EntityChoiceList($entityManager,'Iaato\IaatoBundle\Entity\Ship');
+		
 		$user = new User();
 		$formBuilder = $this->createFormBuilder($user);
 		$formBuilder
-			->add('username',	'text')
-			->add('roles', 'choice', array(
+			->add('username','text')
+			->add('roles','choice', array(
         'choices' => array("ROLE_ADMIN"=>"Admin","ROLE_SECRETARIAT"=>"IAATO","ROLE_CAPITAINE"=>"Expedition Leader"),
-        'required' => false,'label'=>'Roles','multiple'=>true
+        'required' => true,'label'=>'Roles','multiple'=>true
     ))
+			->add('ship','choice',array('choice_list'=> $ship_list))
 			->add('password', 'repeated', array(
 			'type' => 'password',
 			'invalid_message' => 'The password fields must match.',
@@ -47,7 +53,9 @@ class AdminController extends Controller
 			
 		if ($request->getMethod() == 'POST')
 		{
+			//$ship_obj = $entityManager->getRepository('IaatoIaatoBundle:Ship')->find($ship);
 			$form->bind($request);
+			
 			if ($form->isValid())
 			{
 				$em = $this->getDoctrine()->getManager();
@@ -58,13 +66,14 @@ class AdminController extends Controller
 				    'form_add' => $form->createView(),
 				    'error'=>'ERROR : The user "'.$user->getUsername().'" already exists.',
 				    'sucess'=>''));;
+				
 				$em->persist($user);
 				$em->flush();
 			}
 			if($user->getPassword() == '')
 			  return $this->render('IaatoIaatoBundle:Admin:index.html.twig',array(
 			    'form_add' => $form->createView(),
-			    'error'=>'',
+			    'error'=>'Invalid passwords',
 			    'sucess'=>''));
 			return $this->render('IaatoIaatoBundle:Admin:index.html.twig',array(
 				  'form_add' => $form->createView(),
