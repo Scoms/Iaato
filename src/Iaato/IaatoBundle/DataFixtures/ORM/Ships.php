@@ -25,13 +25,13 @@ class Ships extends AbstractFixture implements OrderedFixtureInterface{
 	*/
 	public function load(ObjectManager $manager){
 		
-		$ship = new Ship;
-		$ship->setCode('C6WC2');
-		$ship->setNameShip('Alexander von Humboldt');
-		$ship->setNbPassenger('150');
-		$ship->setType($this->getReference('standard'));
-		$ship->setSociety($this->getReference('Club Cruise Fleet & Technical Department'));
-    	
+	$ship = new Ship;
+	$ship->setCode('C6WC2');
+	$ship->setNameShip('Alexander von Humboldt');
+	$ship->setNbPassenger('150');
+	$ship->setType($this->getReference('standard'));
+	$ship->setSociety($this->getReference('Club Cruise Fleet & Technical Department'));
+
     	$manager->persist($ship);		
     	$manager->flush();
 

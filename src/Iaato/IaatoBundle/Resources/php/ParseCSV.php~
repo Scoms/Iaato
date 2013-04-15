@@ -1,0 +1,12 @@
+<?php
+
+namespace Iaato\Ressources;
+
+class ParseCSV
+{
+  public function ParseCSV()
+  {
+    $i = 1;
+  }
+}
+?>

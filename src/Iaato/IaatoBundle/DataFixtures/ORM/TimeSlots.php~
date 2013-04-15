@@ -30,14 +30,12 @@ class TimeSlots extends AbstractFixture implements OrderedFixtureInterface{
 	  {
 	    foreach($label_list as $label)
 	    {
-	      if($label != null )
-	      {
 		$ts = new TimeSlot;
 		$ts->setLabelTimeSlot($label);
 		$ts->setDate($date);
 		$manager->persist($ts);	
 		$manager->flush();
-	      }
+	    
 	    }
 	  }
 	}
