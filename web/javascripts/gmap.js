@@ -9,7 +9,7 @@ $(function() {
   {
     zoom: 3, //le zoom de départ
     center: latLng, //le centre de la map au chargement
-    mapTypeId: google.maps.MapTypeId.ROADMAP, //le type de map, ROADMAP correspond à la version par défaut des versions précédentes
+    mapTypeId: google.maps.MapTypeId.SATELLITE, //le type de map, ROADMAP correspond à la version par défaut des versions précédentes
     streetViewControl: false, //si on souhaite désactiver les contrôle StreetView
     panControl: true //si on souhaite masquer les contrôles de déplacement
   });
