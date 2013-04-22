@@ -104,10 +104,38 @@ iaato_csv_download:
     pattern: /secretariat/csv/download
     defaults: { _controller:IaatoIaatoBundle:CSVDown:index }
     
-iaato_csv_show:
-    pattern: /secretariat/csv/show
-    defaults : { _controller:IaatoIaatoBundle:CSVUp:show }
-    
 iaato_csv_upload:
     pattern: /secretariat/csv/upload
     defaults: { _controller:IaatoIaatoBundle:CSVUp:index }
+
+iaato_csv_download_activities:
+    pattern: /secretariat/csv/download/activities
+    defaults: { _controller:IaatoIaatoBundle:CSVDown:activity }
+
+iaato_csv_download_ships:
+    pattern: /secretariat/csv/download/ships
+    defaults: { _controller:IaatoIaatoBundle:CSVDown:ship }
+
+iaato_csv_download_steps:
+    pattern: /secretariat/csv/download/steps
+    defaults: { _controller:IaatoIaatoBundle:CSVDown:step }
+
+iaato_csv_download_sites:
+    pattern: /secretariat/csv/download/sites
+    defaults: { _controller:IaatoIaatoBundle:CSVDown:site }
+
+iaato_csv_download_societies:
+    pattern: /secretariat/csv/download/societies
+    defaults: { _controller:IaatoIaatoBundle:CSVDown:society }
+
+iaato_csv_download_types:
+    pattern: /secretariat/csv/download/types
+    defaults: { _controller:IaatoIaatoBundle:CSVDown:type }
+
+iaato_csv_download_zones:
+    pattern: /secretariat/csv/download/zones
+    defaults: { _controller:IaatoIaatoBundle:CSVDown:zone }
+
+iaato_csv_download_subzones:
+    pattern: /secretariat/csv/download/subzones
+    defaults: { _controller:IaatoIaatoBundle:CSVDown:subZone }
