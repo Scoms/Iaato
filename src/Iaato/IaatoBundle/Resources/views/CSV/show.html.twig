@@ -12,9 +12,10 @@
 		</thead>
 
 		<tbody>
-			<tr>
-        <td>{{ cpt_done }} out of {{ cpt_total }} {{ name }} entered in the database !</td>
-      </tr>
+			<tr> <td>{{ cpt_done }} out of {{ cpt_total }} {{ name }} entered in the database !</td></tr>
+      {% for err in error %}
+        <tr> <td>{{ err }}</td> </tr>
+      {% endfor %}
 		</tbody>
 
 	</table>

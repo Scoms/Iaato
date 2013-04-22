@@ -57,7 +57,7 @@ class CSVUpController extends Controller
                         //return $this->forward('IaatoIaatoBundle:CSVUp:site', array('data' => $data));
                         break;
                     case "types":
-                        //return $this->forward('IaatoIaatoBundle:CSVUp:type', array('data' => $data));
+                        return $this->forward('IaatoIaatoBundle:CSVUp:type', array('data' => $data));
                         break;
                     case "zones":
                         //return $this->forward('IaatoIaatoBundle:CSVUp:zone', array('data' => $data));
@@ -79,11 +79,12 @@ class CSVUpController extends Controller
   public function shipAction($data)
   {
     $handle = fopen($data, "r");
+    $errors = array();
     $cpt_done = 0;
     $cpt_total = 0;
+    $i = 0;
     $lin = fgetcsv($handle,1000,";");
     while(($lin = fgetcsv($handle,1000,";")) !== FALSE){
-        
         $cpt_total++;
         $em = $this->getDoctrine()->getEntityManager();
         $ship = new Ship();
@@ -94,50 +95,55 @@ class CSVUpController extends Controller
         if($em->getRepository("IaatoIaatoBundle:Society")->findOneBy(array('labelSociety' => $lin[1]))!=NULL){
             if($em->getRepository("IaatoIaatoBundle:Type")->findOneBy(array('labelType' => $lin[2]))!=NULL){
                 if($em->getRepository("IaatoIaatoBundle:Email")->findOneBy(array('email' => $lin[4]))==NULL){
-                    if($em->getRepository("IaatoIaatoBundle:Phone")->findOneBy(array('numberPhone' => $lin[5]))==NULL){
-                
-                        $society = $em->getRepository("IaatoIaatoBundle:Society")->findOneBy(array('labelSociety' => $lin[1]));
-                        $ship->setSociety($society);
-                    
-                    
-                        $type = $em->getRepository("IaatoIaatoBundle:Type")->findOneBy(array('labelType' => $lin[2]));
-                        $ship->setType($type);
-                        
-                        $email = new Email();
-                        $email->setEmail($lin[4]);
-                        $email->setShip($ship);
-                        $em->persist($email);
-                        $ship->addEmail($email);
-                        
-                        $phone = new Phone();
-                        $phone->setNumberPhone($lin[4]);
-                        $phone->setShip($ship);
-                        $em->persist($phone);
-                        $ship->addPhone($phone);
-                        
-                        $cpt_done++;
-                        $em->persist($ship);
-                        $em->flush();
-                        
-                    }
-                    else{
-                        // Il existe déjà ce numéro de téléphone dans la base de données.
-                    }
+                    $email = new Email();
+                    $email->setEmail($lin[4]);
+                    $email->setShip($ship);
+                    $em->persist($email);
                 }
                 else{
-                    // L'email existe déjà dans la base de données
+                    $email = $em->getRepository("IaatoIaatoBundle:Email")->findOneBy(array('email' => $lin[4]));
                 }
+                if($em->getRepository("IaatoIaatoBundle:Phone")->findOneBy(array('numberPhone' => $lin[5]))==NULL){
+                    $phone = new Phone();
+                    $phone->setNumberPhone($lin[4]);
+                    $phone->setShip($ship);
+                    $em->persist($phone);
+                }
+                else{
+                    $phone = $em->getRepository("IaatoIaatoBundle:Phone")->findOneBy(array('numberPhone' => $lin[5]));
+                }
+            
+                $society = $em->getRepository("IaatoIaatoBundle:Society")->findOneBy(array('labelSociety' => $lin[1]));
+                $ship->setSociety($society);
+            
+                $type = $em->getRepository("IaatoIaatoBundle:Type")->findOneBy(array('labelType' => $lin[2]));
+                $ship->setType($type);
+                
+                $ship->addEmail($email);
+                $ship->addPhone($phone);
+                
+                
+                $cpt_done++;
+                $em->persist($ship);
+                $em->flush();
+                
             }
             else{
                 // Le type de bateau n'existe pas...
+                $line_num = $cpt_total+1;
+                $errors[$i] = "Line " . $line_num . " :  the type of ship doesn't exist...";
+                $i++;
             }
         }
         else{
             // La société n'existe pas ...
+            $line_num = $cpt_total+1;
+            $errors[$i] = "Line " . $line_num . " :  the society doesn't exist...";
+            $i++;
         }
     }
     fclose($handle);
-	return $this->render('IaatoIaatoBundle:CSV:show.html.twig', array('cpt_done' => $cpt_done, 'cpt_total' => $cpt_total,'name' => "ships"));
+	return $this->render('IaatoIaatoBundle:CSV:show.html.twig', array('cpt_done' => $cpt_done, 'cpt_total' => $cpt_total,'name' => "ships", 'error' => $errors));
   }
   
   // Ok
@@ -157,7 +163,7 @@ class CSVUpController extends Controller
             $soc->setLabelSociety($lin[0]);
             $em->persist($soc);
             $cpt_done++;
-             $em->flush();
+            $em->flush();
         }
     }
     
