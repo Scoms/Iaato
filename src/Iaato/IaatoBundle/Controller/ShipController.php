@@ -14,7 +14,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Bridge\Doctrine\Form\ChoiceList\EntityChoiceList;
+use Symfony\Component\Form\FormView;
+use Iaato\IaatoBundle\Form\EmailType;
+use Iaato\IaatoBundle\Form\PhoneType;
 use Iaato\IaatoBundle\Entity\Ship;
+use Iaato\IaatoBundle\Entity\Email;
 use Iaato\IaatoBundle\Entity\Society;
 
 class ShipController extends Controller {
@@ -33,33 +38,30 @@ class ShipController extends Controller {
 		$ship = new Ship();
 		$entityManager = $this->getDoctrine()->getEntityManager();
 		
-		$societies = $entityManager->getRepository("IaatoIaatoBundle:Society")->findAll();
-		$stackSoc = array();
-		
-		$types = $entityManager->getRepository("IaatoIaatoBundle:Type")->findAll();
-		$stackType = array();
+        $email1 = new Email();
+        $ship->addEmail($email1);
+        $email2 = new Email();
+        $ship->addEmail($email2);
+        
+        $societies = new EntityChoiceList($entityManager,'Iaato\IaatoBundle\Entity\Society');
 
-		foreach($societies as $society)
-			array_push($stackSoc,$society->getLabelSociety());
-
-		foreach($types as $type)
-			array_push($stackType,$type->getLabelType());
+		$types = new EntityChoiceList($entityManager,'Iaato\IaatoBundle\Entity\Type');
 
 		$formBuilder = $this->createFormBuilder($ship);
 		$formBuilder
 			->add('code',	'text')
 			->add('nameShip',	'text')
-			->add('society', 'choice', array(
-        		'choices' => $stackSoc,
-        		'required' => false,'label'=>'Societies','multiple'=>false, 'empty_value' => '-- Choose a society --'
-    		))
+			->add('society','choice',array('choice_list'=> $societies,
+				'label'=>'Societies',
+				'empty_value' => '-- Choose a society --'
+			))
 			->add('nbPassenger',	'text')
-			->add('type', 'choice', array(
-        		'choices' => $stackType,
-        		'required' => false,'label'=>'Types','multiple'=>false, 'empty_value' => '-- Choose a type --'
-    		))
-			->add('email',	'email')
-			->add('phone',	'text');
+			->add('type','choice',array('choice_list'=> $types,
+				'label'=>'Types',
+				'empty_value' => '-- Choose a type --'
+			))
+			->add('email', 'collection', array('type' => new EmailType()))
+			->add('phone', 'collection', array('type' => new PhoneType()));
 			
 	    $form = $formBuilder->getForm();
 	    $request = $this->get('request');

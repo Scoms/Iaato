@@ -108,4 +108,10 @@ class Type
     {
         return $this->ship;
     }
+
+    public function __toString()
+    {
+      return $this->getLabelType();
+    }
+
 }
