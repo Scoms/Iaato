@@ -117,12 +117,24 @@ class CSVUpController extends Controller
                         
                         $cpt_done++;
                         $em->persist($ship);
+                        $em->flush();
                         
                     }
+                    else{
+                        // Il existe déjà ce numéro de téléphone dans la base de données.
+                    }
+                }
+                else{
+                    // L'email existe déjà dans la base de données
                 }
             }
+            else{
+                // Le type de bateau n'existe pas...
+            }
         }
-        $em->flush();
+        else{
+            // La société n'existe pas ...
+        }
     }
     fclose($handle);
 	return $this->render('IaatoIaatoBundle:CSV:show.html.twig', array('cpt_done' => $cpt_done, 'cpt_total' => $cpt_total,'name' => "ships"));
