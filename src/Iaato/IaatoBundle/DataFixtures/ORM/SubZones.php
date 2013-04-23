@@ -23,7 +23,7 @@ class SubZones extends AbstractFixture implements OrderedFixtureInterface{
 	 * {@inheritDoc}
 	*/
 	public function load(ObjectManager $manager){
-		
+		/*
 		$label = array('Gerlache Strait', 'Holtedahl Bay', 'Crystal Sound');		
 		
 		foreach ($label as $i => $label) {
@@ -35,7 +35,7 @@ class SubZones extends AbstractFixture implements OrderedFixtureInterface{
 		
 		// On déclenche l'enregistrement
 		$manager->flush();
-
+*/
   	}
 
   	public function getOrder(){

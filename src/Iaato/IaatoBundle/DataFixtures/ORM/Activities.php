@@ -21,7 +21,7 @@ class Activities extends AbstractFixture implements OrderedFixtureInterface{
 	 * {@inheritDoc}
 	*/
 	public function load(ObjectManager $manager){
-		
+		/*
 		$label = array('Randonnée', 'Ballade en zodiac', 'Camping');		
 		
 		foreach ($label as $i => $label) {
@@ -33,7 +33,7 @@ class Activities extends AbstractFixture implements OrderedFixtureInterface{
 		
 		// On déclenche l'enregistrement
 		$manager->flush();
-
+*/
   	}
   	public function getOrder()
 	{

@@ -14,6 +14,7 @@ use Iaato\IaatoBundle\Entity\Type;
 use Iaato\IaatoBundle\Entity\Step;
 use Iaato\IaatoBundle\Entity\Site;
 use Iaato\IaatoBundle\Entity\SubZone;
+use Iaato\IaatoBundle\Entity\Zone;
 use Symfony\Component\Security\Core\SecurityContext;
 
 class CSVUpController extends Controller
@@ -54,16 +55,13 @@ class CSVUpController extends Controller
                         //return $this->forward('IaatoIaatoBundle:CSVUp:step', array('data' => $data));
                         break;
                     case "sites":
-                        //return $this->forward('IaatoIaatoBundle:CSVUp:site', array('data' => $data));
+                        return $this->forward('IaatoIaatoBundle:CSVUp:site', array('data' => $data));
                         break;
                     case "types":
                         return $this->forward('IaatoIaatoBundle:CSVUp:type', array('data' => $data));
                         break;
                     case "zones":
-                        //return $this->forward('IaatoIaatoBundle:CSVUp:zone', array('data' => $data));
-                        break;
-                    case "subZones":
-                        //return $this->forward('IaatoIaatoBundle:CSVUp:subzone', array('data' => $data));
+                        return $this->forward('IaatoIaatoBundle:CSVUp:zone', array('data' => $data));
                         break;
                     default:
                         break;
@@ -86,64 +84,72 @@ class CSVUpController extends Controller
     while(($lin = fgetcsv($handle,1000,";")) !== FALSE){
         $cpt_total++;
         $em = $this->getDoctrine()->getEntityManager();
-        $ship = new Ship();
-        $ship->setNameShip($lin[0]);
-        $ship->setCode($lin[3]);
-        $ship->setNbPassenger($lin[6]);
         
-        if($em->getRepository("IaatoIaatoBundle:Society")->findOneBy(array('labelSociety' => $lin[1]))!=NULL){
-            if($em->getRepository("IaatoIaatoBundle:Type")->findOneBy(array('labelType' => $lin[2]))!=NULL){
-                if($em->getRepository("IaatoIaatoBundle:Email")->findOneBy(array('email' => $lin[4]))==NULL){
-                    $email = new Email();
-                    $email->setEmail($lin[4]);
-                    $email->setShip($ship);
-                    $em->persist($email);
+        if($em->getRepository("IaatoIaatoBundle:Ship")->findOneBy(array('nameShip' => $lin[0]))==NULL){
+            if($em->getRepository("IaatoIaatoBundle:Society")->findOneBy(array('labelSociety' => $lin[1]))!=NULL){
+                if($em->getRepository("IaatoIaatoBundle:Type")->findOneBy(array('labelType' => $lin[2]))!=NULL){
+                    
+                    $ship = new Ship();
+                    $ship->setNameShip($lin[0]);
+                    $ship->setCode($lin[3]);
+                    $ship->setNbPassenger($lin[6]);
+                    
+                    if($em->getRepository("IaatoIaatoBundle:Email")->findOneBy(array('email' => $lin[4]))==NULL){
+                        $email = new Email();
+                        $email->setEmail($lin[4]);
+                        $email->setShip($ship);
+                        $em->persist($email);
+                    }
+                    else{
+                        $email = $em->getRepository("IaatoIaatoBundle:Email")->findOneBy(array('email' => $lin[4]));
+                    }
+                    if($em->getRepository("IaatoIaatoBundle:Phone")->findOneBy(array('numberPhone' => $lin[5]))==NULL){
+                        $phone = new Phone();
+                        $phone->setNumberPhone($lin[4]);
+                        $phone->setShip($ship);
+                        $em->persist($phone);
+                    }
+                    else{
+                        $phone = $em->getRepository("IaatoIaatoBundle:Phone")->findOneBy(array('numberPhone' => $lin[5]));
+                    }
+                    
+                    $society = $em->getRepository("IaatoIaatoBundle:Society")->findOneBy(array('labelSociety' => $lin[1]));
+                    $ship->setSociety($society);
+                
+                    $type = $em->getRepository("IaatoIaatoBundle:Type")->findOneBy(array('labelType' => $lin[2]));
+                    $ship->setType($type);
+                    
+                    $ship->addEmail($email);
+                    $ship->addPhone($phone);
+                    
+                    
+                    $cpt_done++;
+                    $em->persist($ship);
+                    $em->flush();
+                    
                 }
                 else{
-                    $email = $em->getRepository("IaatoIaatoBundle:Email")->findOneBy(array('email' => $lin[4]));
+                    // Le type de bateau n'existe pas...
+                    $line_num = $cpt_total+1;
+                    array_push($errors,"Line " . $line_num . " :  the type of ship doesn't exist...");
                 }
-                if($em->getRepository("IaatoIaatoBundle:Phone")->findOneBy(array('numberPhone' => $lin[5]))==NULL){
-                    $phone = new Phone();
-                    $phone->setNumberPhone($lin[4]);
-                    $phone->setShip($ship);
-                    $em->persist($phone);
-                }
-                else{
-                    $phone = $em->getRepository("IaatoIaatoBundle:Phone")->findOneBy(array('numberPhone' => $lin[5]));
-                }
-            
-                $society = $em->getRepository("IaatoIaatoBundle:Society")->findOneBy(array('labelSociety' => $lin[1]));
-                $ship->setSociety($society);
-            
-                $type = $em->getRepository("IaatoIaatoBundle:Type")->findOneBy(array('labelType' => $lin[2]));
-                $ship->setType($type);
-                
-                $ship->addEmail($email);
-                $ship->addPhone($phone);
-                
-                
-                $cpt_done++;
-                $em->persist($ship);
-                $em->flush();
-                
             }
             else{
-                // Le type de bateau n'existe pas...
+                // La société n'existe pas ...
                 $line_num = $cpt_total+1;
-                array_push($errors,"Line " . $line_num . " :  the type of ship doesn't exist...");
+                array_push($errors, "Line " . $line_num . " :  the society doesn't exist...");
             }
         }
         else{
-            // La société n'existe pas ...
             $line_num = $cpt_total+1;
-            array_push($errors, "Line " . $line_num . " :  the society doesn't exist...");
+            array_push($errors,"Line " . $line_num . " :  this ship already exists");
         }
     }
     fclose($handle);
 	return $this->render('IaatoIaatoBundle:CSV:show.html.twig', array('cpt_done' => $cpt_done, 'cpt_total' => $cpt_total,'name' => "ships", 'error' => $errors));
   }
   
-  // Ok
+  // Ok tested
   public function societyAction($data)
   {
     $handle = fopen($data, "r");
@@ -173,7 +179,7 @@ class CSVUpController extends Controller
 	return $this->render('IaatoIaatoBundle:CSV:show.html.twig', array('cpt_done' => $cpt_done, 'cpt_total' => $cpt_total, 'name' => "societies", 'error' => $errors));
   }
   
-  // Ok
+  // Ok tested
   public function activityAction($data)
   {
     $handle = fopen($data, "r");
@@ -257,11 +263,11 @@ class CSVUpController extends Controller
 	return $this->render('IaatoIaatoBundle:CSV:show.html.twig', array('cpt_done' => $cpt_done, 'cpt_total' => $cpt_total, 'name' => "steps", 'error' => $errors));
   }
   
-  
+  // Ok tested
   public function siteAction($data)
   {
     $handle = fopen($data, "r");
-    $cpt_done = 0;
+    $cpt_done = 0; 
     $cpt_total = 0;
     $errors = array();
     $lin = fgetcsv($handle,1000,";"); // Pour sauter la première ligne 
@@ -270,16 +276,34 @@ class CSVUpController extends Controller
         $cpt_total++;
         $em = $this->getDoctrine()->getEntityManager();
         
-        if($em->getRepository("IaatoIaatoBundle:Society")->findOneBy(array('labelSociety' => $lin[0]))==NULL){
-            $site = new Site();
-            $soc->setLabelSociety($lin[0]);
-            $em->persist($soc);
-            $em->flush();
-            $cpt_done++;
+        if($em->getRepository("IaatoIaatoBundle:Site")->findOneBy(array('nameSite' => $lin[0]))==NULL){
+            if($em->getRepository("IaatoIaatoBundle:Zone")->findOneBy(array('labelZone' => $lin[4])) != NULL){
+                
+                $zone = $em->getRepository("IaatoIaatoBundle:Zone")->findOneBy(array('labelZone' => $lin[4]));
+                
+                $site = new Site();
+                $site->setNameSite($lin[0]);
+                $site->setLatitude($lin[1]);
+                $site->setLongitude($lin[2]);
+                
+                if($lin[3] == "true")
+                    $site->setIaato(TRUE);
+                else
+                    $site->setIaato(FALSE);
+                
+                $site->setZone($zone);
+                $em->persist($site);
+                $em->flush();
+                $cpt_done++;
+            }
+            else{
+                $line_num = $cpt_total+1;
+                array_push($errors,"Line " . $line_num . " :  the zone doesn't exist...");
+            }
         }
         else{
             $line_num = $cpt_total+1;
-            array_push($errors,"Line " . $line_num . " :  this site already exist...");
+            array_push($errors,"Line " . $line_num . " :  this site already exists");
         }
     }
     
@@ -287,12 +311,13 @@ class CSVUpController extends Controller
 	return $this->render('IaatoIaatoBundle:CSV:show.html.twig', array('cpt_done' => $cpt_done, 'cpt_total' => $cpt_total, 'name' => "sites", 'error' => $errors));
   }
   
-  // A tester
+  // Ok tested
   public function typeAction($data)
   {
     $handle = fopen($data, "r");
     $cpt_done = 0;
     $cpt_total = 0;
+    $errors = array();
     $lin = fgetcsv($handle,1000,";"); // Pour sauter la première ligne 
     
     while(($lin = fgetcsv($handle,1000,";")) !== FALSE){
@@ -306,36 +331,59 @@ class CSVUpController extends Controller
             $em->flush();
             $cpt_done++;
         }
+        else{
+            $line_num = $cpt_total+1;
+            array_push($errors,"Line " . $line_num . " :  this type already exists");
+        }
     }
     
     fclose($handle);
-	return $this->render('IaatoIaatoBundle:CSV:show.html.twig', array('cpt_done' => $cpt_done, 'cpt_total' => $cpt_total, 'name' => "types"));
+	return $this->render('IaatoIaatoBundle:CSV:show.html.twig', array('cpt_done' => $cpt_done, 'cpt_total' => $cpt_total, 'name' => "types", 'error' => $errors));
   }
   
+  // Ok -- Il serait peut-être bien de pouvoir ajouter une zone sans forçément mettre une subzone ?
   public function zoneAction($data)
   {
     $handle = fopen($data, "r");
     $cpt_done = 0;
     $cpt_total = 0;
+    $errors = array();
     $lin = fgetcsv($handle,1000,";"); // Pour sauter la première ligne 
     
     while(($lin = fgetcsv($handle,1000,";")) !== FALSE){
         $cpt_total++;
         $em = $this->getDoctrine()->getEntityManager();
         
-        if($em->getRepository("IaatoIaatoBundle:Zone")->findOneBy(array('labelZone' => $lin[0]))==NULL){
-            $zone = new Zone();
-            $zone->setLabelZone($lin[0]);
-            $em->persist($zone);
+        if($em->getRepository("IaatoIaatoBundle:SubZone")->findOneBy(array('labelSubZ' => $lin[1]))==NULL){
+            
+            $subzone = new SubZone();
+            $subzone->setLabelSubZ($lin[1]);
+            
+            if($em->getRepository("IaatoIaatoBundle:Zone")->findOneBy(array('labelZone' => $lin[0]))==NULL){
+                $zone = new Zone();
+                $zone->setLabelZone($lin[0]);
+                $zone->setSubZone($subzone);
+            }
+            else{
+                $zone = $em->getRepository("IaatoIaatoBundle:Zone")->findOneBy(array('labelZone' => $lin[0]));
+            }
+            
+            $em->persist($subzone);
+            $em->persist($zone);  
             $em->flush();
             $cpt_done++;
+        }
+        else{
+            $line_num = $cpt_total+1;
+            array_push($errors,"Line " . $line_num . " :  this subzone already exists");
         }
     }
     
     fclose($handle);
-	return $this->render('IaatoIaatoBundle:CSV:show.html.twig', array('cpt_done' => $cpt_done, 'cpt_total' => $cpt_total, 'name' => "zones"));
+	return $this->render('IaatoIaatoBundle:CSV:show.html.twig', array('cpt_done' => $cpt_done, 'cpt_total' => $cpt_total, 'name' => "zones", 'error' => $errors));
   }
   
+  /*
   public function subZoneAction($data)
   {
     $handle = fopen($data, "r");
@@ -362,6 +410,7 @@ class CSVUpController extends Controller
     fclose($handle);
 	return $this->render('IaatoIaatoBundle:CSV:show.html.twig', array('cpt_done' => $cpt_done, 'cpt_total' => $cpt_total, 'name' => "subZones"));
   }
+  * */
   
 }
 

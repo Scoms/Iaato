@@ -23,7 +23,7 @@ class Sites extends AbstractFixture implements OrderedFixtureInterface{
 	 * {@inheritDoc}
 	*/
 	public function load(ObjectManager $manager){
-		
+		/*
 		$site = new Site;
 		$site->setNameSite('Aitcho Islands');
 		$site->setLatitude('62.24');
@@ -33,7 +33,7 @@ class Sites extends AbstractFixture implements OrderedFixtureInterface{
     	
     	$manager->persist($site);		
     	$manager->flush();
-
+*/
   	}
 
   	public function getOrder(){

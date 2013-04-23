@@ -24,7 +24,7 @@ class Ships extends AbstractFixture implements OrderedFixtureInterface{
 	 * {@inheritDoc}
 	*/
 	public function load(ObjectManager $manager){
-		
+		/*
 	$ship = new Ship;
 	$ship->setCode('C6WC2');
 	$ship->setNameShip('Alexander von Humboldt');
@@ -34,7 +34,7 @@ class Ships extends AbstractFixture implements OrderedFixtureInterface{
 
     	$manager->persist($ship);		
     	$manager->flush();
-
+*/
   	}
 
   	public function getOrder(){

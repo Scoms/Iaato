@@ -22,7 +22,7 @@ class Types extends AbstractFixture implements OrderedFixtureInterface{
 	 * {@inheritDoc}
 	*/
 	public function load(ObjectManager $manager){
-		
+		/*
 		$label = array('standard', 'ice-strengthned', 'ice-breaker');		
 		
 		foreach ($label as $i => $label) {
@@ -34,7 +34,7 @@ class Types extends AbstractFixture implements OrderedFixtureInterface{
 		
 		// On déclenche l'enregistrement
 		$manager->flush();
-
+*/
   	}
   	public function getOrder()
       {
