@@ -82,7 +82,6 @@ class CSVUpController extends Controller
     $errors = array();
     $cpt_done = 0;
     $cpt_total = 0;
-    $i = 0;
     $lin = fgetcsv($handle,1000,";");
     while(($lin = fgetcsv($handle,1000,";")) !== FALSE){
         $cpt_total++;
@@ -131,15 +130,13 @@ class CSVUpController extends Controller
             else{
                 // Le type de bateau n'existe pas...
                 $line_num = $cpt_total+1;
-                $errors[$i] = "Line " . $line_num . " :  the type of ship doesn't exist...";
-                $i++;
+                array_push($errors,"Line " . $line_num . " :  the type of ship doesn't exist...");
             }
         }
         else{
             // La société n'existe pas ...
             $line_num = $cpt_total+1;
-            $errors[$i] = "Line " . $line_num . " :  the society doesn't exist...";
-            $i++;
+            array_push($errors, "Line " . $line_num . " :  the society doesn't exist...");
         }
     }
     fclose($handle);
@@ -152,6 +149,7 @@ class CSVUpController extends Controller
     $handle = fopen($data, "r");
     $cpt_done = 0;
     $cpt_total = 0;
+    $errors = array();
     $lin = fgetcsv($handle,1000,";");
     
     while(($lin = fgetcsv($handle,1000,";")) !== FALSE){
@@ -165,10 +163,14 @@ class CSVUpController extends Controller
             $cpt_done++;
             $em->flush();
         }
+        else{
+            $line_num = $cpt_total+1;
+            array_push($errors, "Line " . $line_num . " : this society already exists.");
+        }
     }
     
     fclose($handle);
-	return $this->render('IaatoIaatoBundle:CSV:show.html.twig', array('cpt_done' => $cpt_done, 'cpt_total' => $cpt_total, 'name' => "societies"));
+	return $this->render('IaatoIaatoBundle:CSV:show.html.twig', array('cpt_done' => $cpt_done, 'cpt_total' => $cpt_total, 'name' => "societies", 'error' => $errors));
   }
   
   // Ok
@@ -177,6 +179,7 @@ class CSVUpController extends Controller
     $handle = fopen($data, "r");
     $cpt_done = 0;
     $cpt_total = 0;
+    $errors = array();
     $lin = fgetcsv($handle,1000,";"); // Pour sauter la première ligne 
     
     while(($lin = fgetcsv($handle,1000,";")) !== FALSE){
@@ -189,10 +192,14 @@ class CSVUpController extends Controller
             $em->persist($activity);
             $cpt_done++;
             $em->flush();
-        }        
+        }  
+        else{
+            $line_num = $cpt_total+1;
+            array_push($errors, "Line " . $line_num . " : this activity already exists.");
+        }      
     }
     fclose($handle);
-	return $this->render('IaatoIaatoBundle:CSV:show.html.twig', array('cpt_done' => $cpt_done, 'cpt_total' => $cpt_total, 'name' => "activities"));
+	return $this->render('IaatoIaatoBundle:CSV:show.html.twig', array('cpt_done' => $cpt_done, 'cpt_total' => $cpt_total, 'name' => "activities", 'error' => $errors));
   }
   
   // Need TypeSlot...
@@ -201,6 +208,7 @@ class CSVUpController extends Controller
     $handle = fopen($data, "r");
     $cpt_done = 0;
     $cpt_total = 0;
+    $errors = array();
     $lin = fgetcsv($handle,1000,";"); // Pour sauter la première ligne 
     
     while(($lin = fgetcsv($handle,1000,";")) !== FALSE){
@@ -233,16 +241,20 @@ class CSVUpController extends Controller
             }
             else{
                 /* Le nom de site n'existe pas */
+                $line_num = $cpt_total+1;
+                array_push($errors,"Line " . $line_num . " :  the site doesn't exist...");
             }
         }
         else{
             /* Le nom de ship n'existe pas */
+            $line_num = $cpt_total+1;
+            array_push($errors,"Line " . $line_num . " :  the name of the ship doesn't exist...");
         }
         
     }
     
     fclose($handle);
-	return $this->render('IaatoIaatoBundle:CSV:show.html.twig', array('cpt_done' => $cpt_done, 'cpt_total' => $cpt_total, 'name' => "steps"));
+	return $this->render('IaatoIaatoBundle:CSV:show.html.twig', array('cpt_done' => $cpt_done, 'cpt_total' => $cpt_total, 'name' => "steps", 'error' => $errors));
   }
   
   
@@ -251,6 +263,7 @@ class CSVUpController extends Controller
     $handle = fopen($data, "r");
     $cpt_done = 0;
     $cpt_total = 0;
+    $errors = array();
     $lin = fgetcsv($handle,1000,";"); // Pour sauter la première ligne 
     
     while(($lin = fgetcsv($handle,1000,";")) !== FALSE){
@@ -264,10 +277,14 @@ class CSVUpController extends Controller
             $em->flush();
             $cpt_done++;
         }
+        else{
+            $line_num = $cpt_total+1;
+            array_push($errors,"Line " . $line_num . " :  this site already exist...");
+        }
     }
     
     fclose($handle);
-	return $this->render('IaatoIaatoBundle:CSV:show.html.twig', array('cpt_done' => $cpt_done, 'cpt_total' => $cpt_total, 'name' => "sites"));
+	return $this->render('IaatoIaatoBundle:CSV:show.html.twig', array('cpt_done' => $cpt_done, 'cpt_total' => $cpt_total, 'name' => "sites", 'error' => $errors));
   }
   
   // A tester
