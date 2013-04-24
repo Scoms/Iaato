@@ -1,16 +1,19 @@
 {% extends '::base.html.twig' %}
 
+{% block title %}CSV uploaded{% endblock %}
+
 {% block body %}
 <div class="well">
   <ul class="nav">
 		<a class="btn btn-info" href="{{ path('iaato_secretariat') }}" >Back</a>	
+    <a class="btn btn-info" href="{{ path('iaato_csv_upload') }}" >Upload another file</a>	
 	</ul>
     
 	<table class="table table-hover table-bordered" style="width: 45%;background-color:white;">
 		
 		<thead style="background-color:#49afcd">
 			<tr>
-	  			<th style="color:iophyjkb">{{ name }}</th>
+	  			<th style="color:iophyjkb"><center>{{ name }}</center></th>
 			</tr>
 		</thead>
 

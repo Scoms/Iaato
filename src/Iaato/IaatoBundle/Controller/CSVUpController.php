@@ -15,6 +15,9 @@ use Iaato\IaatoBundle\Entity\Step;
 use Iaato\IaatoBundle\Entity\Site;
 use Iaato\IaatoBundle\Entity\SubZone;
 use Iaato\IaatoBundle\Entity\Zone;
+use Iaato\IaatoBundle\Entity\TimeSlot;
+use Iaato\IaatoBundle\Entity\TimeSlotLabel;
+use Iaato\IaatoBundle\Entity\Date;
 use Symfony\Component\Security\Core\SecurityContext;
 
 class CSVUpController extends Controller
@@ -52,7 +55,7 @@ class CSVUpController extends Controller
                         return $this->forward('IaatoIaatoBundle:CSVUp:activity', array('data' => $data));
                         break;
                     case "steps":
-                        //return $this->forward('IaatoIaatoBundle:CSVUp:step', array('data' => $data));
+                        return $this->forward('IaatoIaatoBundle:CSVUp:step', array('data' => $data));
                         break;
                     case "sites":
                         return $this->forward('IaatoIaatoBundle:CSVUp:site', array('data' => $data));
@@ -224,7 +227,7 @@ class CSVUpController extends Controller
         
         if($em->getRepository("IaatoIaatoBundle:Ship")->findOneBy(array('nameShip' => $lin[0]))!= NULL){
             if($em->getRepository("IaatoIaatoBundle:Site")->findOneBy(array('nameSite' => $lin[1]))!= NULL){
-                if($em->getRepository("IaatoIaatoBundle:TimeSlotLabel")->findOneBy(array('tslabel' => $lin[2]))!= NULL){
+                if($em->getRepository("IaatoIaatoBundle:TimeSlotLabel")->findOneBy(array('tslabel' => $lin[3]))!= NULL){
                 
                     $ship = $em->getRepository("IaatoIaatoBundle:Ship")->findOneBy(array('nameShip' => $lin[0]));
                     $step->setShip($ship);
@@ -232,12 +235,32 @@ class CSVUpController extends Controller
                     $site = $em->getRepository("IaatoIaatoBundle:Site")->findOneBy(array('nameSite' => $lin[1]));
                     $step->setSite($site);
                     
-                    $tsl = $em->getRepository("IaatoIaatoBundle:TimeSlotLabel")->findOneBy(array('tslabel' => $lin[2]));
+                    if($em->getRepository("IaatoIaatoBundle:Date")->findOneBy(array('date' => new \DateTime($lin[2])))!= NULL){
+                      $date = $em->getRepository("IaatoIaatoBundle:Date")->findOneBy(array('date' => new \DateTime($lin[2])));
+                    }
                     
-                    // Besoin d'avoir la table tomeSlot remplie...
-                    $timeSlot = $em->getRepository("IaatoIaatoBundle:TimeSlot")->findOneBy(array('label' => $tsl));
-                    $step->setTimeslot($timeSlot);
-                    $cpt++;
+                    else{
+                      $date = new Date();
+                      $date->setDate(new \DateTime($lin[2]));
+                      $em-persist($date);
+                    }
+                    
+                    $tsl = $em->getRepository("IaatoIaatoBundle:TimeSlotLabel")->findOneBy(array('tslabel' => $lin[3]));
+                    if($em->getRepository("IaatoIaatoBundle:TimeSlot")->findBy(array('date' => $date,'label' => $tsl))!= NULL){
+                      $timeslot = $em->getRepository("IaatoIaatoBundle:TimeSlot")->findOneBy(array('date' => $date,'label' => $tsl));
+                    }
+                    else{
+                      $timeslot = new TimeSlot();
+                      $timeslot->setDate($date);
+                      $timeslot->setLabelTimeSlot($tsl);
+                      $timeslot->addStep($step);
+                      $em->persist($timeslot);
+                    }
+                    
+                    // Besoin d'avoir la table timeSlot remplie...
+                    //$timeSlot = $em->getRepository("IaatoIaatoBundle:TimeSlot")->findOneBy(array('label' => $tsl));
+                    $step->setTimeslot($timeslot);
+                    $cpt_done++;
                     $em->persist($step);
                     $em->flush();
                 }
