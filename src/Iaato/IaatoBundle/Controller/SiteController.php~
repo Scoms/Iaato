@@ -14,9 +14,8 @@ class SiteController extends Controller{
   public function indexAction(){
 
     $em = $this->getDoctrine()->getEntityManager();
-    $site = $em->getRepository('IaatoIaatoBundle:Site')->findAll();
+    $sites = $em->getRepository('IaatoIaatoBundle:Site')->findAll();
     return $this->render('IaatoIaatoBundle:Site:index.html.twig', array('sites' => $sites));
-  
   }
 
   public function addAction(){
@@ -28,7 +27,7 @@ class SiteController extends Controller{
       $stackZone = array();
 
       foreach($zones as $zone)
-        array_push($stackZone,$zone->getLabelZone());
+        array_push($stackZone,$zone->getLabelSubZone());
 
       $formBuilder = $this->createFormBuilder($site);
       $formBuilder

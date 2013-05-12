@@ -29,7 +29,7 @@ class Ships extends AbstractFixture implements OrderedFixtureInterface{
 	public function load(ObjectManager $manager)
 	{
 	  
-	 $handle = fopen('web/CSV/ships.csv','r');
+	 $handle = fopen('template_csv/remplis/ships.csv','r');
 	  $row = 1;
 	      while (($data = fgetcsv($handle, 1000, ";")) !== FALSE)
 	      {

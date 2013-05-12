@@ -46,8 +46,8 @@
             <td><p>{{ site.nameSite }}</p></td>
             <td><p>{{ site.latitude }}</p></td>
             <td><p>{{ site.longitude }}</p></td>
-            <td><p>{{ site.iaato }}</p></td>
-            <td><p>{{ site.labelZone }}</p></td>
+            <td><p>{% if site.iaato %}true{% else %}false{% endif %}</p></td>
+            <td><p>{{ site.subZone.labelSubz }} </p></td>
           </tr>
       {% endfor %}
     </tbody>

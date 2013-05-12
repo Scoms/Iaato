@@ -69,4 +69,27 @@ class SubZone
     {
         return $this->labelSubZ;
     }
+
+    /**
+     * Set zone
+     *
+     * @param \Iaato\IaatoBundle\Entity\Zone $zone
+     * @return SubZone
+     */
+    public function setZone(\Iaato\IaatoBundle\Entity\Zone $zone)
+    {
+        $this->zone = $zone;
+    
+        return $this;
+    }
+
+    /**
+     * Get zone
+     *
+     * @return \Iaato\IaatoBundle\Entity\Zone 
+     */
+    public function getZone()
+    {
+        return $this->zone;
+    }
 }

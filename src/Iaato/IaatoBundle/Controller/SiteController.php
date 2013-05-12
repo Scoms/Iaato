@@ -27,7 +27,7 @@ class SiteController extends Controller{
       $stackZone = array();
 
       foreach($zones as $zone)
-        array_push($stackZone,$zone->getLabelZone());
+        array_push($stackZone,$zone->getLabelSubZ());
 
       $formBuilder = $this->createFormBuilder($site);
       $formBuilder

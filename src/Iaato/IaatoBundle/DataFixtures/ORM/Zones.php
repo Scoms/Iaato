@@ -23,7 +23,7 @@ class Zones extends AbstractFixture implements OrderedFixtureInterface{
 	*/
 	public function load(ObjectManager $manager){
 		
-		$handle = fopen('web/CSV/zones.csv','r');
+		$handle = fopen('template_csv/remplis/zones.csv','r');
 		$data = fgetcsv($handle, 1000, ";");
 		while (($data = fgetcsv($handle, 1000, ";")) !== FALSE)
 		{

@@ -23,7 +23,7 @@ class Companys extends AbstractFixture implements OrderedFixtureInterface{
 	*/
 	public function load(ObjectManager $manager)
 	{
-	  $handle = fopen('web/CSV/societies.csv','r');
+	  $handle = fopen('template_csv/remplis/societies.csv','r');
 	  $row = 2;
 	      while (($data = fgetcsv($handle, 1000, ";")) !== FALSE)
 	      {

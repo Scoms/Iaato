@@ -29,7 +29,7 @@ class Ships extends AbstractFixture implements OrderedFixtureInterface{
 	public function load(ObjectManager $manager)
 	{
 	  
-	 $handle = fopen('web/CSV/ships.csv','r');
+	 $handle = fopen('template_CSV/remplis/ships.csv','r');
 	  $row = 1;
 	      while (($data = fgetcsv($handle, 1000, ";")) !== FALSE)
 	      {
@@ -39,8 +39,6 @@ class Ships extends AbstractFixture implements OrderedFixtureInterface{
 		    $ship = new Ship;
 		    $ship->setNameShip($data[0]);
 		    $ship->setSociety($manager->getRepository('IaatoIaatoBundle:Society')->findOneBy(array("labelSociety"=>$data[1])));
-		    
-		    echo $data[2]."\n";
 		    $ship->setType($manager->getRepository('IaatoIaatoBundle:Type')->findOneBy(array("labelType"=>$data[2])));
 		    $ship->setCode($data[3]);
 		    // EMAIL 
