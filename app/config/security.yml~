@@ -50,6 +50,7 @@ security:
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/secretariat, roles: ROLE_SECRETARIAT }
+        - { path: ^/capitaine, roles: ROLE_CAPITAINE }
 #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         #
         # You must uncomment the two following rules to restrict access to paths

@@ -1,4 +1,9 @@
 {% extends '::base.html.twig' %}
+
+{% block title %}
+	Admin
+{% endblock %}
+
 {% block body %}
 <div class="well">
 	<p>You can add and remove users</p>
@@ -14,7 +19,6 @@
   </div>
 {% endif %}
 	
-	{% endif %}
 	<h3>Add a user</h3>
 	<form method="post" {{ form_enctype(form_add) }} class="form">
 		{{ form_errors(form_add) }}
