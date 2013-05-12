@@ -25,16 +25,17 @@ class Companys extends AbstractFixture implements OrderedFixtureInterface{
 	{
 	  $handle = fopen('web/CSV/societies.csv','r');
 	  $row = 2;
-	      while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
+	      while (($data = fgetcsv($handle, 1000, ";")) !== FALSE)
 	      {
+		  echo $data[0]."\n";
 		  $num = count($data);
 		  $row++;
 		  $company = new Society;
 		  $company->setLabelSociety($data[0]);
 		  if($manager->getRepository('IaatoIaatoBundle:Society')->findOneBy(array("labelSociety"=>$data[0])) == "")
-		  {  $manager->persist($company); 
-		      
-	      $manager->flush();
+		  { 
+		      $manager->persist($company);       
+		      $manager->flush();
 		   }   
 	      }
 	    fclose($handle);

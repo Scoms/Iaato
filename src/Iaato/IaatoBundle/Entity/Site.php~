@@ -20,14 +20,13 @@ class Site
     private $step;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Zone", inversedBy="site") //Un site est rattaché à une seule zone mais une zone est rattachée à un seul site
+     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\SubZone", inversedBy="site") 
      * @ORM\JoinColumn(nullable=false) //Interdit de créer un site sans une zone
     */
-    private $zone;
+    private $subzone;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Iaato\IaatoBundle\Entity\Activity",
-     cascade={"persist"}) //Un site propose plusieurs activités et une activité est rattachée à plusieurs sites
+     * @ORM\ManyToMany(targetEntity="Iaato\IaatoBundle\Entity\Activity",cascade={"persist"}) //Un site propose plusieurs activités et une activité est rattachée à plusieurs sites
     */
     private $activity;
 

@@ -14,18 +14,6 @@ class Zone
 {
 
     /**
-     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\SubZone", inversedBy="zone")
-     * @ORM\JoinColumn(nullable=false)
-    */
-    private $subZone;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\Site", mappedBy="zone")
-     * @ORM\JoinColumn(nullable=false) //Une zone est rattachée à au moins un site
-    */
-    private $site;
-    
-    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
@@ -79,40 +67,7 @@ class Zone
      */
     public function __construct()
     {
-        $this->site = new \Doctrine\Common\Collections\ArrayCollection();
-    }
     
-    /**
-     * Add site
-     *
-     * @param \Iaato\IaatoBundle\Entity\Site $site
-     * @return Zone
-     */
-    public function addSite(\Iaato\IaatoBundle\Entity\Site $site)
-    {
-        $this->site[] = $site;
-    
-        return $this;
-    }
-
-    /**
-     * Remove site
-     *
-     * @param \Iaato\IaatoBundle\Entity\Site $site
-     */
-    public function removeSite(\Iaato\IaatoBundle\Entity\Site $site)
-    {
-        $this->site->removeElement($site);
-    }
-
-    /**
-     * Get site
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getSite()
-    {
-        return $this->site;
     }
     
     /**

@@ -14,7 +14,7 @@ class SubZone
 {
 
     /**
-     * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\Zone", mappedBy="subZone")
+     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Zone", inversedBy="subZone")
      * @ORM\JoinColumn(nullable=false)
     */
     private $zone;

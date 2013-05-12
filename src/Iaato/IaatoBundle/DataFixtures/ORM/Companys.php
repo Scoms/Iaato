@@ -25,7 +25,7 @@ class Companys extends AbstractFixture implements OrderedFixtureInterface{
 	{
 	  $handle = fopen('web/CSV/societies.csv','r');
 	  $row = 2;
-	      while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
+	      while (($data = fgetcsv($handle, 1000, ";")) !== FALSE)
 	      {
 		  $num = count($data);
 		  $row++;
