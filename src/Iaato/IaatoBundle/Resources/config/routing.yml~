@@ -108,6 +108,11 @@ iaato_csv_upload:
     pattern: /secretariat/csv/upload
     defaults: { _controller:IaatoIaatoBundle:CSVUp:index }
 
+
+iaato_csv_upload_el:
+    pattern: /capitaine/csv/upload
+    defaults: { _controller:IaatoIaatoBundle:CSVUp:index }
+
 iaato_csv_download_activities:
     pattern: /secretariat/csv/download/activities
     defaults: { _controller:IaatoIaatoBundle:CSVDown:activity }
@@ -120,7 +125,7 @@ iaato_csv_download_steps:
     pattern: /secretariat/csv/download/steps
     defaults: { _controller:IaatoIaatoBundle:CSVDown:step }
 
-iaato_csv_download_steps:
+iaato_csv_download_steps_el:
     pattern: /capitaine/csv
     defaults: { _controller:IaatoIaatoBundle:CSVDown:step }
     
