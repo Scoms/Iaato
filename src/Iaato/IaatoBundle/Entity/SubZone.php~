@@ -10,8 +10,24 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Iaato\IaatoBundle\Entity\SubZoneRepository")
  */
-class SubZone extends Zone
+class SubZone
 {
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Zone", inversedBy="subZone")
+     * @ORM\JoinColumn(nullable=false)
+    */
+    private $zone;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
 
     /**
      * @var string
@@ -52,5 +68,28 @@ class SubZone extends Zone
     public function getLabelSubZ()
     {
         return $this->labelSubZ;
+    }
+
+    /**
+     * Set zone
+     *
+     * @param \Iaato\IaatoBundle\Entity\Zone $zone
+     * @return SubZone
+     */
+    public function setZone(\Iaato\IaatoBundle\Entity\Zone $zone)
+    {
+        $this->zone = $zone;
+    
+        return $this;
+    }
+
+    /**
+     * Get zone
+     *
+     * @return \Iaato\IaatoBundle\Entity\Zone 
+     */
+    public function getZone()
+    {
+        return $this->zone;
     }
 }

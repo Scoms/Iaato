@@ -53,9 +53,7 @@ class AdminController extends Controller
 			
 		if ($request->getMethod() == 'POST')
 		{
-			//$ship_obj = $entityManager->getRepository('IaatoIaatoBundle:Ship')->find($ship);
 			$form->bind($request);
-			
 			if ($form->isValid())
 			{
 				$em = $this->getDoctrine()->getManager();

@@ -23,22 +23,34 @@ class Sites extends AbstractFixture implements OrderedFixtureInterface{
 	 * {@inheritDoc}
 	*/
 	public function load(ObjectManager $manager){
-		/*
-		$site = new Site;
-		$site->setNameSite('Aitcho Islands');
-		$site->setLatitude('62.24');
-		$site->setLongitude('59.47');
-		$site->setIaato('1');
-		$site->setZone($this->getReference('Falklands'));
-    	
-    	$manager->persist($site);		
-    	$manager->flush();
-*/
+		$repo_s_zone = $manager->getRepository('IaatoIaatoBundle:SubZone');
+		$handle = fopen('template_csv/remplis/sites.csv','r');
+		$data = fgetcsv($handle, 1000, ";");
+		while (($data = fgetcsv($handle, 1000, ";")) !== FALSE)
+		{
+		  $site = new Site;
+		  $site->setNameSite($data[0]);
+		  $site->setLatitude($data[1]);
+		  $site->setLongitude($data[2]);
+		  
+		  if($data[3] == "false")
+		    $site->setIaato(false);
+		  else
+		    $site->setIaato(true);
+		  
+		  if($data[5] == "")
+		    $data[5] = $data[4];
+		    
+		  $site->setSubzone($repo_s_zone->findOneBy(array("labelSubZ"=>$data[5])));
+		  $manager->persist($site);       
+		  $manager->flush();
+	      }
+	    fclose($handle);
   	}
 
   	public function getOrder(){
 
-	  return 3; // the order in which fixtures will be loaded
+	  return 2; // the order in which fixtures will be loaded
 	
 	}
 

@@ -42,10 +42,11 @@ class SubZones extends AbstractFixture implements OrderedFixtureInterface{
 	    //On attribut une sous zone eponyme à chaque zone pour des raisons pratique d'applications
 	    foreach($repo_zone->findAll() as $zone)
 	    {
+	      echo $zone;
 	      $s_zone = new SubZone;
 	      $s_zone->setLabelSubZ($zone->getLabelZone());
 	      $s_zone->setZone($zone);
-	      $manager->persist($s_zone);
+	      $manager->persist($zone);
 	    }
 	    $manager->flush();
   	}

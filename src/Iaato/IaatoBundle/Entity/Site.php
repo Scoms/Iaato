@@ -20,10 +20,10 @@ class Site
     private $step;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Zone", inversedBy="site") //Un site est rattaché à une seule zone mais une zone est rattachée à un seul site
+     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\SubZone", inversedBy="site") 
      * @ORM\JoinColumn(nullable=false) //Interdit de créer un site sans une zone
     */
-    private $zone;
+    private $subzone;
 
     /**
      * @ORM\ManyToMany(targetEntity="Iaato\IaatoBundle\Entity\Activity",cascade={"persist"}) //Un site propose plusieurs activités et une activité est rattachée à plusieurs sites
@@ -264,5 +264,28 @@ class Site
     public function getStep()
     {
         return $this->step;
+    }
+
+    /**
+     * Set subzone
+     *
+     * @param \Iaato\IaatoBundle\Entity\SubZone $subzone
+     * @return Site
+     */
+    public function setSubzone(\Iaato\IaatoBundle\Entity\SubZone $subzone)
+    {
+        $this->subzone = $subzone;
+    
+        return $this;
+    }
+
+    /**
+     * Get subzone
+     *
+     * @return \Iaato\IaatoBundle\Entity\SubZone 
+     */
+    public function getSubzone()
+    {
+        return $this->subzone;
     }
 }
