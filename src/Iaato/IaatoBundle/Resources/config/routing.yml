@@ -111,7 +111,7 @@ iaato_csv_upload:
 
 iaato_csv_upload_el:
     pattern: /capitaine/csv/upload
-    defaults: { _controller:IaatoIaatoBundle:CSVUp:index }
+    defaults: { _controller:IaatoIaatoBundle:CSVUp:indexEl }
 
 iaato_csv_download_activities:
     pattern: /secretariat/csv/download/activities

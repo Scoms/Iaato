@@ -361,7 +361,6 @@ class CSVUpController extends Controller
       $d = $lin[0];
       $tsl = $lin[1];
       $date = mktime(0, 0, 0, $m, $d, $y);
-      //Récupérer les dates
       $timeSlot = $repo_ts->findOneBy(array("date"=>102555,"label"=>$tsl));
       if($timeSlot == "")
       {

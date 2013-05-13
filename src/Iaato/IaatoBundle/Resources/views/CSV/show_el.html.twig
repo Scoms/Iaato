@@ -1,0 +1,30 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}CSV uploaded{% endblock %}
+
+{% block body %}
+<div class="well">
+
+  <a class="btn btn-warning" href={{ path('iaato_map_homepage') }}>Map</a>
+  <a class="btn btn-warning" href={{ path('iaato_step_list') }}>List</a>
+  <a class="btn btn-warning" href={{ path('iaato_csv_download_steps_el') }}>Download Step CSV</a>
+  <a class="btn btn-warning" href={{ path('iaato_csv_upload_el') }}>Upload Step CSV</a>
+    
+	<table class="table table-hover table-bordered" style="width: 45%;background-color:white;">
+		
+		<thead style="background-color:#49afcd">
+			<tr>
+	  			<th style="color:iophyjkb"><center>{{ name }}</center></th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr> <td>{{ cpt_done }} out of {{ cpt_total }} {{ name }} entered in the database !</td></tr>
+      {% for err in error %}
+        <tr> <td>{{ err }}</td> </tr>
+      {% endfor %}
+		</tbody>
+
+	</table>
+</div>
+{% endblock %}
