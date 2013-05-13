@@ -48,7 +48,31 @@ class CSVDownController extends Controller
   
   public function stepAction()
   {
-    return $this->forward('IaatoIaatoBundle:CSVDown:down', array('file' => 'steps.csv'));    
+    $request = $this->get('request');
+    $years = array();
+    $months = array();
+    $y = date("Y");
+    
+    for($i=0;$i<5;$i++)
+      $years[$y+$i] = $y+$i;
+    
+    for($i=1;$i<=12;$i++)
+      $months[$i] = $i;
+    
+    $form = $this->createFormBuilder();
+    $form
+      ->add('year','choice',array(
+      "choices"=>$years,
+      "required"=>"true",))
+      ->add('month','choice',array(
+      "choices"=>$months,
+      "required"=>"true",
+      ));
+    $form = $form->getForm();
+    return $this->render('IaatoIaatoBundle:Step:choose.html.twig',array(
+      "form"=>$form->createView(),
+    ));
+    //return $this->forward('IaatoIaatoBundle:CSVDown:down', array('file' => 'steps.csv'));    
   }
   
   public function subZoneAction()
