@@ -17,7 +17,7 @@ class CSVDownController extends Controller
   
   public function downAction($file)
   {
-    $path = '/opt/lampp/htdocs/Iaato/template_csv/';
+    $path = '/opt/lampp/htdocs/Iaato/web/CSV/';
     $response = new Response();
     $response->setContent(file_get_contents($path.$file));
     $response->headers->set('Content-Type', 'application/force-download'); // modification du content-type pour forcer le téléchargement (sinon le navigateur internet essaie d'afficher le document)
@@ -50,7 +50,7 @@ class CSVDownController extends Controller
   {
     return $this->forward('IaatoIaatoBundle:CSVDown:down', array('file' => 'steps.csv'));    
   }
-  
+  /*
   public function subZoneAction()
   {
     return $this->forward('IaatoIaatoBundle:CSVDown:down', array('file' => 'subZones.csv'));    
@@ -65,6 +65,7 @@ class CSVDownController extends Controller
   {
     return $this->forward('IaatoIaatoBundle:CSVDown:down', array('file' => 'zones.csv'));    
   }
+  */
 }
 
 ?>
