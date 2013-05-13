@@ -120,6 +120,10 @@ iaato_csv_download_steps:
     pattern: /secretariat/csv/download/steps
     defaults: { _controller:IaatoIaatoBundle:CSVDown:step }
 
+iaato_csv_download_steps_el:
+    pattern: /capitaine/csv
+    defaults: { _controller:IaatoIaatoBundle:CSVDown:step }
+    
 iaato_csv_download_sites:
     pattern: /secretariat/csv/download/sites
     defaults: { _controller:IaatoIaatoBundle:CSVDown:site }
