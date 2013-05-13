@@ -52,7 +52,8 @@ class CSVDownController extends Controller
     $years = array();
     $months = array();
     $y = date("Y");
-    
+    $msg = "pas de message";
+        
     for($i=0;$i<5;$i++)
       $years[$y+$i] = $y+$i;
     
@@ -69,8 +70,22 @@ class CSVDownController extends Controller
       "required"=>"true",
       ));
     $form = $form->getForm();
+    
+    if($request->getMethod() == 'POST')
+    {
+      $form->bind($request);
+      if($form->isValid())
+      {
+	$filename = "steps_".$form["year"]->getData()."_".$form["month"]->getData();
+	if($this->rechercheCSV("ok"))
+	  $msg = "téléchargement ".$filename;
+	else
+	  $msg = "création ".$filename;
+      }
+    }
     return $this->render('IaatoIaatoBundle:Step:choose.html.twig',array(
       "form"=>$form->createView(),
+      "msg"=>$msg,
     ));
     //return $this->forward('IaatoIaatoBundle:CSVDown:down', array('file' => 'steps.csv'));    
   }
@@ -88,6 +103,10 @@ class CSVDownController extends Controller
   public function zoneAction()
   {
     return $this->forward('IaatoIaatoBundle:CSVDown:down', array('file' => 'zones.csv'));    
+  }
+  public function rechercheCSV($name)
+  {
+    return false;
   }
 }
 

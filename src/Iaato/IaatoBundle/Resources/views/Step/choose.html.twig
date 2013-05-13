@@ -7,12 +7,12 @@
 {% block body %}
 <div class="well">
 <h2>Choose the period</h2>
-
+<h3>{{ msg }}</h3>
 <form method="post" {{ form_enctype(form) }} class="form">
     {{ form_errors(form) }}
     {{ form_row(form.year) }}
     {{ form_row(form.month) }}
-    
+    {{ form_rest(form) }}
     <input type="submit" value="Envoyer" class="btn btn-primary" />
 </form>
 </div>
