@@ -124,7 +124,8 @@ class CSVDownController extends Controller
     $mois = mktime( 0, 0, 0, $m, 1, $y );
     for($i=1;$i <= intval(date("t",$mois)) ;$i++)
     {
-      fputs($fd,"$i;;;\n");
+      for($j=0;$j<5;$j++)
+	fputs($fd,"$i;;;\n");
     }
   }
 }

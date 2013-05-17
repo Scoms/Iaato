@@ -346,69 +346,77 @@ class CSVUpController extends Controller
     $repo_date = $manager->getRepository('IaatoIaatoBundle:Date');
     $repo_ts = $manager->getRepository('IaatoIaatoBundle:TimeSlot');
     $repo_tsl = $manager->getRepository('IaatoIaatoBundle:TimeSlotLabel');
+    $repo_step = $manager->getRepository('IaatoIaatoBundle:Step');
     
     $handle = fopen($data, "r");
     $cpt_done = 0;
     $cpt_total = 0;
     $errors = array();
     $lin = fgetcsv($handle,1000,";"); // Pour sauter la première ligne 
-    $ship = $manager->getRepository('IaatoIaatoBundle:Ship')->findOneBy(array("nameShip"=>
-      $user = $this->get('security.context')->getToken()->getUser()->getShip()->getNameShip()));
+    
+    $ship = $this->get('security.context')->getToken()->getUser()->getShip();
     
     $infos = explode("_",$filename);
     $m = intval($infos[3]);
     $y = intval($infos[2]);
+    
     while(($lin = fgetcsv($handle,1000,";")) !== FALSE)
     {
-      $log->info($lin[1].":".$lin[2]."\n");
-      foreach( $repo_tsl->findAll() as $xxx )
-	if(($lin[1] == $xxx->getLabel())==1)
-	  $timeslotlabel = $xxx;
- 
-      foreach( $repo_site->findAll() as $xxx2)
-	if(($lin[2] == $xxx2->getNameSite())==1)
-	    $site = $xxx2;
-	    
-      $tsl = $repo_tsl->findOneBy(array("label"=>$timeslotlabel));
-      $d = $lin[0];
-      $date_test = new \DateTime;
-      $date_test->setDate($y,$m,$d);
-      $date = $repo_date->findOneBy(array("date"=>$date_test));
-      //Si la date n'existe pas 
-      if($date == null)
+      $datetime = new \DateTime;
+      $datetime->setDate($y,$m,$cpt_total+1);
+      $site_name = $lin[2];
+      $site = new Site();
+      $site = $repo_site->findOneBy(array("nameSite"=>$site_name));
+      //On récupère le timeslot
+      $date = $repo_date->findOneBy(array("date"=>$datetime));
+      $timeslotlabel = $repo_tsl->findOneBy(array("label"=>$lin[1]));
+      $timeslot = $repo_ts->findOneBy(array("label"=>$timeslotlabel,"date"=>$date));
+      
+      //On cherche si le step existe déja
+      $test_step = $repo_step->findOneBy(array("timeslot"=>$timeslot,"ship"=>$ship,"site"=>$site));
+      if($test_step == null)
       {
-	$date = new Date();
-	$date->setDate($date_test);
-	$manager->persist($date);
-	$manager->flush();
+	//Pas de Step existant
+	// 3 tests à faire : site, ship, date
 	
-	$timeSlot = new TimeSlot();
-	$timeSlot->setDate($date);
-	$timeSlot->setLabelTimeSlot($timeslotlabel);
-	$manager->persist($timeSlot);
-	$manager->flush();
-      }
-      // si le time slot n'existe pas 
-      else
-      {
-	$timeSlot = $repo_ts->findOneBy(array("date"=>$date,"label"=>$tsl));
-	if($timeSlot == null)
+	//Test sur la date
+	if($date == null)
+	  array_push($errors,"Line " . ($cpt_total+1) . " :  date does not exist");
+	
+	if($site == null)
+	  array_push($errors,"Line " . ($cpt_total+1) . " :  site does not exist ($site_name)");
+	
+	  
+	if($timeslot == null)
 	{
-	  $timeSlot = new TimeSlot();
-	  $timeSlot->setDate($date);
-	  $timeSlot->setLabelTimeSlot($timeslotlabel);
-	  $manager->persist($timeSlot);
+	  
+	  if($timeslotlabel == null)
+	    array_push($errors,"Line " . ($cpt_total+1) . " :  timeslotlabel does not exist ($lin[1])");
+	  else
+	  {
+	    $timeslot = new TimeSlot();
+	    $timeslot->setDate($date);
+	    $timeslot->setLabelTimeSlot($timeslotlabel);
+	    $manager->persist($timeslot);
+	    $manager->flush();
+	  }
+	}
+	
+	if($site != null && $timeslot != null)
+	{
+	  
+	  array_push($errors,"Lxxx");
+	  $step = new Step();
+	  $step->setSite($site);
+	  $step->setTimeslot($timeslot);
+	  $step->setShip($ship);
+	  $manager->persist($step);
 	  $manager->flush();
 	}
       }
-      
-      $step = new Step;
-      $step->setShip($ship);
-      
-      $step->setSite($site);
-      $step->setTimeslot($timeSlot);
-      $manager->persist($step);
-      $manager->flush();
+      else
+	array_push($errors,"Line " . ($cpt_total+1) . " :  the step already exists");
+      $cpt_total++;
     }
     fclose($handle);
 	return $this->render('IaatoIaatoBundle:CSV:show_el.html.twig', array('cpt_done' => $cpt_done, 'cpt_total' => $cpt_total, 'name' => "steps", 'error' => $errors));
