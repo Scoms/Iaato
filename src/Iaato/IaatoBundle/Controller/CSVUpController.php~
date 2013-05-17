@@ -340,11 +340,13 @@ class CSVUpController extends Controller
   
   public function step2Action($filename,$data)
   {
+    $log = $this->get('logger');
     $manager = $this->getDoctrine()->getManager();
     $repo_site = $manager->getRepository('IaatoIaatoBundle:Site');
     $repo_date = $manager->getRepository('IaatoIaatoBundle:Date');
     $repo_ts = $manager->getRepository('IaatoIaatoBundle:TimeSlot');
     $repo_tsl = $manager->getRepository('IaatoIaatoBundle:TimeSlotLabel');
+    
     $handle = fopen($data, "r");
     $cpt_done = 0;
     $cpt_total = 0;
@@ -358,20 +360,51 @@ class CSVUpController extends Controller
     $y = intval($infos[2]);
     while(($lin = fgetcsv($handle,1000,";")) !== FALSE)
     {
+      $log->info($lin[1].":".$lin[2]."\n");
+      foreach( $repo_tsl->findAll() as $xxx )
+	if(($lin[1] == $xxx->getLabel())==1)
+	  $timeslotlabel = $xxx;
+ 
+      foreach( $repo_site->findAll() as $xxx2)
+	if(($lin[2] == $xxx2->getNameSite())==1)
+	    $site = $xxx2;
+	    
+      $tsl = $repo_tsl->findOneBy(array("label"=>$timeslotlabel));
       $d = $lin[0];
-      $tsl = $lin[1];
-      $date = mktime(0, 0, 0, $m, $d, $y);
-      $timeSlot = $repo_ts->findOneBy(array("date"=>102555,"label"=>$tsl));
-      if($timeSlot == "")
+      $date_test = new \DateTime;
+      $date_test->setDate($y,$m,$d);
+      $date = $repo_date->findOneBy(array("date"=>$date_test));
+      //Si la date n'existe pas 
+      if($date == null)
       {
-	// Créer timeslot
+	$date = new Date();
+	$date->setDate($date_test);
+	$manager->persist($date);
+	$manager->flush();
+	
 	$timeSlot = new TimeSlot();
-	$timeSlot->setDate($repo_date->findOneBy(array("date"=>$date)));
-	$timeSlot->setLabel($repo_tsl->findOneBy(array('tslabel'=>$tsl)));
+	$timeSlot->setDate($date);
+	$timeSlot->setLabelTimeSlot($timeslotlabel);
+	$manager->persist($timeSlot);
+	$manager->flush();
       }
-      $site = $repo_site->findOneBy(array("nameSite"=>$lin[2]));
+      // si le time slot n'existe pas 
+      else
+      {
+	$timeSlot = $repo_ts->findOneBy(array("date"=>$date,"label"=>$tsl));
+	if($timeSlot == null)
+	{
+	  $timeSlot = new TimeSlot();
+	  $timeSlot->setDate($date);
+	  $timeSlot->setLabelTimeSlot($timeslotlabel);
+	  $manager->persist($timeSlot);
+	  $manager->flush();
+	}
+      }
+      
       $step = new Step;
       $step->setShip($ship);
+      
       $step->setSite($site);
       $step->setTimeslot($timeSlot);
       $manager->persist($step);
