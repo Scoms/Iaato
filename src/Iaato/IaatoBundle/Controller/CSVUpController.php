@@ -352,7 +352,9 @@ class CSVUpController extends Controller
     $i = 0;
     $cpt_done = 0;
     $cpt_total = 0;
+    $lines = 1;
     $errors = array();
+    $success = array();
     $lin = fgetcsv($handle,1000,";"); // Pour sauter la première ligne 
     
     $ship = $this->get('security.context')->getToken()->getUser()->getShip();
@@ -362,8 +364,10 @@ class CSVUpController extends Controller
     $y = intval($infos[2]);
     while(($lin = fgetcsv($handle,1000,";")) !== FALSE)
     {
+      
       //Si la ligne contient des informations, sinon l'on affiche pas d'erreur
       $d = $lin[0];
+      $lines++;
       $datetime = new \DateTime;
       $datetime->setDate($y,$m,$d);
       //On récupère le timeslot
@@ -376,14 +380,16 @@ class CSVUpController extends Controller
       //On supprime tout ce qui se trouve au même timeslot
       if($i == 0)
       foreach($repo_ts->findBy(array('date'=>$date)) as $ts)
-	foreach( $repo_step->findBy(array('timeslot'=>$ts)) as $old_step)
+	foreach( $repo_step->findBy(array('timeslot'=>$ts,'ship'=>$ship)) as $old_step)
 	{
+	  
+	    array_push($errors,"REMOVE".$ts);
 	  $manager->remove($old_step);
 	}
       
       $i++;
       if($i==5)
-	$i==0;
+	$i=0;
       $manager->flush();
       if($lin[1] != '' &&  $lin[2] != '')
       {
@@ -403,23 +409,23 @@ class CSVUpController extends Controller
 	  $test_step2 = $repo_step->findOneBy(array("timeslot"=>$timeslot,"site"=>$site));
 	  //Pas de reservation enregistré
 	  if($test_step2 != null)
-	    array_push($errors,"Line " . ($cpt_total+1) . " :  the site is already booked by ($ship).");
+	    array_push($errors,"Line " . $lines . " :  the site is already booked by ($ship).");
 	 
 	 //Création de la reservation 
 	  else
 	  {
 	    //Si la date n'existe pas et que les deux autre champ sont remplis on l'ajoute
 	    if($date == null)
-	      array_push($errors,"Line " . ($cpt_total+1) . " :  date does not exist");
+	      array_push($errors,"Line " . $lines. " :  date does not exist");
 	    if($site == null)
-	      array_push($errors,"Line " . ($cpt_total+1) . " :  site does not exist ($site_name)");
+	      array_push($errors,"Line " . $lines . " :  site does not exist ($site_name)");
 	    
 	      
 	    if($timeslot == null)
 	    {
 	      
 	      if($timeslotlabel == null)
-		array_push($errors,"Line " . ($cpt_total+1) . " :  timeslotlabel does not exist ($lin[1])");
+		array_push($errors,"Line " . $lines . " :  timeslotlabel does not exist ($lin[1])");
 	      else
 	      {
 		$timeslot = new TimeSlot();
@@ -446,11 +452,23 @@ class CSVUpController extends Controller
 		    $manager->persist($step);
 		    $manager->flush();
 		    $cpt_done++;
-		    array_push($errors,"Line " . ($cpt_total+1) . " :  step confirmed. (".$datetime->format('Y-m-d')." : ".$timeslotlabel->getLabel()." : ".$site->getNameSite()." )");
+		    array_push($success,"Line " . $lines . " :  step confirmed. (".$datetime->format('Y-m-d')." : ".$timeslotlabel->getLabel()." : ".$site->getNameSite()." )");
 		  }
 		  else
 		  {
-		    array_push($errors,"Line " . ($cpt_total+1) . " :  Already booked before this day : ".$test_step3->getSite()->getNameSite()." ".$test_step3->getTimeSlot()->getLabelTimeSlot()->getLabel());
+		    if($test_step3->getTimeSlot()->getDate() === $date)
+		      array_push($errors,"Line " . $lines . " :  Already booked before this day : ".$test_step3->getSite()->getNameSite()." ".$test_step3->getTimeSlot()->getLabelTimeSlot()->getLabel());
+		    else
+		    {
+		      $step = new Step();
+		      $step->setSite($site);
+		      $step->setTimeslot($timeslot);
+		      $step->setShip($ship);
+		      $manager->persist($step);
+		      $manager->flush();
+		      $cpt_done++;
+		      array_push($success,"Line " . $lines . " :  step confirmed. (".$datetime->format('Y-m-d')." : ".$timeslotlabel->getLabel()." : ".$site->getNameSite()." )");
+		    }
 		  }
 		}
 		else
@@ -462,7 +480,7 @@ class CSVUpController extends Controller
 		  $manager->persist($step);
 		  $manager->flush();
 		  $cpt_done++;
-		  array_push($errors,"Line " . ($cpt_total+1) . " :  step confirmed. (".$datetime->format('Y-m-d')." : ".$timeslotlabel->getLabel()." : ".$site->getNameSite()." )");
+		  array_push($success,"Line " . $lines . " :  step confirmed. (".$datetime->format('Y-m-d')." : ".$timeslotlabel->getLabel()." : ".$site->getNameSite()." )");
 		}
 	      }
 	      else
@@ -474,14 +492,14 @@ class CSVUpController extends Controller
 		$manager->persist($step);
 		$manager->flush();
 		$cpt_done++;
-		array_push($errors,"Line " . ($cpt_total+1) . " :  step confirmed. (".$datetime->format('Y-m-d')." : ".$timeslotlabel->getLabel()." : ".$site->getNameSite()." )");
+		array_push($success,"Line " . $lines . " :  step confirmed. (".$datetime->format('Y-m-d')." : ".$timeslotlabel->getLabel()." : ".$site->getNameSite()." )");
 	      }
 	    }
 	   }
 	}
 	else
 	{
-	  array_push($errors,"Line " . ($cpt_total+1) . " :  step confirmed. (".$datetime->format('Y-m-d')." : ".$timeslotlabel->getLabel()." : ".$site->getNameSite()." )");
+	  array_push($success,"Line " . $lines. " :  step confirmed. (".$datetime->format('Y-m-d')." : ".$timeslotlabel->getLabel()." : ".$site->getNameSite()." )");
 	  $cpt_done++;
 	}
       }

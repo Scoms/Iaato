@@ -1,23 +1,44 @@
-{% extends '::base.html.twig' %}
+{% extends 'IaatoIaatoBundle:Capitaine:index.html.twig' %}
 
 {% block title %}
 	Expedition Leader
 {% endblock %}
 
+
 {% block body %}
 
 <div class="well">
-<ul class="nav">
+<div class ="btn-group">
   <a class="btn btn-warning" href={{ path('iaato_map_homepage') }}>Map</a>
   <a class="btn btn-warning" href={{ path('iaato_step_list') }}>List</a>
   <a class="btn btn-warning" href={{ path('iaato_csv_download_steps_el') }}>Download Step CSV</a>
   <a class="btn btn-warning" href={{ path('iaato_csv_upload_el') }}>Upload Step CSV</a>
-</ul>
-<ul class="nav">
+  <a class="btn btn-warning" href={{ path('iaato_csv_download_sites') }}>Sites</a>
+</div>
+<ul class="nav" style="margin-top:15px;">
 	<a class="btn btn-info" href="{{ path('iaato_step_list') }}" >Show steps</a>
 	<a class="btn btn-info" href="{{ path('iaato_step_list_add') }}" >Add a step</a>	
 	<a class="btn btn-info" href="{{ path('iaato_step_list_remove') }}" >Remove a step</a>
 </ul>
-<h6>Show -- Your ship : {{ ship }}</h6>
+<h6>Show -- Your ship : {{ ship.nameship }}</h6>
+
+
+<table class="table table-hover table-bordered" style=";background-color:white;margin-top:15px;">
+
+  <thead style="background-color:#49afcd">
+	<tr>
+		<th style="color:iophyjkb"><center>Site</center></th>
+		<th style="color:iophyjkb"><center>Date</center></th>
+	</tr>
+  </thead>
+  <tbody>
+  {% for step in list_step %}
+    <tr>
+      <td>{{ step.site.nameSite }}</td>
+      <td>{{ step.timeslot }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
 </div>
 {% endblock %}

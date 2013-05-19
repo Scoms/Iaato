@@ -3,8 +3,8 @@ iaato_iaato_homepage:
     defaults: { _controller: IaatoIaatoBundle:Home:index }
 
 iaato_capitaine:
-    pattern: /capitaine
-    defaults: { _controller: IaatoIaatoBundle:Capitaine:index }
+    pattern:  /capitaine/map
+    defaults: { _controller: IaatoMapBundle:Default:index }
 
 iaato_step_list:
     pattern: /capitaine/list
@@ -135,7 +135,7 @@ iaato_csv_download_sites:
     
 iaato_csv_download_sites_el:
     pattern: /el/csv/download/sites
-    defaults: { _controller:IaatoIaatoBundle:CSVDown:site }
+    defaults: { _controller:IaatoIaatoBundle:CSVDownFill:site }
 
 iaato_csv_download_societies:
     pattern: /secretariat/csv/download/societies

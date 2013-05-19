@@ -4,12 +4,15 @@
 	Expedition Leader
 {% endblock %}
 
-{% block body %}
-
-<div class="well">
+{% block subnav %}
+<div class ="btn-group">
   <a class="btn btn-warning" href={{ path('iaato_map_homepage') }}>Map</a>
   <a class="btn btn-warning" href={{ path('iaato_step_list') }}>List</a>
   <a class="btn btn-warning" href={{ path('iaato_csv_download_steps_el') }}>Download Step CSV</a>
   <a class="btn btn-warning" href={{ path('iaato_csv_upload_el') }}>Upload Step CSV</a>
+  <a class="btn btn-warning" href={{ path('iaato_csv_download_sites') }}>Sites</a>
 </div>
+{% endblock %}
+{% block body %}
+
 {% endblock %}

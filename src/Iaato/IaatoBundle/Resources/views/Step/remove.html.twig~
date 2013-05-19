@@ -7,10 +7,14 @@
 {% block body %}
 
 <div class="well">
-<ul class="nav">
+<div class ="btn-group">
   <a class="btn btn-warning" href={{ path('iaato_map_homepage') }}>Map</a>
   <a class="btn btn-warning" href={{ path('iaato_step_list') }}>List</a>
-</ul>
+  <a class="btn btn-warning" href={{ path('iaato_csv_download_steps_el') }}>Download Step CSV</a>
+  <a class="btn btn-warning" href={{ path('iaato_csv_upload_el') }}>Upload Step CSV</a>
+  <a class="btn btn-warning" href={{ path('iaato_csv_download_sites') }}>Sites</a>
+</div>
+  
 <ul class="nav">
 	<a class="btn btn-info" href="{{ path('iaato_step_list') }}" >Show steps</a>
 	<a class="btn btn-info" href="{{ path('iaato_step_list_add') }}" >Add a step</a>	

@@ -135,4 +135,10 @@ class TimeSlot
     {
         return $this->date;
     }
+    
+    public function __toString()
+    {
+      //return $this->getDate()." : ".$this->getLabelTimeSlot();
+      return $this->getDate()." : ".$this->getLabelTimeSlot();
+    }
 }

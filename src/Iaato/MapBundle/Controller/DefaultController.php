@@ -10,16 +10,21 @@ class DefaultController extends Controller
     public function indexAction()
     {
         
+	$em = $this->getDoctrine()->getManager();
 	$request = $this->getRequest();
 	$session = $request->getSession();
 	$role = $this->get('security.context');
+	$user = $this->get('security.context')->getToken()->getUser();
+	$ship = $user->getShip();
+	$repo_step = $em->getRepository('IaatoIaatoBundle:Step');
+	$array_step = $repo_step->findBy(array('ship'=>$ship));
 	// Si l'utilisateur est authetifié
 	if($role->isGranted('IS_AUTHENTICATED_REMEMBERED'))
 	{
 	//BON ROLE
 	  if( ($role->isGranted('ROLE_CAPITAINE') || $role->isGranted('ROLE_ADMIN')))
 	  {
-	    return $this->render('IaatoMapBundle:Map:map.html.twig');
+	    return $this->render('IaatoMapBundle:Map:map.html.twig',array('array_step'=>$array_step));
 	  }
 	  // MAUVAIS ROLE
 	}
@@ -35,8 +40,7 @@ class DefaultController extends Controller
 	    $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
 	    $session->remove(SecurityContext::AUTHENTICATION_ERROR);
 	  }
-	  
 	  //Authentification
-	  return $this->render('IaatoUserBundle:Security:login.html.twig', array('last_username' => $session->get(SecurityContext::LAST_USERNAME),'error'=> $error,));
+	  return $this->render('IaatoUserBundle:Security:login.html.twig', array('last_username' => $session->get(SecurityContext::LAST_USERNAME),'error'=> $error,'list_step'=>$list_step));
     }
 }

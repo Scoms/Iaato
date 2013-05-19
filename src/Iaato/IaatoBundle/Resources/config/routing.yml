@@ -3,8 +3,8 @@ iaato_iaato_homepage:
     defaults: { _controller: IaatoIaatoBundle:Home:index }
 
 iaato_capitaine:
-    pattern: /capitaine
-    defaults: { _controller: IaatoIaatoBundle:Capitaine:index }
+    pattern:  /capitaine/map
+    defaults: { _controller: IaatoMapBundle:Default:index }
 
 iaato_step_list:
     pattern: /capitaine/list

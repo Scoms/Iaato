@@ -14,20 +14,19 @@ class StepController extends Controller
     public function indexAction()
     {
       $em = $this->getDoctrine()->getEntityManager();
+      $repo_step = $em->getRepository('IaatoIaatoBundle:Step');
       $user = $this->get('security.context')->getToken()->getUser();
       $ship = $user->getShip();
-      if($ship==NULL)
-      {
-	//Display a choice box
-	$ship = "unkown";
-      }
-      else
-      {
-	$ship = $ship->getNameShip();
-      }
       
+      //On récupère la liste des steps.
+      $list_step = $repo_step->findBy(array("ship"=>$ship));
+      foreach($list_step as $step)
+      {
+	
+      }
       return $this->render('IaatoIaatoBundle:Step:show.html.twig',array(
-	'ship'=>$ship
+	'ship'=>$ship,
+	"list_step"=>$list_step,
       ));
     }
     public function addAction()
