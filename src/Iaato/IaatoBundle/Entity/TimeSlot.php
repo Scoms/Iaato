@@ -70,7 +70,7 @@ class TimeSlot
      */
     public function getLabelTimeSlot()
     {
-        return $this->labelTimeSlot;
+        return $this->label;
     }
     /**
      * Constructor

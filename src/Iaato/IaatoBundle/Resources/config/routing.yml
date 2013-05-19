@@ -132,6 +132,10 @@ iaato_csv_download_steps_el:
 iaato_csv_download_sites:
     pattern: /secretariat/csv/download/sites
     defaults: { _controller:IaatoIaatoBundle:CSVDown:site }
+    
+iaato_csv_download_sites_el:
+    pattern: /el/csv/download/sites
+    defaults: { _controller:IaatoIaatoBundle:CSVDownFill:site }
 
 iaato_csv_download_societies:
     pattern: /secretariat/csv/download/societies

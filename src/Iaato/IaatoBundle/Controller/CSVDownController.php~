@@ -120,13 +120,17 @@ class CSVDownController extends Controller
   }
   public function createFile($fd,$m,$y)
   {
+    $repo_tsl = $this->getDoctrine()->getManager()->getRepository('IaatoIaatoBundle:TimeSlotLabel');
     fputs($fd,"Day;TimeSlot;Site;\n");
     $mois = mktime( 0, 0, 0, $m, 1, $y );
     for($i=1;$i <= intval(date("t",$mois)) ;$i++)
     {
-      for($j=0;$j<5;j++)
-	fputs($fd,"$i;;;\n");
+      foreach($tsl as $ts)
+      {
+	fputs($fd,"$i;$ts;;\n");
+      }
     }
+
   }
 }
 

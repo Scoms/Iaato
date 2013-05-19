@@ -130,4 +130,8 @@ class TimeSlotLabel
     {
         return $this->label;
     }
+    public function __toString()
+    {
+      return $this->getLabel();
+    }
 }
