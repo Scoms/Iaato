@@ -13,6 +13,10 @@ iaato_step_list:
 iaato_step_list_add:
     pattern: /capitaine/list_add
     defaults: { _controller: IaatoIaatoBundle:Step:add }
+    
+iaato_step_list_add2:
+    pattern: /capitaine/list_add2/y={y}/d={d}/param={param}
+    defaults: { _controller: IaatoIaatoBundle:Step:add2 }
 
 iaato_step_list_remove:
     pattern: /capitaine/list_remove

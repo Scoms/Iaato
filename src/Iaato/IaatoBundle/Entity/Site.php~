@@ -265,4 +265,32 @@ class Site
     {
         return $this->step;
     }
+
+    /**
+     * Set subzone
+     *
+     * @param \Iaato\IaatoBundle\Entity\SubZone $subzone
+     * @return Site
+     */
+    public function setSubzone(\Iaato\IaatoBundle\Entity\SubZone $subzone)
+    {
+        $this->subzone = $subzone;
+    
+        return $this;
+    }
+
+    /**
+     * Get subzone
+     *
+     * @return \Iaato\IaatoBundle\Entity\SubZone 
+     */
+    public function getSubzone()
+    {
+        return $this->subzone;
+    }
+    
+    public function __toString()
+    {
+      return $this->getNameSite(). " : ".$this->getSubzone();
+    }
 }

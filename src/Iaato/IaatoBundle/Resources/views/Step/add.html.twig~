@@ -12,14 +12,35 @@
   <a class="btn btn-warning" href={{ path('iaato_step_list') }}>List</a>
   <a class="btn btn-warning" href={{ path('iaato_csv_download_steps_el') }}>Download Step CSV</a>
   <a class="btn btn-warning" href={{ path('iaato_csv_upload_el') }}>Upload Step CSV</a>
-  <a class="btn btn-warning" href={{ path('iaato_csv_download_sites') }}>Sites</a>
+  <a class="btn btn-warning" href={{ path('iaato_csv_download_sites_el') }}>Sites</a>
 </div>
   
 <ul class="nav" style="margin-top:15px;">
 	<a class="btn btn-info" href="{{ path('iaato_step_list') }}" >Show steps</a>
-	<a class="btn btn-info" href="{{ path('iaato_step_list_add') }}" >Add a step</a>	
+	<a class="btn btn-info" href="{{ path('iaato_step_list_add',{"param":"null"}) }}" >Add a step</a>	
 	<a class="btn btn-info" href="{{ path('iaato_step_list_remove') }}" >Remove a step</a>
 </ul>
-<h6>Add </h6>
+<h2>Step add</h2>
+
+{% if form != null %}
+<form method="post" {{ form_enctype(form) }} class="form">
+    {{ form_errors(form) }}
+    {{ form_rest(form) }}
+    <input type="submit" value="Envoyer" class="btn btn-primary" />
+</form>
+{% else %}
+
+<div class="btn-group">
+  <a class="btn btn-inverse" href="{{ path('iaato_step_list_add',{"param":"day"}) }}">By Day</a>
+  <a class="btn btn-inverse" href="{{ path('iaato_step_list_add',{"param":"site"}) }}">By Site</a>
+</div>
+
+{% endif %}
+
+{% if form_day != null %}
+{% endif %}
+{% if form_site != null %}
+{% endif %}
+
 </div>
 {% endblock %}

@@ -139,6 +139,6 @@ class TimeSlot
     public function __toString()
     {
       //return $this->getDate()." : ".$this->getLabelTimeSlot();
-      return " : ".$this->getLabelTimeSlot();
+      return $this->getDate()." : ".$this->getLabelTimeSlot();
     }
 }
