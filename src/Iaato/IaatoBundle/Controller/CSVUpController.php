@@ -382,8 +382,6 @@ class CSVUpController extends Controller
       foreach($repo_ts->findBy(array('date'=>$date)) as $ts)
 	foreach( $repo_step->findBy(array('timeslot'=>$ts,'ship'=>$ship)) as $old_step)
 	{
-	  
-	    array_push($errors,"REMOVE".$ts);
 	  $manager->remove($old_step);
 	}
       

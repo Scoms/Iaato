@@ -9,7 +9,7 @@
   <a class="btn btn-warning" href={{ path('iaato_step_list') }}>List</a>
   <a class="btn btn-warning" href={{ path('iaato_csv_download_steps_el') }}>Download Step CSV</a>
   <a class="btn btn-warning" href={{ path('iaato_csv_upload_el') }}>Upload Step CSV</a>
-  <a class="btn btn-warning" href={{ path('iaato_csv_download_sites') }}>Sites</a>
+  <a class="btn btn-warning" href={{ path('iaato_csv_download_sites_el') }}>Sites</a>
 </div>
 	<h3></h3>
 	<div class="well" style="width:60%; margin-left:auto; margin-right:auto; heigth:200px;">

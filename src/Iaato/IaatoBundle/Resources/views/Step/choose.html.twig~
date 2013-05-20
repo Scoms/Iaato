@@ -16,7 +16,6 @@
   
 <h2>Choose the period</h2>
 
-<h3>{{ msg }}</h3>
 <form method="post" {{ form_enctype(form) }} class="form">
     {{ form_errors(form) }}
     {{ form_row(form.year) }}
