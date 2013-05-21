@@ -19,7 +19,7 @@ $(function() {
   //addSites(-62.24, 59.47);
   //addSites(-64.14, 61.08);
   polyline = new google.maps.Polyline({
-    strokeColor:   '#2222FF', //on définit la couleur
+    strokeColor:   'red', //on définit la couleur
     strokeOpacity: 0.5,       //l'opacité
     strokeWeight:  3,         //l'épaisseur du trait,
     map:           gmap       //la map à laquelle rattacher la polyline

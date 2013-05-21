@@ -25,10 +25,11 @@ class DefaultController extends Controller
 	INNER JOIN IaatoIaatoBundle:TimeSlot ts with st.timeslot = ts.id
 	WHERE st.ship = '.$ship_id.'
 	ORDER BY ts.date ASC
+	ORDER BY ts.label DESC
 	'
 	  );
 
-      $list_step = $query->getResult();
+      $array_step = $query->getResult();
 	// Si l'utilisateur est authetifié
 	if($role->isGranted('IS_AUTHENTICATED_REMEMBERED'))
 	{
