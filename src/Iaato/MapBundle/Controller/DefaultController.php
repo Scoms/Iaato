@@ -18,6 +18,8 @@ class DefaultController extends Controller
 	$ship = $user->getShip();
 	$repo_step = $em->getRepository('IaatoIaatoBundle:Step');
 	$array_step = $repo_step->findBy(array('ship'=>$ship));
+	
+	sort($array_step);
 	// Si l'utilisateur est authetifié
 	if($role->isGranted('IS_AUTHENTICATED_REMEMBERED'))
 	{

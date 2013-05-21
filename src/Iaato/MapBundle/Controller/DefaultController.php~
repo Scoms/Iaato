@@ -17,14 +17,16 @@ class DefaultController extends Controller
 	$user = $this->get('security.context')->getToken()->getUser();
 	$ship = $user->getShip();
 	$repo_step = $em->getRepository('IaatoIaatoBundle:Step');
-	$array_step = $repo_step->findBy(array('ship'=>$ship));
+	$array_step = $repo_step->findBy(array('ship'=>$ship))->orderBy();
+	
+	sort($array_step);
 	// Si l'utilisateur est authetifié
 	if($role->isGranted('IS_AUTHENTICATED_REMEMBERED'))
 	{
 	//BON ROLE
 	  if( ($role->isGranted('ROLE_CAPITAINE') || $role->isGranted('ROLE_ADMIN')))
 	  {
-	    return $this->render('IaatoMapBundle:Map:map.html.twig',array('array_step'=>$array_step);
+	    return $this->render('IaatoMapBundle:Map:map.html.twig',array('array_step'=>$array_step));
 	  }
 	  // MAUVAIS ROLE
 	}
