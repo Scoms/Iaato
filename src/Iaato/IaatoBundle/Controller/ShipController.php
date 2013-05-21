@@ -38,10 +38,11 @@ class ShipController extends Controller {
 		$ship = new Ship();
 		$entityManager = $this->getDoctrine()->getEntityManager();
 		
-        $email1 = new Email();
-        $ship->addEmail($email1);
+
+        /*$email = new Email();
+        $ship->addEmail($email);
         $email2 = new Email();
-        $ship->addEmail($email2);
+        $ship->addEmail($email2);*/
         
         $societies = new EntityChoiceList($entityManager,'Iaato\IaatoBundle\Entity\Society');
 

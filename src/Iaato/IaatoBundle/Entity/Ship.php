@@ -33,7 +33,7 @@ class Ship
     private $society;
 
     /**
-     * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\Email",mappedBy="ship")
+     * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\Email",mappedBy="ship", cascade={"persist"})
     */
     private $email;
 
@@ -239,7 +239,7 @@ class Ship
     {
         return $this->email;
     }
-
+    
     /**
      * Add phone
      *
