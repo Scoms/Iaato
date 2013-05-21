@@ -19,6 +19,7 @@ class Step
     private $ship;
 
     /**
+     * @ORM\Column(name="site", type="integer")
      * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Site", inversedBy="step")
      * @ORM\JoinColumn(nullable=false)
     */
