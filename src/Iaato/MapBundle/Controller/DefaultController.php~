@@ -17,9 +17,18 @@ class DefaultController extends Controller
 	$user = $this->get('security.context')->getToken()->getUser();
 	$ship = $user->getShip();
 	$repo_step = $em->getRepository('IaatoIaatoBundle:Step');
-	$array_step = $repo_step->findBy(array('ship'=>$ship))->orderBy();
-	
-	sort($array_step);
+	$ship_id = $ship->getId();
+	//On récupère la liste des steps.
+	$query_builder = $em->createQueryBuilder();
+	$query = $em->createQuery(
+	'SELECT st FROM IaatoIaatoBundle:Step st 
+	INNER JOIN IaatoIaatoBundle:TimeSlot ts with st.timeslot = ts.id
+	WHERE st.ship = '.$ship_id.'
+	ORDER BY ts.date ASC
+	'
+	  );
+
+      $list_step = $query->getResult();
 	// Si l'utilisateur est authetifié
 	if($role->isGranted('IS_AUTHENTICATED_REMEMBERED'))
 	{

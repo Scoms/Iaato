@@ -21,20 +21,6 @@ class StepController extends Controller
       $ship_id = $ship->getId();
       //On récupère la liste des steps.
       $query_builder = $em->createQueryBuilder();
-      //$query = $em->createQuery('SELECT s FROM IaatoIaatoBundle:Step s INNER JOIN IaatoIaatoBundle:TimeSlot ts ORDER BY ts.date');
-      /*
-      $em = $this->getDoctrine()->getEntityManager();
-$qb = $em->createQueryBuilder()
-        ->select('c.name, i.id, i.image, i.name, i.description, m.id, m.quantity, m.value, m.qty_received, m.custom_image, m.custom_name, m.custom_description, u.user1fname, u.user1lname, u.user2fname, u.user2lname')
-        ->from('Categories', 'c')
-        ->innerJoin('Items', 'i', 'ON', 'c.id = i.category_id')
-        ->innerJoin('MemberItems', 'm', 'ON', 'i.id = m.item_id')
-        ->innerJoin('User', 'u', 'ON', 'm.memberinfo_id = u.id')
-        ->where('u.id = ?', $slug)
-        ->orderBy('c.id', 'ASC')
-        ->getQuery();
-
-$memberItems = $qb->getResult();*/
      $query = $em->createQuery(
      'SELECT st FROM IaatoIaatoBundle:Step st 
      INNER JOIN IaatoIaatoBundle:TimeSlot ts with st.timeslot = ts.id

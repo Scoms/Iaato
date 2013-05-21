@@ -24,8 +24,8 @@ class TimeSlots extends AbstractFixture implements OrderedFixtureInterface{
 	*/
 	public function load(ObjectManager $manager)
 	{
-	  $date_list = $manager->getRepository('IaatoIaatoBundle:Date')->findAll();
-	  $label_list = $manager->getRepository('IaatoIaatoBundle:TimeSlotLabel')->findAll();
+	 // $date_list = $manager->getRepository('IaatoIaatoBundle:Date')->findAll();
+	  //$label_list = $manager->getRepository('IaatoIaatoBundle:TimeSlotLabel')->findAll();
 	  /*foreach($date_list as $date)
 	  {
 	    foreach($label_list as $label)

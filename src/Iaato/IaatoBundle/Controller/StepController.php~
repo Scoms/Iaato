@@ -37,7 +37,7 @@ $qb = $em->createQueryBuilder()
 $memberItems = $qb->getResult();*/
      $query = $em->createQuery(
      'SELECT st FROM IaatoIaatoBundle:Step st 
-     RIGHT JOIN IaatoIaatoBundle:TimeSlot ts with st.timeslot = ts.id
+     INNER JOIN IaatoIaatoBundle:TimeSlot ts with st.timeslot = ts.id
      WHERE st.ship = '.$ship_id.'
      ORDER BY ts.date ASC
      '
