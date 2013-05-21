@@ -14,11 +14,11 @@ class Zone
 {
 
     /**
-     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\SubZone", inversedBy="zone")
+     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\SubZone",inversedBy="zone")
      * @ORM\JoinColumn(nullable=false)
     */
-    private $subZone;
-
+    private $subzone;
+    
     /**
      * @var integer
      *
@@ -32,7 +32,7 @@ class Zone
      * @var string
      *
      * @ORM\Column(name="labelZone", type="string", length=255)
-     */
+    */
     private $labelZone;
 
 

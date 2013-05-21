@@ -142,16 +142,44 @@ class StepController extends Controller
     public function addByDayAction($y,$m,$d,$tsl)
     {
       $jour = $y."-".$m."-".$d." : ".$tsl;
-      $em = $this->getDoctrine()->getManager();
-      $array_site = array();
-      $query_builder = $em->createQueryBuilder();
-	$query = $em->createQuery(
-	'SELECT s2
-	FROM IaatoIaatoBundle:Site s2 
-	WHERE s2  IN (SELECT st.ship FROM IaatoIaatoBundle:Step st)'
-	);
-      $array_site = $query->getResult();
+      $date_time = new \DateTime(''.$y.'-'.$m.'-'.$d.'');
       
+      $em = $this->getDoctrine()->getManager();
+      $repo_site = $em->getRepository('IaatoIaatoBundle:Site');
+      $repo_step = $em->getRepository('IaatoIaatoBundle:Step');
+      $repo_timeslot = $em->getRepository('IaatoIaatoBundle:TimeSlot');
+      $repo_date = $em->getRepository('IaatoIaatoBundle:Date');
+      
+      $date = $repo_date->findOneBy(array('date'=>$date_time));
+      $timeslot = $repo_timeslot->findOneBy(array('date'=>$date,'label'=>$tsl));
+      $array_step = $repo_step->findBy(array('timeslot'=>$timeslot));
+      $array_site_full = $repo_site->findAll();
+      $array_site = array();
+      /*
+      foreach($array_site_full as $site)
+      {
+	$in = false;
+	foreach($array_step as $step )
+	{
+	  if($site == $step->getSite())
+	  {
+	    $in = true;
+	  }
+	}
+	if($in == false)
+	  array_push($array_site,$site);
+      }*/
+      foreach($array_site_full as $site)
+      {
+	$in = false;
+	foreach($array_step as $step)
+	  if($site === $step->getSite())
+	    $in = true;
+	
+	if(!$in)
+	  array_push($array_site,$site);
+      }
+	
       $form = $this->createFormBuilder();
       $form->add('site','choice',array(
 	'choices'=>$array_site,

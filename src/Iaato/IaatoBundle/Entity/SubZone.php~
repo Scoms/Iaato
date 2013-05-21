@@ -12,9 +12,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class SubZone
 {
-
+   /**
+     * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\Site", mappedBy="subzone") 
+     * @ORM\JoinColumn(nullable=false)
+    */
+    private $site;
+    
     /**
-     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Zone", inversedBy="subZone")
+     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Zone", inversedBy="labelZone")
      * @ORM\JoinColumn(nullable=false)
     */
     private $zone;

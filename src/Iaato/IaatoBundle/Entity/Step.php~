@@ -13,7 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Step
 {
     /**
-    * @ORM\Column(name="ship")
      * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Ship", inversedBy="step")
      * @ORM\JoinColumn(nullable=false)
     */

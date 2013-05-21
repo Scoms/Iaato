@@ -14,6 +14,12 @@ class Zone
 {
 
     /**
+     * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\SubZone",mappedBy="zone")
+     * @ORM\JoinColumn(nullable=false)
+    */
+    private $subzone;
+    
+    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
@@ -26,7 +32,7 @@ class Zone
      * @var string
      *
      * @ORM\Column(name="labelZone", type="string", length=255)
-     */
+    */
     private $labelZone;
 
 
