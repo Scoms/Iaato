@@ -8,7 +8,6 @@
     <link href="{{ asset('../bootstrap/css/bootstrap.css') }}" rel="stylesheet" media="screen">
     <link href="{{ asset('../css/stylecontact.css') }}" rel="stylesheet" media="screen">
     <link href="{{ asset('../css/background.css') }}" rel="stylesheet" media="screen">
-    <link href="{{ asset('javascripts/select2-3.4.0/select2.css') }}" media="screen">
     <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>-->
     
     

@@ -438,7 +438,12 @@ class CSVUpController extends Controller
 	  {
 	    //Si la date n'existe pas et que les deux autre champ sont remplis on l'ajoute
 	    if($date == null)
-	      array_push($errors,"Line " . $lines. " :  date does not exist");
+	    {
+	      $date = new Date();
+	      $date->setDate($datetime);
+	      $manager->persist($date);
+	      $manager->flush();
+	    }
 	    if($site == null)
 	      array_push($errors,"Line " . $lines . " :  site does not exist ($site_name)");
 	    

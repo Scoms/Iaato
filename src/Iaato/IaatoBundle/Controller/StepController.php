@@ -18,9 +18,19 @@ class StepController extends Controller
       $repo_step = $em->getRepository('IaatoIaatoBundle:Step');
       $user = $this->get('security.context')->getToken()->getUser();
       $ship = $user->getShip();
-      
+      $ship_id = $ship->getId();
       //On récupère la liste des steps.
-      $list_step = $repo_step->findBy(array("ship"=>$ship));
+      $query_builder = $em->createQueryBuilder();
+     $query = $em->createQuery(
+     'SELECT st FROM IaatoIaatoBundle:Step st 
+     INNER JOIN IaatoIaatoBundle:TimeSlot ts with st.timeslot = ts.id
+     INNER JOIN IaatoIaatoBundle:TimeSlotLabel tsl with ts.label = tsl.id
+     WHERE st.ship = '.$ship_id.'
+     ORDER BY ts.date ASC, tsl.id ASC
+     '
+     );
+
+      $list_step = $query->getResult();
       return $this->render('IaatoIaatoBundle:Step:show.html.twig',array(
 	'ship'=>$ship,
 	'list_step'=>$list_step,

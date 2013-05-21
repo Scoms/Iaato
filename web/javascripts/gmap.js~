@@ -1,5 +1,7 @@
 var gmap;
 var gMarkers = new Array();
+var polyline;
+var path;
 $(function() {
   //J'utilise dans l'exemple jQuery pour améliorer la lisibilité du code, le focus étant sur GoogleMaps
  
@@ -16,6 +18,13 @@ $(function() {
   });
   //addSites(-62.24, 59.47);
   //addSites(-64.14, 61.08);
+  polyline = new google.maps.Polyline({
+    strokeColor:   'red', //on définit la couleur
+    strokeOpacity: 0.5,       //l'opacité
+    strokeWeight:  3,         //l'épaisseur du trait,
+    map:           gmap       //la map à laquelle rattacher la polyline
+  });
+  path = polyline.getPath();
   for(var coor in list_step)
   {
       addSites(list_step[coor]);
@@ -25,11 +34,12 @@ $(function() {
 function addSites(coor)
 {
     var myLatlng = new google.maps.LatLng(-coor[0],-coor[1]);
+    path.push(myLatlng);
     var marker = new google.maps.Marker({ position: myLatlng, title: coor[2]});
     marker.setMap(gmap);
     var content = "<div><strong>" + coor[2] + "</strong><br/>";
-    content += "<p>"+coor[3]+"</p><br/>";
-    content += "<p>"+coor[0]+";"+coor[1]+"</p>";
+    content += "<p>"+coor[3]+"</p>";
+    content += "<p>"+coor[0]+";"+coor[1]+"</p></div>";
     var infowindow = new google.maps.InfoWindow({ content: content });
     gMarkers.push(new GMarkerClass(marker, infowindow));  
 }
