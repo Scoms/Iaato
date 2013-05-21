@@ -288,4 +288,9 @@ class Site
     {
         return $this->subzone;
     }
+    
+    public function __toString()
+    {
+      return $this->getNameSite(). " : ".$this->getSubzone();
+    }
 }

@@ -25,19 +25,19 @@ class TimeSlotLabels extends AbstractFixture implements OrderedFixtureInterface{
 	public function load(ObjectManager $manager)
 	{
 	    $ts = new TimeSlotLabel;
-	    $ts->setTimeSlotLabel("early morning");
+	    $ts->setLabel("early morning");
 	    $manager->persist($ts);
 	    $ts = new TimeSlotLabel;
-	    $ts->setTimeSlotLabel("morning");
+	    $ts->setLabel("morning");
 	    $manager->persist($ts);
 	    $ts = new TimeSlotLabel;
-	    $ts->setTimeSlotLabel("afternoon");
+	    $ts->setLabel("afternoon");
 	    $manager->persist($ts);
 	    $ts = new TimeSlotLabel;
-	    $ts->setTimeSlotLabel("evening");
+	    $ts->setLabel("evening");
 	    $manager->persist($ts);
 	    $ts = new TimeSlotLabel;
-	    $ts->setTimeSlotLabel("overnight");
+	    $ts->setLabel("overnight");
 	    $manager->persist($ts);	
 	    $manager->flush();
   	}

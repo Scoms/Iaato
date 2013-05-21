@@ -12,6 +12,7 @@ namespace Iaato\IaatoBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Iaato\UserBundle\Entity\User;
+use Symfony\Bridge\Doctrine\Form\ChoiceList\EntityChoiceList;
 
 class RemoveController extends Controller
 {
@@ -52,6 +53,7 @@ class RemoveController extends Controller
 				}
 				$em->remove($user);
 				$em->flush();
+				unset($stack[$nom]);
 				$formBuilder = $this->createFormBuilder($user);
 				$formBuilder
 					->add('username', 'choice', array(
@@ -59,8 +61,6 @@ class RemoveController extends Controller
 			'required' => false,'label'=>'Roles','multiple'=>false
 		    ));
 				$form = $formBuilder->getForm();
-				$liste_user = $em->getRepository("IaatoUserBundle:User")->findAll();
-				unset($stack[$nom]);
 				return $this->render('IaatoIaatoBundle:Remove:index.html.twig',array(
 				    'sucess'=>'User "'.$nom.'" has been removed succesfully.',
 				    'error'=>'',

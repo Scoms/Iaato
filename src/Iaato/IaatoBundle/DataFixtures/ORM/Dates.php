@@ -24,7 +24,7 @@ class Dates extends AbstractFixture implements OrderedFixtureInterface{
 	*/
 	public function load(ObjectManager $manager)
 	{
-	  $d = new \DateTime("10/11/2013");
+	  /*$d = new \DateTime("10/11/2013");
 	  $i = 0;
 	  for($i = 0; $i < 100; $i++)
 	  {
@@ -33,7 +33,7 @@ class Dates extends AbstractFixture implements OrderedFixtureInterface{
 	    $manager->persist($date);	
 	    $manager->flush();
 	    $d->add(new \DateInterval('P1D'));
-	  }
+	  }*/
   	}
 
   	public function getOrder(){

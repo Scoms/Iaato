@@ -58,7 +58,7 @@ class TimeSlot
      */
     public function setLabelTimeSlot($labelTimeSlot)
     {
-        $this->labelTimeSlot = $labelTimeSlot;
+        $this->label = $labelTimeSlot;
     
         return $this;
     }
@@ -70,7 +70,7 @@ class TimeSlot
      */
     public function getLabelTimeSlot()
     {
-        return $this->labelTimeSlot;
+        return $this->label;
     }
     /**
      * Constructor
@@ -134,5 +134,11 @@ class TimeSlot
     public function getDate()
     {
         return $this->date;
+    }
+    
+    public function __toString()
+    {
+      //return $this->getDate()." : ".$this->getLabelTimeSlot();
+      return $this->getDate()." : ".$this->getLabelTimeSlot();
     }
 }

@@ -5,10 +5,18 @@
     <title>{% block title %}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
-    <link href="/Iaato/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
-    <link href="/Iaato/css/stylecontact.css" rel="stylesheet" media="screen">
-    <link href="/Iaato/css/background.css" rel="stylesheet" media="screen">
+    <link href="{{ asset('../bootstrap/css/bootstrap.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ asset('../css/stylecontact.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ asset('../css/background.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ asset('javascripts/select2-3.4.0/select2.css') }}" media="screen">
     <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>-->
+    
+    
+    <script src="{{ asset('javascripts/jquery-1.9.1.js') }}" media="screen"></script>
+    <script src="{{ asset('javascripts/select2-3.4.0/select2.js') }}" media="screen"></script>
+    {% block javascripts %}
+    {% endblock %}
+    
 </head>
 
 <body class="container">
@@ -50,10 +58,10 @@
 
     </div>
   </div>
-
-{% block body%}{% endblock %}
-
-{% block javascripts %}{% endblock %}
+{% block bodysupp %}
+{% block body%}
+{% endblock %}
+{% endblock %}
 </body>
 
 <footer>
@@ -67,4 +75,3 @@
 </footer>
 
 </html>
-

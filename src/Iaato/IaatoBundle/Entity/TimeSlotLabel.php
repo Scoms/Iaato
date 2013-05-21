@@ -32,7 +32,7 @@ class TimeSlotLabel
      *
      * @ORM\Column(name="label",type="string", length=255)
      */
-    private $tslabel;
+    private $label;
 
 
     /**
@@ -106,5 +106,32 @@ class TimeSlotLabel
     public function getTimeSlot()
     {
         return $this->timeSlot;
+    }
+
+    /**
+     * Set label
+     *
+     * @param string $label
+     * @return TimeSlotLabel
+     */
+    public function setLabel($label)
+    {
+        $this->label = $label;
+    
+        return $this;
+    }
+
+    /**
+     * Get label
+     *
+     * @return string 
+     */
+    public function getLabel()
+    {
+        return $this->label;
+    }
+    public function __toString()
+    {
+      return $this->getLabel();
     }
 }

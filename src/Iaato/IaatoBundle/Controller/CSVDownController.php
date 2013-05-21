@@ -26,6 +26,16 @@ class CSVDownController extends Controller
     return $response;
   }
   
+  public function down2Action($file)
+  {
+    $response = new Response();
+    $response->setContent(file_get_contents($file));
+    $response->headers->set('Content-Type', 'application/force-download'); // modification du content-type pour forcer le téléchargement (sinon le navigateur internet essaie d'afficher le document)
+    $response->headers->set('Content-disposition', 'filename='. $file);
+
+    return $response;
+  }
+  
   public function activityAction()
   {
     return $this->forward('IaatoIaatoBundle:CSVDown:down', array('file' => 'activities.csv'));    
@@ -76,11 +86,11 @@ class CSVDownController extends Controller
       $form->bind($request);
       if($form->isValid())
       {
-	$filename = "steps_".$form["year"]->getData()."_".$form["month"]->getData();
-	if($this->rechercheCSV("ok"))
-	  $msg = "téléchargement ".$filename;
-	else
-	  $msg = "création ".$filename;
+	$filename = "CSV/steps_".$form["year"]->getData()."_".$form["month"]->getData().".csv";
+	$fd = fopen($filename,"w+");
+	$msg = "téléchargement ".$filename;
+	$this->createFile($fd,$form["month"]->getData(),$form["year"]->getData());
+	return $this->forward('IaatoIaatoBundle:CSVDown:down2', array('file' => $filename));
       }
     }
     return $this->render('IaatoIaatoBundle:Step:choose.html.twig',array(
@@ -104,14 +114,28 @@ class CSVDownController extends Controller
   {
     return $this->forward('IaatoIaatoBundle:CSVDown:down', array('file' => 'zones.csv'));    
   }
-<<<<<<< HEAD
   */
-=======
+
   public function rechercheCSV($name)
   {
     return false;
   }
->>>>>>> dc199c9a60c95568e0909fe9373f5b58d5af05b3
+
+  public function createFile($fd,$m,$y)
+  {
+    $repo_tsl = $this->getDoctrine()->getManager()->getRepository('IaatoIaatoBundle:TimeSlotLabel');
+     $tsl = $repo_tsl->findAll();
+    fputs($fd,"Day;TimeSlot;Site;\n");
+    $mois = mktime( 0, 0, 0, $m, 1, $y );
+    for($i=1;$i <= intval(date("t",$mois)) ;$i++)
+    {
+      foreach($tsl as $ts)
+      {
+	fputs($fd,"$i;$ts;;\n");
+      }
+    }
+
+  }
 }
 
 ?>

@@ -68,6 +68,7 @@ class CSVUpController extends Controller
                         return $this->forward('IaatoIaatoBundle:CSVUp:zone', array('data' => $data , 'filename' => $filename));
                         break;
                     default:
+			return $this->forward('IaatoIaatoBundle:CSVUp:step2', array('filename'=>$filename ,'data' => $data));
                         break;
                 }
 			}
@@ -75,7 +76,58 @@ class CSVUpController extends Controller
 		return $this->render('IaatoIaatoBundle:CSV:upload.html.twig', array('form' => $form->createView()));
         
   }
-  
+  public function indexElAction()
+  {
+      
+	  $form = $this->createFormBuilder()
+		->add('file', 'file')
+		->getForm();
+
+		$request = $this->get('request');
+
+		// Check if we are posting stuff
+		if ($request->getMethod() == 'POST') {
+			
+			$form->bind($request);
+			
+			if ($form->isValid()) {
+                
+				$file = $form->get('file');
+                $data = $file->getData();
+                
+                $filename = $data->getClientOriginalName();
+                $name = explode(".", $filename);
+                switch($name[0]){
+                    case "ships":
+                        return $this->forward('IaatoIaatoBundle:CSVUp:ship', array('data' => $data));
+                        break;
+                    case "societies":
+                        return $this->forward('IaatoIaatoBundle:CSVUp:society', array('data' => $data));
+                        break;
+                    case "activities":
+                        return $this->forward('IaatoIaatoBundle:CSVUp:activity', array('data' => $data));
+                        break;
+                    case "steps":
+                        return $this->forward('IaatoIaatoBundle:CSVUp:step', array('data' => $data));
+                        break;
+                    case "sites":
+                        return $this->forward('IaatoIaatoBundle:CSVUp:site', array('data' => $data));
+                        break;
+                    case "types":
+                        return $this->forward('IaatoIaatoBundle:CSVUp:type', array('data' => $data));
+                        break;
+                    case "zones":
+                        return $this->forward('IaatoIaatoBundle:CSVUp:zone', array('data' => $data));
+                        break;
+                    default:
+			return $this->forward('IaatoIaatoBundle:CSVUp:step2', array('filename'=>$filename ,'data' => $data));
+                        break;
+                }
+			}
+		}
+		return $this->render('IaatoIaatoBundle:CSV:upload_el.html.twig', array('form' => $form->createView()));
+        
+  }
   
   // Ok
   public function shipAction($data, $filename)
@@ -310,6 +362,173 @@ class CSVUpController extends Controller
 	return $this->render('IaatoIaatoBundle:CSV:show.html.twig', array('cpt_done' => $cpt_done, 'cpt_total' => $cpt_total, 'name' => "steps", 'error' => $errors));
   }
   
+  public function step2Action($filename,$data)
+  {
+    $log = $this->get('logger');
+    $manager = $this->getDoctrine()->getManager();
+    $repo_site = $manager->getRepository('IaatoIaatoBundle:Site');
+    $repo_date = $manager->getRepository('IaatoIaatoBundle:Date');
+    $repo_ts = $manager->getRepository('IaatoIaatoBundle:TimeSlot');
+    $repo_tsl = $manager->getRepository('IaatoIaatoBundle:TimeSlotLabel');
+    $repo_step = $manager->getRepository('IaatoIaatoBundle:Step');
+    
+    $handle = fopen($data, "r");
+    $i = 0;
+    $cpt_done = 0;
+    $cpt_total = 0;
+    $lines = 1;
+    $errors = array();
+    $success = array();
+    $lin = fgetcsv($handle,1000,";"); // Pour sauter la première ligne 
+    
+    $ship = $this->get('security.context')->getToken()->getUser()->getShip();
+    
+    $infos = explode("_",$filename);
+    $m = intval($infos[3]);
+    $y = intval($infos[2]);
+    while(($lin = fgetcsv($handle,1000,";")) !== FALSE)
+    {
+      
+      //Si la ligne contient des informations, sinon l'on affiche pas d'erreur
+      $d = $lin[0];
+      $lines++;
+      $datetime = new \DateTime;
+      $datetime->setDate($y,$m,$d);
+      //On récupère le timeslot
+      
+      $site_name = $lin[2];
+      $site = $repo_site->findOneBy(array("nameSite"=>$site_name));
+      $date = $repo_date->findOneBy(array("date"=>$datetime));
+      $timeslotlabel = $repo_tsl->findOneBy(array("label"=>$lin[1]));
+      $timeslot = $repo_ts->findOneBy(array("label"=>$timeslotlabel,"date"=>$date));
+      //On supprime tout ce qui se trouve au même timeslot
+      if($i == 0)
+      foreach($repo_ts->findBy(array('date'=>$date)) as $ts)
+	foreach( $repo_step->findBy(array('timeslot'=>$ts,'ship'=>$ship)) as $old_step)
+	{
+	  $manager->remove($old_step);
+	}
+      
+      $i++;
+      if($i==5)
+	$i=0;
+      $manager->flush();
+      if($lin[1] != '' &&  $lin[2] != '')
+      {
+	$cpt_total++;
+	
+	
+	//On cherche si le step existe déja
+	$test_step = $repo_step->findOneBy(array("timeslot"=>$timeslot,"ship"=>$ship,"site"=>$site));
+	
+	// Pas de step, on en crée un 
+	if($test_step == null)
+	{
+	  //Pas de Step existant
+	  // 3 tests à faire : site, ship, date
+	  
+	  //On vérifie si le site n'est pas déja réservé
+	  $test_step2 = $repo_step->findOneBy(array("timeslot"=>$timeslot,"site"=>$site));
+	  //Pas de reservation enregistré
+	  if($test_step2 != null)
+	    array_push($errors,"Line " . $lines . " :  the site is already booked by ($ship).");
+	 
+	 //Création de la reservation 
+	  else
+	  {
+	    //Si la date n'existe pas et que les deux autre champ sont remplis on l'ajoute
+	    if($date == null)
+	      array_push($errors,"Line " . $lines. " :  date does not exist");
+	    if($site == null)
+	      array_push($errors,"Line " . $lines . " :  site does not exist ($site_name)");
+	    
+	      
+	    if($timeslot == null)
+	    {
+	      
+	      if($timeslotlabel == null)
+		array_push($errors,"Line " . $lines . " :  timeslotlabel does not exist ($lin[1])");
+	      else
+	      {
+		$timeslot = new TimeSlot();
+		$timeslot->setDate($date);
+		$timeslot->setLabelTimeSlot($timeslotlabel);
+		$manager->persist($timeslot);
+	      }
+	    }
+	    
+	    if($site != null && $timeslot != null)
+	    {
+	      //Si le site est IAATO et Si il existe déjà une réservation pour ce site 
+	      if($site->getIaato())
+	      {
+		$test_step3 = $repo_step->findOneBy(array('ship'=>$ship,'site'=>$site));
+		if($test_step3!=null)
+		{
+		  if($test_step3->getTimeSlot()->getLabelTimeSlot() == 'overnight' || $timeslot->getLabelTimeSlot() == 'overnight')
+		  {
+		    $step = new Step();
+		    $step->setSite($site);
+		    $step->setTimeslot($timeslot);
+		    $step->setShip($ship);
+		    $manager->persist($step);
+		    $manager->flush();
+		    $cpt_done++;
+		    array_push($success,"Line " . $lines . " :  step confirmed. (".$datetime->format('Y-m-d')." : ".$timeslotlabel->getLabel()." : ".$site->getNameSite()." )");
+		  }
+		  else
+		  {
+		    if($test_step3->getTimeSlot()->getDate() === $date)
+		      array_push($errors,"Line " . $lines . " :  Already booked before this day : ".$test_step3->getSite()->getNameSite()." ".$test_step3->getTimeSlot()->getLabelTimeSlot()->getLabel());
+		    else
+		    {
+		      $step = new Step();
+		      $step->setSite($site);
+		      $step->setTimeslot($timeslot);
+		      $step->setShip($ship);
+		      $manager->persist($step);
+		      $manager->flush();
+		      $cpt_done++;
+		      array_push($success,"Line " . $lines . " :  step confirmed. (".$datetime->format('Y-m-d')." : ".$timeslotlabel->getLabel()." : ".$site->getNameSite()." )");
+		    }
+		  }
+		}
+		else
+		{
+		  $step = new Step();
+		  $step->setSite($site);
+		  $step->setTimeslot($timeslot);
+		  $step->setShip($ship);
+		  $manager->persist($step);
+		  $manager->flush();
+		  $cpt_done++;
+		  array_push($success,"Line " . $lines . " :  step confirmed. (".$datetime->format('Y-m-d')." : ".$timeslotlabel->getLabel()." : ".$site->getNameSite()." )");
+		}
+	      }
+	      else
+	      {
+		$step = new Step();
+		$step->setSite($site);
+		$step->setTimeslot($timeslot);
+		$step->setShip($ship);
+		$manager->persist($step);
+		$manager->flush();
+		$cpt_done++;
+		array_push($success,"Line " . $lines . " :  step confirmed. (".$datetime->format('Y-m-d')." : ".$timeslotlabel->getLabel()." : ".$site->getNameSite()." )");
+	      }
+	    }
+	   }
+	}
+	else
+	{
+	  array_push($success,"Line " . $lines. " :  step confirmed. (".$datetime->format('Y-m-d')." : ".$timeslotlabel->getLabel()." : ".$site->getNameSite()." )");
+	  $cpt_done++;
+	}
+      }
+    }
+    fclose($handle);
+	return $this->render('IaatoIaatoBundle:CSV:show_el.html.twig', array('cpt_done' => $cpt_done, 'cpt_total' => $cpt_total, 'name' => "steps", 'error' => $errors));
+  }
   // Ok tested
   public function siteAction($data, $filename)
   {

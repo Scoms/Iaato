@@ -107,4 +107,9 @@ class Date
     {
         return $this->timeslot;
     }
+    
+    public function __toString()
+    {
+      return "date";
+    }
 }

@@ -92,4 +92,8 @@ class SubZone
     {
         return $this->zone;
     }
+    public function __toString()
+    {
+      return $this->getLabelSubZ();
+    }
 }
