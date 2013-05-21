@@ -17,24 +17,59 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Iaato\IaatoBundle\Entity\Ship;
 use Iaato\IaatoBundle\Entity\Type;
 use Iaato\IaatoBundle\Entity\Society;
+use Iaato\IaatoBundle\Entity\Email;
+use Iaato\IaatoBundle\Entity\Phone;
+
 
 class Ships extends AbstractFixture implements OrderedFixtureInterface{
 
 	/**
 	 * {@inheritDoc}
 	*/
-	public function load(ObjectManager $manager){
-		
-	$ship = new Ship;
-	$ship->setCode('C6WC2');
-	$ship->setNameShip('Alexander von Humboldt');
-	$ship->setNbPassenger('150');
-	$ship->setType($this->getReference('standard'));
-	$ship->setSociety($this->getReference('Club Cruise Fleet & Technical Department'));
-
-    	$manager->persist($ship);		
-    	$manager->flush();
-
+	public function load(ObjectManager $manager)
+	{
+	  
+	 $handle = fopen('template_csv/remplis/ships.csv','r');
+	  $row = 1;
+	      while (($data = fgetcsv($handle, 1000, ";")) !== FALSE)
+	      {
+		  if($row!=1)
+		  {
+		    $num = count($data);
+		    $ship = new Ship;
+		    $ship->setNameShip($data[0]);
+		    $ship->setSociety($manager->getRepository('IaatoIaatoBundle:Society')->findOneBy(array("labelSociety"=>$data[1])));
+		    $ship->setType($manager->getRepository('IaatoIaatoBundle:Type')->findOneBy(array("labelType"=>$data[2])));
+		    $ship->setCode($data[3]);
+		    // EMAIL 
+		    $email = new Email();
+		    $email->setEmail($data[4]);
+		    $email->setShip($ship);
+		    $ship->addEmail($email);
+		    
+		    // PHONE
+		    $phone = new Phone();
+		    $phone->setNumberPhone($data[5]);
+		    $ship->addPhone($phone);
+		    $phone->setShip($ship);
+		    
+		    $ship->setNbPassenger($data[6]);
+		    
+		    $manager->persist($phone);
+		    $manager->persist($email);
+		    $manager->persist($ship);
+		    $manager->flush();
+		  }
+		  $row++;
+		  //$ship->setNameShip($data[0]);
+		  //$ship->setSociety($manager->getRepository('IaatoIaatoBundle:Society')->findBy(array("labelSociety"=>$data[1])));
+		  //if($manager->getRepository('IaatoIaatoBundle:Society')->findOneBy(array("labelSociety"=>$data[0])) == "")
+		  //{ 
+		  //    $manager->persist($ship);       
+		  //    $manager->flush();
+		  // }   
+	      }
+	    fclose($handle);
   	}
 
   	public function getOrder(){

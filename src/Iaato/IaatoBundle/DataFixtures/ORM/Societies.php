@@ -21,7 +21,7 @@ class Societies extends AbstractFixture implements OrderedFixtureInterface{
 	 * {@inheritDoc}
 	*/
 	public function load(ObjectManager $manager){
-		
+		/*
 		$label = array('Club Cruise Fleet & Technical Department', 'Quark Expeditions', 'Oceanwide Expeditions');		
 		
 		foreach ($label as $i => $label) {
@@ -33,7 +33,7 @@ class Societies extends AbstractFixture implements OrderedFixtureInterface{
 		
 		// On déclenche l'enregistrement
 		$manager->flush();
-
+*/
   	}
   	public function getOrder()
 	{

@@ -14,9 +14,7 @@ namespace Iaato\IaatoBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Iaato\IaatoBundle\Entity\Site;
 use Iaato\IaatoBundle\Entity\Zone;
-use Iaato\IaatoBundle\Entity\SubZone;
 
 class Zones extends AbstractFixture implements OrderedFixtureInterface{
 
@@ -25,24 +23,24 @@ class Zones extends AbstractFixture implements OrderedFixtureInterface{
 	*/
 	public function load(ObjectManager $manager){
 		
-		$label = array('Antartic Peninsula', 'Falklands', 'South Georgia');		
-		
-		foreach ($label as $i => $label) {
-			$zones[$i] = new Zone;
-			$zones[$i]->setLabelZone($label);
-    			$manager->persist($zones[$i]);
-			$this->addReference($label, $zones[$i]);
-			$zones[$i]->setSubZone($this->getReference('Gerlache Strait'));
-		}
-		
-		// On déclenche l'enregistrement
-		$manager->flush();
-
+		$handle = fopen('template_csv/remplis/zones.csv','r');
+		$data = fgetcsv($handle, 1000, ";");
+		while (($data = fgetcsv($handle, 1000, ";")) !== FALSE)
+		{
+		  $zone = new Zone;
+		  $zone->setLabelZone($data[0]);
+		  if($manager->getRepository('IaatoIaatoBundle:Zone')->findOneBy(array("labelZone"=>$data[0])) == "")
+		  { 
+		      $manager->persist($zone);       
+		      $manager->flush();
+		   }   
+	      }
+	    fclose($handle);
   	}
 
   	public function getOrder(){
 
-	  return 2; // the order in which fixtures will be loaded
+	  return 0; // the order in which fixtures will be loaded
 	
 	}
 

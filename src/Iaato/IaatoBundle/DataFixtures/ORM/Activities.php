@@ -1,12 +1,13 @@
 <?php
 // vim: set et sw=4 ts=4 sts=4 fdm=marker ff=unix fenc=utf8
 /**
- * Ship.php
+ * Site.php
  *
  * @author
  * @date 2013/03/26
  * @link
  */
+
 
 namespace Iaato\IaatoBundle\DataFixtures\ORM;
 
@@ -16,28 +17,27 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Iaato\IaatoBundle\Entity\Activity;
 
 class Activities extends AbstractFixture implements OrderedFixtureInterface{
-	
+
 	/**
 	 * {@inheritDoc}
 	*/
 	public function load(ObjectManager $manager){
-		
-		$label = array('Randonnée', 'Ballade en zodiac', 'Camping');		
-		
-		foreach ($label as $i => $label) {
-			$activities[$i] = new Activity;
-			$activities[$i]->setLabelActivity($label);
-    			$manager->persist($activities[$i]);
-			$this->addReference($label, $activities[$i]);
-		}
-		
-		// On déclenche l'enregistrement
-		$manager->flush();
-
+		$handle = fopen('template_csv/remplis/activities.csv','r');
+		$data = fgetcsv($handle, 1000, ";");
+		while (($data = fgetcsv($handle, 1000, ";")) !== FALSE)
+		{
+		  $A = new Activity;
+		  $A->setLabelActivity($data[0]);
+		  $manager->persist($A);       
+		  $manager->flush();
+	      }
+	    fclose($handle);
   	}
-  	public function getOrder()
-	{
-	  return 1; // the order in which fixtures will be loaded
+
+  	public function getOrder(){
+
+	  return 0; // the order in which fixtures will be loaded
+	
 	}
 
 }

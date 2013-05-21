@@ -10,58 +10,32 @@ class DefaultController extends Controller
     public function indexAction()
     {
         
+	$em = $this->getDoctrine()->getManager();
 	$request = $this->getRequest();
 	$session = $request->getSession();
 	$role = $this->get('security.context');
+	$user = $this->get('security.context')->getToken()->getUser();
+	$ship = $user->getShip();
+	$repo_step = $em->getRepository('IaatoIaatoBundle:Step');
+	$ship_id = $ship->getId();
+	//On récupère la liste des steps.
+	$query_builder = $em->createQueryBuilder();
+	$query = $em->createQuery(
+	'SELECT st FROM IaatoIaatoBundle:Step st 
+	INNER JOIN IaatoIaatoBundle:TimeSlot ts with st.timeslot = ts.id
+	WHERE st.ship = '.$ship_id.'
+	ORDER BY ts.date ASC
+	'
+	  );
+
+      $list_step = $query->getResult();
 	// Si l'utilisateur est authetifié
 	if($role->isGranted('IS_AUTHENTICATED_REMEMBERED'))
 	{
 	//BON ROLE
 	  if( ($role->isGranted('ROLE_CAPITAINE') || $role->isGranted('ROLE_ADMIN')))
 	  {
-	    /*
-	    * Création de la map 
-	    */
-	    
-	    $gmap = new GoogleMapAPI();
-	    $gmap->setDivId('map');
-	    $gmap->setDirectionDivId('route');
-	    //$gmap->setCenter('Nantes France');
-	    $gmap->setEnableWindowZoom(true);
-	    //$gmap->setEnableAutomaticCenterZoom(true);
-	    $gmap->setDisplayDirectionFields(true);
-	    // $gmap->setClusterer(true);
-	    $gmap->setSize('800px','600px');
-	    $gmap->setZoom(0);
-	    $gmap->setLang('fr');
-	    $gmap->setDefaultHideMarker(false);
-	    // cat2
-	    $coordtab = array();
-	    array_push($coordtab,array('- 62.24','- 59.47','English Strait. SSI'));
-	    array_push($coordtab,array('- 64.14','61.08','Hughes Bay'));
-	    array_push($coordtab,array('0','0','a'));
-	    array_push($coordtab,array('- 64.51','62.23','Antarctic Peninsula','Andvord Bay'));
-	    array_push($coordtab,array('- 62.13','58.56','Antarctic Peninsula','KGI, SSI'));
-	    array_push($coordtab,array('- 65.15','64.16','Antarctic Peninsula','Penola Strait'));
-	    array_push($coordtab,array('- 63.17','58.4','Antarctic Peninsula','Bransfield Strait'));
-	    array_push($coordtab,array('- 62.58','60.3','Antarctic Peninsula','Deception Island, SSI'));
-	    array_push($coordtab,array('- 66.27','67.1','Antarctic Peninsula','Biscoe Islands'));
-	    array_push($coordtab,array('- 66.56','67.4','Antarctic Peninsula','Hanusse Bay'));
-	    array_push($coordtab,array('- 65.2','64.09','Antarctic Peninsula','Grandidier Channel'));
-	    array_push($coordtab,array('- 67.33','67.04','Antarctic Peninsula','NE Marguerite Bay'));
-	    array_push($coordtab,array('- 67.43','67.48','Antarctic Peninsula','W side Pourquoi Pas Island'));
-	    array_push($coordtab,array('- 63.32','56.55','Antarctic Peninsula','Tabarin Peninsula'));
-	    array_push($coordtab,array('- 67.58','67.19','Antarctic Peninsula','Eastern Marguerite Bay'));
-	    array_push($coordtab,array('- 64.21','61.35','Antarctic Peninsula','Gerlache Strait'));
-	    array_push($coordtab,array('- 65.04','64','Antarctic Peninsula','Booth Island'));
-	    $gmap->addArrayMarkerByAddress($coordtab,'cat1');
-
-	    $gmap->generate();
-	    echo $gmap->getGoogleMap();
-	    /*
-	    *
-	    */
-	    return $this->render('IaatoMapBundle:Map:map.html.twig');
+	    return $this->render('IaatoMapBundle:Map:map.html.twig',array('array_step'=>$array_step));
 	  }
 	  // MAUVAIS ROLE
 	}
@@ -77,8 +51,7 @@ class DefaultController extends Controller
 	    $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
 	    $session->remove(SecurityContext::AUTHENTICATION_ERROR);
 	  }
-	  
 	  //Authentification
-	  return $this->render('IaatoUserBundle:Security:login.html.twig', array('last_username' => $session->get(SecurityContext::LAST_USERNAME),'error'=> $error,));
+	  return $this->render('IaatoUserBundle:Security:login.html.twig', array('last_username' => $session->get(SecurityContext::LAST_USERNAME),'error'=> $error,'list_step'=>$list_step));
     }
 }

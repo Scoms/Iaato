@@ -18,7 +18,7 @@ class TimeSlot
     */
     private $date;
     /**
-     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\TimeSlotLabel", inversedBy="label")
+     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\TimeSlotLabel", inversedBy="timeslot")
      * @ORM\JoinColumn(nullable=false)
     */
     private $label;
@@ -70,7 +70,7 @@ class TimeSlot
      */
     public function getLabelTimeSlot()
     {
-        return $this->labelTimeSlot;
+        return $this->label;
     }
     /**
      * Constructor
@@ -134,5 +134,11 @@ class TimeSlot
     public function getDate()
     {
         return $this->date;
+    }
+    
+    public function __toString()
+    {
+      //return $this->getDate()." : ".$this->getLabelTimeSlot();
+      return $this->getDate()." : ".$this->getLabelTimeSlot();
     }
 }

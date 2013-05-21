@@ -2,11 +2,23 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-<div class="well">
+	<div class="well">
 
-<ul class="nav">
-	<a class="btn btn-info" href="{{ path('iaato_csv_upload') }}" >Upload</a>	
-</ul>
-<h3>DOWNLOAD-CSV</h3>
-</div>
+		<ul class="nav">
+			<a class="btn btn-info" href="{{ path('iaato_secretariat') }}" >Back</a>	
+			<a class="btn btn-info" href="{{ path('iaato_csv_upload') }}" >Upload</a>	
+		</ul>
+    
+    <h4> Choose the CSV template you need :  </h4>
+		
+    <a class="btn btn-warning" href={{ path('iaato_csv_download_activities') }}>Activities</a> 
+    <a class="btn btn-warning" href={{ path('iaato_csv_download_ships') }}>Ships</a>
+    <a class="btn btn-warning" href={{ path('iaato_csv_download_sites') }}>Sites</a>
+    <a class="btn btn-warning" href={{ path('iaato_csv_download_societies') }}>Societies</a>
+    <a class="btn btn-warning" href={{ path('iaato_csv_download_steps_el') }}>Steps</a> 
+    <a class="btn btn-warning" href={{ path('iaato_csv_download_subzones') }}>SubZones</a> 
+    <a class="btn btn-warning" href={{ path('iaato_csv_download_types') }}>Types</a> 
+    <a class="btn btn-warning" href={{ path('iaato_csv_download_zones') }}>Zones</a>
+    
+	</div>
 {% endblock %}

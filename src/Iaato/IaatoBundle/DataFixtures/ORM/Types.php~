@@ -23,23 +23,21 @@ class Types extends AbstractFixture implements OrderedFixtureInterface{
 	*/
 	public function load(ObjectManager $manager){
 		
-		$label = array('standard', 'ice-strengthned', 'ice-breaker');		
+		$label = array('standard', 'ice-strengthned', 'ice-breaker','yacht','Cat. 1','Cat. 2','Motor Yacht');
 		
 		foreach ($label as $i => $label) {
 			$types[$i] = new Type;
 			$types[$i]->setLabelType($label);
     			$manager->persist($types[$i]);
-		
 			$this->addReference($label, $types[$i]);
 		}
 		
 		// On déclenche l'enregistrement
 		$manager->flush();
-
   	}
   	public function getOrder()
       {
-        return 1; // the order in which fixtures will be loaded
+        return 0; // the order in which fixtures will be loaded
       }
 
 }
