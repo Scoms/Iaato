@@ -23,10 +23,11 @@ class DefaultController extends Controller
 	$query = $em->createQuery(
 	'SELECT st FROM IaatoIaatoBundle:Step st 
 	INNER JOIN IaatoIaatoBundle:TimeSlot ts with st.timeslot = ts.id
+	INNER JOIN IaatoIaatoBundle:TimeSlotLabel tsl with ts.label = tsl.id
 	WHERE st.ship = '.$ship_id.'
-	ORDER BY ts.date ASC
+	ORDER BY ts.date ASC, tsl.id ASC
 	'
-	  );
+	);
 
       $array_step = $query->getResult();
 	// Si l'utilisateur est authetifié
