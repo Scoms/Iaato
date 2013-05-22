@@ -73,7 +73,9 @@ class StepController extends Controller
     }
     public function add2Action($y,$m,$param=null)
     {
+      
       $em = $this->getDoctrine()->getManager();
+      $request = $this->get('request');
       $repo_tsl = $em->getRepository('IaatoIaatoBundle:TimeSlot');
       $form = $this->createFormBuilder();
       if($param == 'day')
@@ -108,7 +110,23 @@ class StepController extends Controller
 	  'label'=>'Site'))
 	  ;
       }
+      
       $form = $form->getForm();
+      if($request->getMethod() == 'POST')
+      {
+	$form->bind($request);
+	if($form->isValid())
+	{
+	  if($param == 'day')
+	  {
+	    return $this->addByDayAction($y,$m,$form["day"]->getData(),$form["timeslot"]->getData());
+	  }
+	  if($param == 'site' )
+	  {
+	    return $this->addBySiteAction($y,$m,$form["site"]->getData());
+	  }
+	}
+      }
       return $this->render('IaatoIaatoBundle:Step:add2.html.twig',array(
       'form'=>$form->createView(),
       'param'=>$param,
@@ -120,5 +138,62 @@ class StepController extends Controller
     {
       $em = $this->getDoctrine()->getEntityManager();
       return $this->render('IaatoIaatoBundle:Step:remove.html.twig');
+    }
+    public function addByDayAction($y,$m,$d,$tsl)
+    {
+      $jour = $y."-".$m."-".$d." : ".$tsl;
+      $date_time = new \DateTime(''.$y.'-'.$m.'-'.$d.'');
+      
+      $em = $this->getDoctrine()->getManager();
+      $repo_site = $em->getRepository('IaatoIaatoBundle:Site');
+      $repo_step = $em->getRepository('IaatoIaatoBundle:Step');
+      $repo_timeslot = $em->getRepository('IaatoIaatoBundle:TimeSlot');
+      $repo_date = $em->getRepository('IaatoIaatoBundle:Date');
+      
+      $date = $repo_date->findOneBy(array('date'=>$date_time));
+      $timeslot = $repo_timeslot->findOneBy(array('date'=>$date,'label'=>$tsl));
+      $array_step = $repo_step->findBy(array('timeslot'=>$timeslot));
+      $array_site_full = $repo_site->findAll();
+      $array_site = array();
+      /*
+      foreach($array_site_full as $site)
+      {
+	$in = false;
+	foreach($array_step as $step )
+	{
+	  if($site == $step->getSite())
+	  {
+	    $in = true;
+	  }
+	}
+	if($in == false)
+	  array_push($array_site,$site);
+      }*/
+      foreach($array_site_full as $site)
+      {
+	$in = false;
+	foreach($array_step as $step)
+	  if($site === $step->getSite())
+	    $in = true;
+	
+	if(!$in)
+	  array_push($array_site,$site);
+      }
+	
+      $form = $this->createFormBuilder();
+      $form->add('site','choice',array(
+	'choices'=>$array_site,
+	));
+      $form = $form->getForm();
+      return $this->render('IaatoIaatoBundle:Step:addByDay.html.twig',array(
+	"form"=>$form->createView(),
+	'day'=>$jour,
+	));
+    }
+    public function addBySiteAction($y,$m,$site)
+    {
+      return $this->render('IaatoIaatoBundle:Step:addBySite.html.twig',array(
+	"form"=>$form->createView(),
+	));
     }
 }

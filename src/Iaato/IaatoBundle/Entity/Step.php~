@@ -19,6 +19,7 @@ class Step
     private $ship;
 
     /**
+     * @ORM\Column(name="site", type="integer")
      * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Site", inversedBy="step")
      * @ORM\JoinColumn(nullable=false)
     */
@@ -48,5 +49,74 @@ class Step
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set ship
+     *
+     * @param \Iaato\IaatoBundle\Entity\Ship $ship
+     * @return Step
+     */
+    public function setShip(\Iaato\IaatoBundle\Entity\Ship $ship)
+    {
+        $this->ship = $ship;
+    
+        return $this;
+    }
+
+    /**
+     * Get ship
+     *
+     * @return \Iaato\IaatoBundle\Entity\Ship 
+     */
+    public function getShip()
+    {
+        return $this->ship;
+    }
+
+    /**
+     * Set site
+     *
+     * @param \Iaato\IaatoBundle\Entity\Site $site
+     * @return Step
+     */
+    public function setSite(\Iaato\IaatoBundle\Entity\Site $site)
+    {
+        $this->site = $site;
+    
+        return $this;
+    }
+
+    /**
+     * Get site
+     *
+     * @return \Iaato\IaatoBundle\Entity\Site 
+     */
+    public function getSite()
+    {
+        return $this->site;
+    }
+
+    /**
+     * Set timeslot
+     *
+     * @param \Iaato\IaatoBundle\Entity\TimeSlot $timeslot
+     * @return Step
+     */
+    public function setTimeslot(\Iaato\IaatoBundle\Entity\TimeSlot $timeslot)
+    {
+        $this->timeslot = $timeslot;
+    
+        return $this;
+    }
+
+    /**
+     * Get timeslot
+     *
+     * @return \Iaato\IaatoBundle\Entity\TimeSlot 
+     */
+    public function getTimeslot()
+    {
+        return $this->timeslot;
     }
 }
