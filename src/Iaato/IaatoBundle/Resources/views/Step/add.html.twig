@@ -25,9 +25,11 @@
 {% if form != null %}
 <form method="post" {{ form_enctype(form) }} class="form">
     {{ form_errors(form) }}
+    {{ form_widget(form.date) }}
     {{ form_rest(form) }}
     <input type="submit" value="Envoyer" class="btn btn-primary" />
 </form>
+        
 {% else %}
 
 <div class="btn-group">
@@ -37,4 +39,9 @@
 {% endif %}
 
 </div>
+{% endblock %}
+{% block javascripts %}
+<script>
+  $(document).ready(function(){ $("form input.date").datepicker() });
+</script>
 {% endblock %}

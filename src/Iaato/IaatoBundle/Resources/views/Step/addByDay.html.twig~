@@ -21,15 +21,24 @@
 	<a class="btn btn-info" href="{{ path('iaato_step_list_remove') }}" >Remove a step</a>
 </ul>
 <h2>Step add</h2>
-<h3>{{ }}</h3>
-
+<h3>{{ day }}</h3>
+<h1> {{ msg.requestUri }} </h1>
 {% if form != null %}
-<form method="post" {{ form_enctype(form) }} class="form">
+<form action="" method="post" {{ form_enctype(form) }} class="form">
     {{ form_errors(form) }}
     {{ form_row(form.site) }}
     {{ form_rest(form) }}
     <br/>
-    <input type="submit" value="Book" class="btn btn-primary" />
+    
+    {% if site == null %}
+      <input type="submit" value="Book" class="btn btn-primary" />
+    {% else %}
+      <div  class="alert alert-warning">
+	<p>Caution : {{ site }} is already booked.
+      </div>
+      <input type="submit" value="Change Booking" class="btn btn-primary" />
+    {% endif %}
+      
 </form>
 {% else %}
 
