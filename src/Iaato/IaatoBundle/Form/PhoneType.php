@@ -12,7 +12,6 @@ class PhoneType extends AbstractType
     {
         $builder
             ->add('numberPhone')
-            ->add('ship')
         ;
     }
 

@@ -33,12 +33,12 @@ class Ship
     private $society;
 
     /**
-     * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\Email",mappedBy="ship", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\Email",mappedBy="ship", cascade={"persist"}, cascade={"remove"})
     */
     private $email;
 
     /**
-     * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\Phone", mappedBy="ship")
+     * @ORM\OneToMany(targetEntity="Iaato\IaatoBundle\Entity\Phone", mappedBy="ship", cascade={"persist"}, cascade={"remove"})
     */
     private $phone;
 

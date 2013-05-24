@@ -2,7 +2,18 @@
 
 {% block bodysite %}
 
-<h3>WARNING : Pas opérationnel</h3>
+{% if error != '' %}
+  	<div class="alert alert-error">
+		<p data-dismiss="alert">{{ error }}</p>
+  	</div>
+{% endif %}
+
+{% if sucess != '' %}
+  	<div class="alert alert-success">
+		<p data-dismiss="alert">{{ sucess }}</p>
+  	</div>
+{% endif %}
+
 <div class="well" style="width:60%; margin-left:auto; margin-right:auto; heigth:200px;">
 	<form method="post" {{ form_enctype(form) }} class="form">
 	    {{ form_errors(form) }}

@@ -14,7 +14,6 @@ class EmailType extends AbstractType
 
         $builder
             ->add('email', 'email')
-            ->add('email', 'email')
         ;
 
     }
