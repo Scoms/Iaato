@@ -27,14 +27,14 @@ class TimeSlotLabel
      */
     private $id;
 
-        /**
+    /**
      * @var string
      *
      * @ORM\Column(name="label",type="string", length=255)
      */
     private $label;
 
-
+    
     /**
      * Get id
      *

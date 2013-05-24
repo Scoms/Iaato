@@ -7,6 +7,7 @@
 {% block body %}
 
 <div class="well">
+
 <div class ="btn-group">
   <a class="btn btn-warning" href={{ path('iaato_map_homepage') }}>Map</a>
   <a class="btn btn-warning" href={{ path('iaato_step_list') }}>List</a>
@@ -21,26 +22,33 @@
 	<a class="btn btn-info" href="{{ path('iaato_step_list_remove') }}" >Remove a step</a>
 </ul>
 <h2>Step add</h2>
-
-{% if form != null %}
-<form method="post" {{ form_enctype(form) }} class="form">
-    {{ form_errors(form) }}
-    {{ form_rest(form) }}
-    <input type="submit" value="Envoyer" class="btn btn-primary" />
-</form>
-{% else %}
-
-<div class="btn-group">
-  <a class="btn btn-inverse" href="{{ path('iaato_step_list_add',{"param":"day"}) }}">By Day</a>
-  <a class="btn btn-inverse" href="{{ path('iaato_step_list_add',{"param":"site"}) }}">By Site</a>
+<h3>{{ msg }}</h3>
+  <div >
+  <form class="span5" action="" method="post" {{ form_enctype(form_day) }} class="form">
+      {{ form_errors(form_day) }}
+      {{ form_label(form_day.date) }}
+      {{ form_widget(form_day.date) }}
+      {{ form_rest(form_day) }}
+      <input type="submit" value="Check Sites" class="btn btn-primary" />
+      <br/><br/>
+  </form>
+  </div>
+  <form class="" action="" method="post" {{ form_enctype(form_site) }} class="form"> 
+<br/>
+      {{ form_errors(form_site) }}
+      {{ form_rest(form_site) }}
+      <br/>
+      <input type="submit" value="Check Disponibility" class="btn btn-primary" />
+  </form>
+<br/>
+<br/>
 </div>
-
-{% endif %}
-
-{% if form_day != null %}
-{% endif %}
-{% if form_site != null %}
-{% endif %}
-
-</div>
+{% endblock %}
+{% block javascripts %}
+<script>
+  $(document).ready(function(){ 
+    $("form input.date").datepicker();
+    $("#form_site").select2();
+    });
+</script>
 {% endblock %}

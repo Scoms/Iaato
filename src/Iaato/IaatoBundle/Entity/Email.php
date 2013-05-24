@@ -90,4 +90,10 @@ class Email
     {
         return $this->ship;
     }
+
+    public function __toString()
+    {
+      return $this->getEmail();
+    }
 }
+

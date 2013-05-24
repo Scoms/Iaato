@@ -20,6 +20,27 @@
 	<a class="btn btn-info" href="{{ path('iaato_step_list_add',{"param":"null"}) }}" >Add a step</a>
 	<a class="btn btn-info" href="{{ path('iaato_step_list_remove') }}" >Remove a step</a>
 </ul>
-<h6>Remove </h6>
+<h2>Remove</h2>
+
+  <form  action="" method="post" {{ form_enctype(form) }} class="form">
+      {{ form_errors(form) }}
+      {{ form_label(form.date) }}
+      {{ form_widget(form.date) }}
+      {{ form_rest(form) }}
+      <input type="submit" value="Remove" class="btn btn-danger" />
+      {% if msg != '' %}
+      <div class="alert alert-success">
+	{{ msg }}
+      </div>
+      {% endif %}
+      <br/><br/>
+  </form>
 </div>
+{% endblock %}
+{% block javascripts %}
+<script>
+  $(document).ready(function(){ 
+    $("form input.date").datepicker();
+    });
+</script>
 {% endblock %}

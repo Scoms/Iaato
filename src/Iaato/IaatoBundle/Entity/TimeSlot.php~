@@ -18,7 +18,7 @@ class TimeSlot
     */
     private $date;
     /**
-     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\TimeSlotLabel", inversedBy="label")
+     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\TimeSlotLabel", inversedBy="timeSlot")
      * @ORM\JoinColumn(nullable=false)
     */
     private $label;
