@@ -115,7 +115,70 @@ class StepController extends Controller
     public function removeAction()
     {
       $em = $this->getDoctrine()->getEntityManager();
-      return $this->render('IaatoIaatoBundle:Step:remove.html.twig');
+      $request = $this->get('request');
+      $user = $this->get('security.context')->getToken()->getUser();
+      $ship = $user->getShip();
+  
+      $repo_ts = $em->getRepository('IaatoIaatoBundle:TimeSlot');
+      $repo_tsl = $em->getRepository('IaatoIaatoBundle:TimeSlotLabel');
+      $repo_step = $em->getRepository('IaatoIaatoBundle:Step');
+      $repo_site = $em->getRepository('IaatoIaatoBundle:Site');
+      $repo_date = $em->getRepository('IaatoIaatoBundle:Date');
+      
+      $array_tsl = $repo_tsl->findAll();
+      
+      $form_day = $this->createFormBuilder();
+      $form_day
+	->add('date', 'datetime',array(
+	  'widget' => 'single_text',
+	  'input' => 'datetime',
+	  'format' => 'MM/dd/yyyy',
+	  'attr' => array('class' => 'date'),
+	  'empty_data' => false,
+	  'label'=>'Date',
+	  ))
+	 ->add('tsl','entity',array(
+	  'choices'=>$array_tsl,
+	  'label'=>'Time Slot',
+	  'class'=>'IaatoIaatoBundle:TimeSlotLabel',
+	  ));
+
+      $form_day = $form_day->getForm();
+      
+      if($request->getMethod() == 'POST')
+      {
+	$form_day->bind($request);
+	if($form_day->isValid())
+	{
+	  $array_date = explode('-',$form_day['date']->getData()->format('Y-m-d'));
+	  $tsl = $form_day['tsl']->getData();
+	  $datetime = new \DateTime();
+	  $datetime->setDate($array_date[0],$array_date[1],$array_date[2]);
+	  $datetime->setTime(0,0);
+	  $date = $repo_date->findOneBy(array('date'=>$datetime));
+	  $timeslot = $repo_ts->findOneBy(array('date'=>$date,'label'=>$tsl));
+	  $step = $repo_step->findOneBy(array('ship'=>$ship,'timeslot'=>$timeslot));
+	  if($step != null)
+	  {
+	      $site = $step->getSite();
+	      $em->remove($step);
+	      $em->flush();
+	      return $this->render('IaatoIaatoBundle:Step:remove.html.twig',array(
+	      'form'=>$form_day->createView(),
+	      'msg'=>'The .'.$site.' on '.$timeslot.' is now free',
+	  ));
+	  }
+	      return $this->render('IaatoIaatoBundle:Step:remove.html.twig',array(
+	      'form'=>$form_day->createView(),
+	      'msg'=>'No bookind this day : '.$timeslot,
+	  ));
+	}
+      }
+      
+      return $this->render('IaatoIaatoBundle:Step:remove.html.twig',array(
+      'form'=>$form_day->createView(),
+      'msg'=>''
+      ));
     }
     public function addByDayAction($date,$tsl)
     {
@@ -166,7 +229,7 @@ class StepController extends Controller
 	      $bool = false;
 	  }
 	}
-	if($bool)
+	if($bool && $site->getIaato())
 	  array_push($array_site,$site);
       }
       
