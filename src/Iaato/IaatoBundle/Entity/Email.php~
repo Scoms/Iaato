@@ -12,9 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Email
 {
-
     /**
-     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Ship") //Un email pour un seul bateau mais un bateau peut avoir plusieurs emails
+     * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Ship", inversedBy="email") //Un email pour un seul bateau mais un bateau peut avoir plusieurs emails
      * @ORM\JoinColumn(nullable=false) //Interdit de créer un email non rattaché à un bateau
     */
     private $ship;
@@ -67,5 +66,28 @@ class Email
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * Set ship
+     *
+     * @param \Iaato\IaatoBundle\Entity\Ship $ship
+     * @return Email
+     */
+    public function setShip(\Iaato\IaatoBundle\Entity\Ship $ship)
+    {
+        $this->ship = $ship;
+    
+        return $this;
+    }
+
+    /**
+     * Get ship
+     *
+     * @return \Iaato\IaatoBundle\Entity\Ship 
+     */
+    public function getShip()
+    {
+        return $this->ship;
     }
 }

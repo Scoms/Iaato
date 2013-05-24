@@ -21,20 +21,37 @@
 	<a class="btn btn-info" href="{{ path('iaato_step_list_remove') }}" >Remove a step</a>
 </ul>
 <h2>Step add</h2>
-<h5>Disponibility of {{ site }} for {{ month }} {{ year }}</h5	>
-{% if form != null %}
-<form method="post" {{ form_enctype(form) }} class="form">
-    {{ form_errors(form) }}
-    {{ form_rest(form) }}
-    <input type="submit" value="Envoyer" class="btn btn-primary" />
-</form>
+<h5>Booking of {{ site }}</h5	>
+
+{% if disponibilities is empty %}
+<p> is free the whole month.</p>
 {% else %}
-
-<div class="btn-group">
-  <a class="btn btn-inverse" href="{{ path('iaato_step_list_add',{"param":"day"}) }}">By Day</a>
-  <a class="btn btn-inverse" href="{{ path('iaato_step_list_add',{"param":"site"}) }}">By Site</a>
-</div>
+<table class="table table-hover table-bordered" style="background-color:white;">
+    
+    <thead style="background-color:#49afcd">
+      <tr>
+          <th style="width:150px;color:iophyjkb">Time Slot</th>
+          <th style="color:iophyjkb">By</th>
+          <th style="color:iophyjkb">Phones</th>
+          <th style="color:iophyjkb">Emails</th>
+      </tr>
+    </thead>
+    {% for dispo in disponibilities %}
+    <tr>
+      <th>{{ dispo.timeslot }}</th>
+      <th>{{ dispo.ship }}</th>
+      <th>
+      {% for phone in dispo.ship.phone %}
+	{{ phone }}
+      {% endfor %}
+      </th><th>
+      {% for email in dispo.ship.email %}
+	{{ email }}
+      {% endfor %}
+      </th>
+    <tr>
+    {% endfor %}
+</table>
 {% endif %}
-
 </div>
 {% endblock %}

@@ -25,23 +25,22 @@
 <h3>{{ msg }}</h3>
   <div >
   <form class="span5" action="" method="post" {{ form_enctype(form_day) }} class="form">
-  <br/><br/>
       {{ form_errors(form_day) }}
       {{ form_label(form_day.date) }}
       {{ form_widget(form_day.date) }}
       {{ form_rest(form_day) }}
-      <br/>
-      <br/>
       <input type="submit" value="Check Sites" class="btn btn-primary" />
+      <br/><br/>
   </form>
   </div>
-  <form action="" method="post" {{ form_enctype(form_site) }} class="form">
+  <form class="" action="" method="post" {{ form_enctype(form_site) }} class="form"> 
+<br/>
       {{ form_errors(form_site) }}
       {{ form_rest(form_site) }}
       <br/>
       <input type="submit" value="Check Disponibility" class="btn btn-primary" />
   </form>
-
+<br/>
 </div>
 {% endblock %}
 {% block javascripts %}

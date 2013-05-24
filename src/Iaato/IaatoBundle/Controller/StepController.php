@@ -64,14 +64,6 @@ class StepController extends Controller
       
       $form_site = $this->createFormBuilder();
       $form_site
-	->add('year','choice',array(
-	  'label'=>'Year',
-	  'choices'=>$array_year,
-	))
-	->add('month','choice',array(
-	  'label'=>'Month',
-	  'choices'=>$array_months,
-	))
 	->add('site','entity',array(
 	  'choices'=>$array_site,
 	  'class'=>'IaatoIaatoBundle:Site',
@@ -103,10 +95,8 @@ class StepController extends Controller
 	$form_site->bind($request);
 	if($form_site->isValid())
 	{
-	  $month = $form_site['month']->getData();
-	  $year = $form_site['year']->getData();
 	  $site = $form_site['site']->getData();
-	    return $this->redirect($this->generateUrl('iaato_step_add_by_site',array('month'=>$array_months[$month],'site'=>$site,'year'=>$array_year[$year])));
+	    return $this->redirect($this->generateUrl('iaato_step_add_by_site',array('site'=>$site->getNameSite())));
 	}
 	$form_day->bind($request);
 	if($form_day->isValid())
@@ -314,16 +304,21 @@ class StepController extends Controller
       }
     }
     
-    public function addBySiteAction($month,$site,$year)
+    public function addBySiteAction($site)
     {
-      $form = $this->createFormBuilder();
-      $form = $form->getForm();
+      $em = $this->getDoctrine()->getManager();
+      
+      $repo_step = $em->getRepository('IaatoIaatoBundle:Step');
+      $repo_site = $em->getRepository('IaatoIaatoBundle:Site');
+      
+      $array_step = $repo_step->findBy(array());
+      
+      $site = $repo_site->findOneBy(array('nameSite'=>$site));
+      $array_disponibility = $repo_step->findBy(array('site'=>$site));
       
       return $this->render('IaatoIaatoBundle:Step:addBySite.html.twig',array(
-	'form'=>$form->createView(),
 	'site'=>$site,
-	'month'=>$month,
-	'year'=>$year,
+	'disponibilities'=>$array_disponibility,
       ));
     }
 }

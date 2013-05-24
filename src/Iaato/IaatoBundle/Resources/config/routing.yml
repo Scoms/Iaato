@@ -19,7 +19,7 @@ iaato_step_add_by_day:
     defaults: { _controller: IaatoIaatoBundle:Step:addByDay }
     
 iaato_step_add_by_site:
-    pattern: /capitaine/list_add/bysite/{month}/{site}/{year}
+    pattern: /capitaine/list_add/bysite/{site}
     defaults: { _controller: IaatoIaatoBundle:Step:addBySite }
     
 iaato_step_list_add2:
