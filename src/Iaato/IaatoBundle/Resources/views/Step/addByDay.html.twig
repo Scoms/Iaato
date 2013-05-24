@@ -21,23 +21,31 @@
 	<a class="btn btn-info" href="{{ path('iaato_step_list_remove') }}" >Remove a step</a>
 </ul>
 <h2>Step add</h2>
-<h3>{{ day }}</h3>
+{{ msg }}
+<h3>{{ date }} {{ tsl }}</h3>
 
-{% if form != null %}
-<form method="post" {{ form_enctype(form) }} class="form">
+<form action="" method="post" {{ form_enctype(form) }} class="form">
     {{ form_errors(form) }}
-    {{ form_row(form.site) }}
     {{ form_rest(form) }}
-    <br/>
-    <input type="submit" value="Book" class="btn btn-primary" />
+    <br/>    
+    
+    {% if msg == null %}
+      {% if site == null %}
+	<input type="submit" value="Book" class="btn btn-primary" />
+      {% else %}
+	<div  class="alert alert-warning">
+	  <p>Caution : {{ site }} is already booked.
+	</div>
+	<input type="submit" value="Change Booking" class="btn btn-primary" />
+      {% endif %}
+    {% else %}
+	<div  class="alert alert-success">
+	  <p>{{ msg }}</p>
+	</div>
+	<input type="submit" value="Change Booking" class="btn btn-primary" />
+    {% endif %}
+      
 </form>
-{% else %}
-
-<div class="btn-group">
-  <a class="btn btn-inverse" href="{{ path('iaato_step_list_add',{"param":"day"}) }}">By Day</a>
-  <a class="btn btn-inverse" href="{{ path('iaato_step_list_add',{"param":"site"}) }}">By Site</a>
-</div>
-{% endif %}
 
 </div>
 {% endblock %}

@@ -20,7 +20,7 @@
 	<a class="btn btn-info" href="{{ path('iaato_step_list_add')}}" >Add a step</a>	
 	<a class="btn btn-info" href="{{ path('iaato_step_list_remove') }}" >Remove a step</a>
 </ul>
-<h2>Step add</h2>
+<h2>Step add {{ msg }}</h2>
 
 <div class="btn-group">
   <a class="btn btn-inverse" href="{{ path('iaato_step_list_add2',{"y":y,"m":m,"param":"day"}) }}">By Day</a>
@@ -35,13 +35,15 @@
 {% elseif param == 'site' %}
 <form method="post" {{ form_enctype(form) }} class="form">
     {{ form_errors(form) }}
-    <select id="form_site" ></select>
+    {{ form_row(form.site) }}
+    {{ form_rest(form) }}
     <input type="submit" value="Envoyer" class="btn btn-primary" />
 </form>
 {% endif %}
 
 </div>
 {% endblock %}
+
 {% block javascripts %}
 <script type="text/javascript">
   $(document).ready(function() { $("#form_site").select2(); });
