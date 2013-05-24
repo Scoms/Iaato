@@ -10,6 +10,9 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Bridge\Doctrine\Form\ChoiceList\EntityChoiceList;
 use Iaato\IaatoBundle\Entity\Step;
+use Iaato\IaatoBundle\Entity\Date;
+use Iaato\IaatoBundle\Entity\TimeSlot;
+use Symfony\Component\HttpFoundation\Response;
 
 class StepController extends Controller
 {
@@ -37,93 +40,86 @@ class StepController extends Controller
 	'list_step'=>$list_step,
       ));
     }
-    public function addAction($param=null)
+    public function addAction()
     {
-      $request=$this->getRequest();
+      $request=$this->get('request');
       $em = $this->getDoctrine()->getEntityManager();
+      
+      $repo_tsl = $em->getRepository('IaatoIaatoBundle:TimeSlotLabel');
+      $repo_site = $em->getRepository('IaatoIaatoBundle:Site');
+      
+      $array_site = $repo_site->findAll();
+      $array_tsl = $repo_tsl->findAll();
+      
+      $y = date('Y');
+      $array_year = array();
+	array_push($array_year,$y);
+      for($i=0;$i<3;$i++)
+      {
+	$y++;
+	array_push($array_year,$y);
+      }
+      
+      $array_months = array('January','February','March','April','May','June','July','August','September','October','November','December');
+      
+      $form_site = $this->createFormBuilder();
+      $form_site
+	->add('year','choice',array(
+	  'label'=>'Year',
+	  'choices'=>$array_year,
+	))
+	->add('month','choice',array(
+	  'label'=>'Month',
+	  'choices'=>$array_months,
+	))
+	->add('site','entity',array(
+	  'choices'=>$array_site,
+	  'class'=>'IaatoIaatoBundle:Site',
+	));
+	
       $form_day = $this->createFormBuilder();
       $form_day
-	->add('date', 'date',array(
+	->add('date', 'datetime',array(
 	  'widget' => 'single_text',
 	  'input' => 'datetime',
-	  'format' => 'dd/MM/yyyy',
+	  'format' => 'MM/dd/yyyy',
 	  'attr' => array('class' => 'date'),
 	  'empty_data' => false,
-	  'empty_value' => 'Choose a date',
+	  'label'=>'Date',
+	  ))
+	 ->add('tsl','entity',array(
+	  'choices'=>$array_tsl,
+	  'label'=>'Time Slot',
+	  'class'=>'IaatoIaatoBundle:TimeSlotLabel',
 	  ));
 	  
       $form_day = $form_day->getForm();
+      $form_site = $form_site->getForm();
+      
+      $date = $form_day['date']->getData();
       if($request->getMethod()=='POST')
       {
+	//$form_day->bind($request);
+	$form_site->bind($request);
+	if($form_site->isValid())
+	{
+	  $month = $form_site['month']->getData();
+	  $year = $form_site['year']->getData();
+	  $site = $form_site['site']->getData();
+	    return $this->redirect($this->generateUrl('iaato_step_add_by_site',array('month'=>$array_months[$month],'site'=>$site,'year'=>$array_year[$year])));
+	}
 	$form_day->bind($request);
 	if($form_day->isValid())
 	{
-	  return $this->add2Action($form_day["year"]->getData(),$form_day["month"]->getData(),$param);
-	}
+	  $date = $form_day['date']->getData();
+	  $tsl= $form_day['tsl']->getData();
+	    return $this->redirect($this->generateUrl('iaato_step_add_by_day',array('date'=>$date->format('Y-m-d'),'tsl'=>$tsl->getLabel())));
+	} 
       }
       return $this->render('IaatoIaatoBundle:Step:add.html.twig',array(
-      'form' => $form_day->createView(),
-      ));
-    }
-    public function add2Action($y,$m,$param=null)
-    {
-      $form;
-      $em = $this->getDoctrine()->getManager();
-      $request = $this->get('request');
-      $repo_tsl = $em->getRepository('IaatoIaatoBundle:TimeSlot');
-      $form_day = $this->createFormBuilder();
-      $form_site = $this->createFormBuilder();
-      $date = date($y,$m);
-      $array_days = array();
-      $mois = mktime( 0, 0, 0, $m, 1, $y );
-      $tsl = new EntityChoiceList($em,'Iaato\IaatoBundle\Entity\TimeSlotLabel');
-      for($i=1;$i <= intval(date("t",$mois)) ;$i++)
-      {
-	$array_days[$i] = $i;
-      }
-      $form_day
-      ->add('day','choice',array(
-      "choices"=>$array_days,
-      "required"=>"true",));
-      $form_day->add('timeslot','choice',array(
-	'choice_list' => $tsl,
-	'required' => true,
-	'label'=>'Time Slot'))
-	;
-      $qb = $em->createQueryBuilder();
-      $qb->add('select', 'u')->add('from', 'Iaato\IaatoBundle\Entity\Site u')->orderBy('u.nameSite');
-      $site = new EntityChoiceList($em,'Iaato\IaatoBundle\Entity\Site');
-      $form_site->add('site','entity',array(
-	'class' => 'Iaato\IaatoBundle\Entity\Site',
-	'query_builder' => $qb,
-	'required' => true,
-	'label'=>'Site'))
-	;
-      $msg;
-      $form_day = $form_day->getForm();
-      $form_site = $form_site->getForm();
-      if($request->getMethod() == 'POST')
-      {
-	$form_day->bind($request);
-	
-	$msg= $form_day['day']->getData();
-	
-	  if($form_site['site']->getData() != '')
-	    return $this->addBySiteAction($y,$m,$form_site["site"]->getData());
-	    
-	  if($form_day['day']->getData() != '')
-	    return $this->addByDayAction($y,$m,$form_day["day"]->getData(),$form_day["timeslot"]->getData());
-      }
-      if($param == 'day')
-	$form = $form_day;
-      else 
-	$form = $form_site;
-	
-      return $this->render('IaatoIaatoBundle:Step:add2.html.twig',array(
-      'form'=>$form->createView(),
-      'param'=>$param,
-      'y'=>$y,
-      'm'=>$m,
+      'form_day' => $form_day->createView(),
+      'form_site'=>$form_site->createView(),
+      'msg' => $date,
       ));
     }
     public function removeAction()
@@ -131,75 +127,203 @@ class StepController extends Controller
       $em = $this->getDoctrine()->getEntityManager();
       return $this->render('IaatoIaatoBundle:Step:remove.html.twig');
     }
-    public function addByDayAction($y,$m,$d,$tsl)
+    public function addByDayAction($date,$tsl)
     {
-      $jour = $y."-".$m."-".$d." : ".$tsl;
-      $date_time = new \DateTime(''.$y.'-'.$m.'-'.$d.'');
+      $em = $this->getDoctrine()->getEntityManager();
       $request = $this->getRequest();
+      $user = $this->get('security.context')->getToken()->getUser();
+      $ship = $user->getShip();
+      $msg = null;
+     
+      $array_date = explode('-',$date);
       
-      $ship = $this->get('security.context')->getToken()->getUser()->getShip();
-      $em = $this->getDoctrine()->getManager();
       $repo_site = $em->getRepository('IaatoIaatoBundle:Site');
       $repo_step = $em->getRepository('IaatoIaatoBundle:Step');
-      $repo_timeslot = $em->getRepository('IaatoIaatoBundle:TimeSlot');
       $repo_date = $em->getRepository('IaatoIaatoBundle:Date');
+      $repo_ts = $em->getRepository('IaatoIaatoBundle:TimeSlot');
+      $repo_tsl = $em->getRepository('IaatoIaatoBundle:TimeSlotLabel');
       
-      
-      $date = $repo_date->findOneBy(array('date'=>$date_time));
-      $timeslot = $repo_timeslot->findOneBy(array('date'=>$date,'label'=>$tsl));
-      //$site_booked = $repo_step->findOneBy(array('timeslot'=>$timeslot,'ship'=>$ship))->getSite();
-      $site_booked ="ok";
-      $array_step = $repo_step->findBy(array('timeslot'=>$timeslot));
+      $datetime = new \DateTime();
+      $datetime->setDate($array_date[0],$array_date[1],$array_date[2]);
+      $datetime->setTime(0,0);
+      $date = $repo_date->findOneBy(array('date'=>$datetime));
+      $tsl = $repo_tsl->findOneBy(array('label'=>$tsl));
+      $timeslot = $repo_ts->findOneBy(array('date'=>$date,'label'=>$tsl));
+      $site_booked = $repo_step->findOneBy(array('timeslot'=>$timeslot));
+      if($site_booked != null)
+	$site_booked = $site_booked->getSite();
+            
       $array_site_full = $repo_site->findAll();
+      $array_step = $repo_step->findBy(array('timeslot'=>$timeslot));
       $array_site = array();
-
+     
+      $this->createTSandDate($timeslot,$date,$datetime,$tsl,$em);
+      $sites_booked = $this->getBookedSitesAction($date,$ship,$timeslot);
+      
+      
+      
       foreach($array_site_full as $site)
       {
-	$in = false;
+	$bool = true;
 	foreach($array_step as $step)
-	  if($site === $step->getSite())
-	    $in = true;
-	
-	if(!$in)
-	  array_push($array_site,$site);
-      }
-	
-      $form = $this->createFormBuilder();
-      $form->add('site','choice',array(
-	'choices'=>$array_site,
-	));
-      $form = $form->getForm();
-	if($request->getMethod() == 'POST')
+	  if($site == $step->getSite())
+	    $bool = false;
+	if($bool)
 	{
-	  if($form['site']->getData() != null)
+	  foreach($sites_booked as $siteb)
 	  {
-	    //On vérifie que le site est bien libre au cas ou 
-	    if($repo_step->findBy(array('timeslot'=>$timeslot,'site'=>$form["site"]->getData())) == null)
-	    {
-	      $step = new Step();
-	      $step->setShip();
-	      $step->setTimeSlot();
-	      $step->setSite();
-	      $em->pesist();
-	      $em->flush();
-	      
-	      return $this->render('IaatoIaatoBundle:Step:succesAdd.html.twig',array(
-		'day'=>$jour,
-		'site'=>$site,
-		));
-	    }
+	    if($site === $siteb)
+	      $bool = false;
 	  }
 	}
+	if($bool)
+	  array_push($array_site,$site);
+      }
+      
+      
+      $form = $this->createFormBuilder();
+      $form->add('site','entity',array(
+	  'label'=>'Site',
+	  'choices'=>$array_site,
+	  'class'=>'IaatoIaatoBundle:Site'
+	));
+      $form = $form->getForm();
+      
+      if($request->getMethod() == 'POST')
+      {
+	$form->bind($request);
+	if($form->isValid())
+	{
+	  if($site_booked == null)
+	  {	    
+	    $step = new Step();
+	    $step->setTimeSlot($timeslot);
+	    $step->setShip($ship);
+	    $site = $form['site']->getData();
+	    $step->setSite($site);
+	    $em->persist($step);
+	    $em->flush();
+	    $msg = "Step added succesfully.";
+	  }
+	  else
+	  {
+	    //On vérfie une dernière fois que le site est libre 
+	    $step = $repo_step->findOneBy(array('ship'=>$ship,'timeslot'=>$timeslot));
+	    $site = $form['site']->getData();
+	    $test = $repo_step->findOneBy(array('site'=>$site,'timeslot'=>$timeslot));
+	    //C'est bon 
+	    if($test == null)
+	    {
+	      $step->setSite($site);
+	      $em->persist($step);
+	      $em->flush();
+	      $msg = "Step changed succesfully.".$form['site']->getData();
+	    }
+	    else
+	    {
+	      $msg = 'TRY AGAIN PLEASE.';
+	    }	
+	  }
+	}
+      }
       return $this->render('IaatoIaatoBundle:Step:addByDay.html.twig',array(
-	"form"=>$form->createView(),
-	'day'=>$jour,
+	'form'=>$form->createView(),
 	'site'=>$site_booked,
-	));
+	'date'=>$date,
+	'msg'=>$msg,
+	'tsl'=>$tsl,
+      ));
     }
-    public function addBySiteAction($y,$m,$site)
+    public function getBookedSitesAction($date,$ship,$timeslot)
     {
+      $site_before = null;
+      $site_after = null;
+      $em = $this->getDoctrine()->getManager();
+      $array_res = array();
+      $repo_tsl = $em->getRepository('IaatoIaatoBundle:TimeSlotLabel');
+      
+      $tsl_early_morning = $repo_tsl->findOneBy(array('label'=>'early morning'));
+      $tsl_morning= $repo_tsl->findOneBy(array('label'=>'morning'));;
+      $tsl_afternoon= $repo_tsl->findOneBy(array('label'=>'afternoon'));;
+      $tsl_evening= $repo_tsl->findOneBy(array('label'=>'evening'));;
+      $tsl_overnigt= $repo_tsl->findOneBy(array('label'=>'overnight'));;
+      
+      $repo_step = $em->getRepository('IaatoIaatoBundle:Step');
+      $repo_ts = $em->getRepository('IaatoIaatoBundle:TimeSlot');
+      
+      switch ($timeslot->getLabelTimeSlot()){
+	case 'early morning' :
+	  $timeslot_temp = $repo_ts->findOneBy(array('date'=>$date,'label'=>$tsl_morning));
+	  $site_after = $repo_step->findOneBy(array('timeslot'=>$timeslot_temp,'ship'=>$ship));
+	  if($site_after != null)
+	    $site_after = $site_after->getSite();
+	  break;
+	case 'morning' :
+	  $timeslot_temp = $repo_ts->findOneBy(array('date'=>$date,'label'=>$tsl_early_morning));
+	  $site_before = $repo_step->findOneBy(array('timeslot'=>$timeslot_temp,'ship'=>$ship));
+	  $timeslot_temp = $repo_ts->findOneBy(array('date'=>$date,'label'=>$tsl_afternoon));
+	  $site_after = $repo_step->findOneBy(array('timeslot'=>$timeslot_temp,'ship'=>$ship));
+	  if($site_after !== null)
+	    $site_after = $site_after->getSite();
+	  if($site_before !== null)
+	    $site_before = $site_before->getSite();
+	  break;
+	case 'afternoon' :
+	  $timeslot_temp = $repo_ts->findOneBy(array('date'=>$date,'label'=>$tsl_morning));
+	  $site_before = $repo_step->findOneBy(array('timeslot'=>$timeslot_temp,'ship'=>$ship));
+	  $timeslot_temp = $repo_ts->findOneBy(array('date'=>$date,'label'=>$tsl_evening));
+	  $site_after = $repo_step->findOneBy(array('timeslot'=>$timeslot_temp,'ship'=>$ship));
+	  if($site_after != null)
+	    $site_after = $site_after->getSite();
+	  if($site_before != null)
+	    $site_before = $site_before->getSite();
+	  break;
+	case 'evening' :
+	  $timeslot_temp = $repo_ts->findOneBy(array('date'=>$date,'label'=>'afternoon'));
+	  $site_before = $repo_step->findOneBy(array('timeslot'=>$timeslot_temp,'ship'=>$ship));
+	  if($site_before != null)
+	    $site_before = $site_before->getSite();
+	  break;
+	case 'overnight' :
+	// rien à faire 
+	  break;
+	defaults :
+	  break;
+	  }
+      array_push($array_res,$site_after);
+      array_push($array_res,$site_before);
+      return $array_res;
+    }
+    
+    public function createTSandDate(&$timeslot,$date,$datetime,$tsl,$em) 
+    {
+      if($timeslot == null)
+      {
+	if($date == null)
+	{
+	  $date = new Date();
+	  $date->setDate($datetime);
+	  $em->persist($date);
+	  $em->flush();
+	}
+	$timeslot = new TimeSlot();
+	$timeslot->setDate($date);
+	$timeslot->setLabelTimeSlot($tsl);
+	$em->persist($timeslot);
+	$em->flush();
+      }
+    }
+    
+    public function addBySiteAction($month,$site,$year)
+    {
+      $form = $this->createFormBuilder();
+      $form = $form->getForm();
+      
       return $this->render('IaatoIaatoBundle:Step:addBySite.html.twig',array(
-	"form"=>$form->createView(),
-	));
+	'form'=>$form->createView(),
+	'site'=>$site,
+	'month'=>$month,
+	'year'=>$year,
+      ));
     }
 }

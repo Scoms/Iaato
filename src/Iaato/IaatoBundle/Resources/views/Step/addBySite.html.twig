@@ -21,7 +21,7 @@
 	<a class="btn btn-info" href="{{ path('iaato_step_list_remove') }}" >Remove a step</a>
 </ul>
 <h2>Step add</h2>
-
+<h5>Disponibility of {{ site }} for {{ month }} {{ year }}</h5	>
 {% if form != null %}
 <form method="post" {{ form_enctype(form) }} class="form">
     {{ form_errors(form) }}
