@@ -26,9 +26,16 @@ use Iaato\IaatoBundle\Entity\Society;
 class ShipController extends Controller {
 
 	public function indexAction(){
-		
+
+    	/*$em = $this->getDoctrine()->getEntityManager();
+    	$query = $em->createQuery('SELECT s.code, s.name, s.nbPassenger FROM IaatoIaatoBundle:Ship s LEFT JOIN s.society so LEFT JOIN s.idtype t limit(15)');
+    	$ships = $query->getResult();*/
+
 		$em = $this->getDoctrine()->getEntityManager();
-		$ships = $sites = $em->getRepository('IaatoIaatoBundle:Ship')->findAll();
+		$ships = $em->getRepository('IaatoIaatoBundle:Ship')->findAll();
+
+		//$this->pager = new sfDoctrinePager('ship', 3);
+
 		return $this->render('IaatoIaatoBundle:Ship:index.html.twig', array('ships' => $ships));
 	
 	}
