@@ -26,10 +26,13 @@ class HomeController extends Controller
     
     $date = $repo_date->findOneBy(array('date'=>$datetime));
     $timeslot = $repo_ts->findBy(array('date'=>$date));
-    $array_step = $repo_step->findBy(array('timeslot'=>$timeslot));
+    if($date != null)
+      $array_step = $repo_step->findBy(array('timeslot'=>$timeslot));
+    else
+      $array_step = array();
     return $this->render('IaatoIaatoBundle:Home:index.html.twig',array(
       'array_ship' => $array_step,
-      'date' => $date->getDate(),
+      'date' => $date,
       ));
   } 
 }
