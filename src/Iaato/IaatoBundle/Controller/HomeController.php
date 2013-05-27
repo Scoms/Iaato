@@ -14,10 +14,24 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class HomeController extends Controller
 {
-public function indexAction()
-{
-return $this->render('IaatoIaatoBundle:Home:index.html.twig',array('content' => 'home'));
-} 
+  public function indexAction()
+  {
+    $em = $this->getDoctrine()->getManager();
+    $datetime = new \Datetime();
+    $datetime->setTime(0,0);
+        
+    $repo_step = $em->getRepository('IaatoIaatoBundle:Step');
+    $repo_date = $em->getRepository('IaatoIaatoBundle:Date');
+    $repo_ts = $em->getRepository('IaatoIaatoBundle:TimeSlot');
+    
+    $date = $repo_date->findOneBy(array('date'=>$datetime));
+    $timeslot = $repo_ts->findBy(array('date'=>$date));
+    $array_step = $repo_step->findBy(array('timeslot'=>$timeslot));
+    return $this->render('IaatoIaatoBundle:Home:index.html.twig',array(
+      'array_ship' => $array_step,
+      'date' => $date->getDate(),
+      ));
+  } 
 }
 ?>
 

@@ -202,7 +202,7 @@ class StepController extends Controller
       $date = $repo_date->findOneBy(array('date'=>$datetime));
       $tsl = $repo_tsl->findOneBy(array('label'=>$tsl));
       $timeslot = $repo_ts->findOneBy(array('date'=>$date,'label'=>$tsl));
-      $site_booked = $repo_step->findOneBy(array('timeslot'=>$timeslot));
+      $site_booked = $repo_step->findOneBy(array('timeslot'=>$timeslot,'ship'=>$ship));
       if($site_booked != null)
 	$site_booked = $site_booked->getSite();
             
@@ -229,7 +229,7 @@ class StepController extends Controller
 	      $bool = false;
 	  }
 	}
-	if($bool)
+	if($bool && $site->getIaato())
 	  array_push($array_site,$site);
       }
       
