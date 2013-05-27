@@ -6,8 +6,21 @@
 
 
 {% block body %}
-
-	<h6>Hello ! {{ content }}</h6>
-
+<div class="well">
+  {{ date|date("Y/m/d")  }}
+  <div id="gmap-div" style="width: 800px; height: 600px;"></div>
+</div>
 {% endblock %}
 
+
+{% block javascripts %}
+  <script type="text/javascript">
+  var list_ship = new Array();
+  {% for step in array_ship %}
+    list_ship.push(new Array("{{ step.site.latitude }}","{{ step.site.longitude }}","{{ step.ship }}","{{ step.timeslot }}"));
+  {% endfor %}
+  </script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false" /></script>
+	<script type="text/javascript" src="{{ asset('javascripts/gmap_home.js') }}" ></script>
+{% endblock %}
