@@ -16,8 +16,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class StepController extends Controller
 {
-    public function indexAction()
+    public function indexAction($index=null)
     {
+      //On simule une variable 
+      if($index == null)
+	$index = 1;
+      $par_page = 15;
+      
       $em = $this->getDoctrine()->getEntityManager();
       $repo_step = $em->getRepository('IaatoIaatoBundle:Step');
       $user = $this->get('security.context')->getToken()->getUser();
@@ -31,9 +36,11 @@ class StepController extends Controller
      INNER JOIN IaatoIaatoBundle:TimeSlotLabel tsl with ts.label = tsl.id
      WHERE st.ship = '.$ship_id.'
      ORDER BY ts.date ASC, tsl.id ASC
-     '
+     '//LIMIT '.($index-1)*$par_page.', '.($index)*$par_page
      );
-
+     
+      $query->setFirstResult(($index-1)*$par_page);
+      $query->setMaxResults(($index)*$par_page);
       $list_step = $query->getResult();
       return $this->render('IaatoIaatoBundle:Step:show.html.twig',array(
 	'ship'=>$ship,
@@ -219,7 +226,7 @@ class StepController extends Controller
       {
 	$bool = true;
 	foreach($array_step as $step)
-	  if($site == $step->getSite())
+	  if($site === $step->getSite())
 	    $bool = false;
 	if($bool)
 	{
