@@ -8,19 +8,17 @@
 
 <div class="well">
 
-<h5>Categories</h5>
-
 <ul class = "nav nav-pills">
-	<li><a href={{ path('iaato_society') }}>Society</a></li>
-	<li><a href={{ path('iaato_ship') }}>Ship</a></li>
+	<li><a href={{ path('iaato_society') }}>Company</a></li>
+	<li><a href={{ path('iaato_ship',{"index":"1"}) }}>Ship</a></li>
 	<li><a href={{ path('iaato_site') }}>Site</a></li>
 	<li><a href={{ path('iaato_activity') }}>Activity</a></li>
 	<li><a href={{ path('iaato_type') }}>Type</a></li>
 </ul>
 
 <h5>Add Data with files</h5>
-<a class="btn btn-warning" href={{ path('iaato_csv_upload') }}>Upload CSV</a>
-<a class="btn btn-warning" href={{ path('iaato_csv_download') }}>Download CSV templates</a>
+<a class="btn btn-info" href={{ path('iaato_csv_upload') }}>Upload CSV</a>
+<a class="btn btn-info" href={{ path('iaato_csv_download') }}>Download CSV templates</a>
 
 </div>
 

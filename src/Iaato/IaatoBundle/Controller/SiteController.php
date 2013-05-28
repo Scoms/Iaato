@@ -5,6 +5,7 @@ namespace Iaato\IaatoBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use Symfony\Bridge\Doctrine\Form\ChoiceList\EntityChoiceList;
 use Iaato\IaatoBundle\Entity\Site;
 use Iaato\IaatoBundle\Entity\SubZone;
 use Symfony\Component\Security\Core\SecurityContext;
@@ -23,22 +24,21 @@ class SiteController extends Controller{
       $site = new Site();
 
       $entityManager = $this->getDoctrine()->getEntityManager();
-      $zones = $entityManager->getRepository("IaatoIaatoBundle:SubZone")->findAll();
-      $stackZone = array();
 
-      foreach($zones as $zone)
-        array_push($stackZone,$zone->getLabelSubZ());
+      $subzones = new EntityChoiceList($entityManager,'Iaato\IaatoBundle\Entity\SubZone');
 
       $formBuilder = $this->createFormBuilder($site);
       $formBuilder
         ->add('nameSite','text')
         ->add('latitude', 'text')
         ->add('longitude', 'text')
-        ->add('iaato', 'checkbox')
-        ->add('subzone', 'choice', array(
-              'choices' => $stackZone,
-              'required' => false,'label'=>'Zones','multiple'=>false, 'empty_value' => '-- Choose a zone --'
-          ));
+        ->add('iaato', 'checkbox', array(
+          'required' => false
+        ))
+        ->add('subzone','choice',array('choice_list'=> $subzones,
+          'label'=>'SubZones',
+          'empty_value' => '-- Choose a subzone --'
+        ));
       $form = $formBuilder->getForm();
       $request = $this->get('request');
       

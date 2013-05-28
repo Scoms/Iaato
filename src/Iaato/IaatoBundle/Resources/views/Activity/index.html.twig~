@@ -1,0 +1,54 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}
+	Activity
+{% endblock %}
+
+{% block body %}
+
+<div class="well">
+
+<ul class = "nav nav-pills">
+	<li><a href={{ path('iaato_society') }}>Company</a></li>
+	<li><a href={{ path('iaato_ship',{"index":1}) }}>Ship</a></li>
+	<li><a href={{ path('iaato_site') }}>Site</a></li>
+	<li class = "active"><a href={{ path('iaato_activity') }}>Activity</a></li>
+	<li><a href={{ path('iaato_type') }}>Type</a></li>
+</ul>
+
+<ul class="nav">
+	<a class="btn btn-info" href="{{ path('iaato_activity') }}" >Show activities</a>
+	<a class="btn btn-info" href="{{ path('iaato_activity_add') }}" >Add a activity</a>	
+	<a class="btn btn-info" href="{{ path('iaato_activity_remove') }}" >Remove a activity</a>
+</ul>
+
+{% block bodyact%}
+
+{% if activities is empty %}
+  <p>No activities</p>
+
+{% else %}
+	<table class="table table-hover table-bordered" style="width: 40%;background-color:white;">
+		
+		<thead style="background-color:#49afcd">
+			<tr>
+	  			<th style="color:iophyjkb">Activities</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			{% for activity in activities %}
+	  			<tr>
+	    			<td><p>{{ activity.labelActivity }}</p></td>
+	  			</tr>
+			{% endfor %}
+		</tbody>
+
+	</table>
+{% endif %}
+
+{% endblock %}
+
+</div>
+
+{% endblock %}

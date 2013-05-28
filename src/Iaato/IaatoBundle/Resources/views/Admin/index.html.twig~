@@ -32,3 +32,8 @@
 
 {% endblock %}
 
+{% block javascripts %}
+<script type="text/javascript">
+  $(document).ready(function() { $("#form_site").select2(); });
+</script>
+{% endblock %}

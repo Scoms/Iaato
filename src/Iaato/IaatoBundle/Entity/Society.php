@@ -108,4 +108,9 @@ class Society
     {
         return $this->ship;
     }
+
+    public function __toString()
+    {
+      return $this->getLabelSociety();
+    }
 }

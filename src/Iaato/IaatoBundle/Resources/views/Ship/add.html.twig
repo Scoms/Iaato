@@ -2,9 +2,21 @@
 
 {% block bodyship %}
 
-<h3>WARNING : Pas opérationnel</h3>
+{% if error != '' %}
+  	<div class="alert alert-error">
+		<p data-dismiss="alert">{{ error }}</p>
+  	</div>
+{% endif %}
+
+{% if sucess != '' %}
+  	<div class="alert alert-success">
+		<p data-dismiss="alert">{{ sucess }}</p>
+  	</div>
+{% endif %}
+
 <div class="well" style="width:60%; margin-left:auto; margin-right:auto; heigth:200px;">
 	<form method="post" {{ form_enctype(form) }} class="form">
+
 	    {{ form_errors(form) }}
 
 	    {{ form_row(form.code) }}
@@ -12,12 +24,79 @@
 	    {{ form_row(form.society) }}
 	    {{ form_row(form.nbPassenger) }}
 	    {{ form_row(form.type) }}
-	    {{ form_row(form.email) }}
-	    {{ form_row(form.phone) }}
+        {{ form_row(form.email) }}
+        <a href="#" id="add_email" class="btn">Add an email</a><br /><br />
+       	{{ form_row(form.phone) }}
+       	<a href="#" id="add_phone" class="btn">Add a number phone</a><br /><br />
 
 	    {{ form_rest(form) }}
+
 	    <input type="submit" value="Envoyer" class="btn btn-primary" />
 	</form>
 </div>
+
+<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		
+		// On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse
+		var $container = $('#form_email');
+		// On définit une fonction qui va ajouter un champ
+		function add_email() {
+			// On définit le numéro du champ (en comptant le nombre de champs déjà ajoutés)
+			index = $container.children().length;
+			// On ajoute à la fin de la balise <div> le contenu de l'attribut « data-prototype »
+			// Après avoir remplacé la variable __name__ qu'il contient par le numéro du champ
+			$container.append($($container.attr('data-prototype').replace(/__name__/g, index)));
+			// On ajoute également un bouton pour pouvoir supprimer la catégorie
+			$container.append($('<a href="#" id="delete_email_' + index + '" class="btn btn-danger">Supprimer</a>'));
+			// On supprime le champ à chaque clic sur le lien de suppression
+			$('#delete_email_' + index).click(function() {
+				$(this).prev().remove(); // $(this).prev() est le template ajouté
+				$(this).remove(); // $(this) est le lien de suppression
+				return false;
+			});
+		}
+	
+		// On ajoute un premier champ directement s'il n'en existe pas déjà un (cas d'un nouvel article par exemple)
+		if($container.children().length == 0) {
+			add_email();
+		}
+		// On ajoute un nouveau champ à chaque clic sur le lien d'ajout
+		$('#add_email').click(function() {
+			add_email();
+			return false;
+		});
+
+	});
+
+	$(document).ready(function() {
+		
+		var $container = $('#form_phone');
+		
+		function add_phone() {
+			
+			index = $container.children().length;
+			$container.append($($container.attr('data-prototype').replace(/__name__/g, index)));
+			$container.append($('<a href="#" id="delete_phone_' + index + '" class="btn btn-danger">Supprimer</a>'));
+			$('#delete_phone_' + index).click(function() {
+				$(this).prev().remove();
+				$(this).remove();
+				return false;
+			});
+		}
+	
+		if($container.children().length == 0) {
+			add_phone();
+		}
+
+		$('#add_phone').click(function() {
+			add_phone();
+			return false;
+		});
+
+	});
+</script>
+
 
 {% endblock %}

@@ -24,11 +24,11 @@ $(function() {
     strokeWeight:  3,         //l'épaisseur du trait,
     map:           gmap       //la map à laquelle rattacher la polyline
   });
-  path = polyline.getPath();
+  /*path = polyline.getPath();
   for(var coor in list_step)
   {
       addSites(list_step[coor]);
-  }
+  }*/
 });	
 
 function addSites(coor)

@@ -1,28 +1,34 @@
-{% extends 'IaatoIaatoBundle:Capitaine:index.html.twig' %}
+{% extends ['IaatoIaatoBundle:Capitaine:index.html.twig'] %}
 
 {% block title %}
-	Expedition Leader
+	Expedition Leader 
 {% endblock %}
 
-
 {% block body %}
-
-<div class="well">
-<div class ="btn-group">
-  <a class="btn btn-warning" href={{ path('iaato_map_homepage') }}>Map</a>
-  <a class="btn btn-warning" href={{ path('iaato_step_list') }}>List</a>
-  <a class="btn btn-warning" href={{ path('iaato_csv_download_steps_el') }}>Download Step CSV</a>
-  <a class="btn btn-warning" href={{ path('iaato_csv_upload_el') }}>Upload Step CSV</a>
-  <a class="btn btn-warning" href={{ path('iaato_csv_download_sites_el') }}>Sites</a>
-</div>
 <ul class="nav" style="margin-top:15px;">
-	<a class="btn btn-info" href="{{ path('iaato_step_list') }}" >Show steps</a>
+	<a class="btn btn-info" href="{{ path('iaato_step_list',{"index":1}) }}" >Show steps</a>
 	<a class="btn btn-info" href="{{ path('iaato_step_list_add',{"param":"null"}) }}" >Add a step</a>		
 	<a class="btn btn-info" href="{{ path('iaato_step_list_remove') }}" >Remove a step</a>
 </ul>
 <h6>Show -- Your ship : {{ ship.nameship }}</h6>
 
-
+  <ul class="pagination pagination-centered">
+  {% if index != 1 %}
+  <a  href="{{ path('iaato_step_list',{"index":1}) }}"><<</a>
+  <a  href="{{ path('iaato_step_list',{"index":index-1}) }}"><</a>
+  {% else %}
+  <a  onclick="return false" href="{{ path('iaato_step_list',{"index":1}) }}"><<</a>
+  <a  onclick="return false" href="{{ path('iaato_step_list',{"index":index-1}) }}"><</a>
+  {% endif %}
+  <a style='text-align:right'>{{ index }} / {{ last_page }}</a>
+  {% if index != last_page %}
+  <a  href="{{ path('iaato_step_list',{"index":index+1}) }}">></a>
+  <a  href="{{ path('iaato_step_list',{"index":last_page}) }}">>></a>
+  {% else %}
+  <a onclick="return false" href="{{ path('iaato_step_list',{"index":index+1}) }}">></a>
+  <a onclick="return false" href="{{ path('iaato_step_list',{"index":last_page}) }}">>></a>
+  {% endif %}
+  </ul>
 <table class="table table-hover table-bordered" style=";background-color:white;margin-top:15px;">
 
   <thead style="background-color:#49afcd">
@@ -40,5 +46,5 @@
   {% endfor %}
   </tbody>
 </table>
-</div>
+
 {% endblock %}

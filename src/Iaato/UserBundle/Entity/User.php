@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class User implements UserInterface, \Serializable 
 {
       /**
-   * @ORM\OneToOne(targetEntity="Iaato\IaatoBundle\Entity\Ship")
+   * @ORM\ManyToOne(targetEntity="Iaato\IaatoBundle\Entity\Ship")
    */
   private $ship;
   /**

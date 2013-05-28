@@ -14,17 +14,49 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Bridge\Doctrine\Form\ChoiceList\EntityChoiceList;
+use Symfony\Component\Form\FormView;
+use Iaato\IaatoBundle\Form\EmailType;
+use Iaato\IaatoBundle\Form\PhoneType;
 use Iaato\IaatoBundle\Entity\Ship;
+use Iaato\IaatoBundle\Entity\Phone;
+use Iaato\IaatoBundle\Entity\Email;
 use Iaato\IaatoBundle\Entity\Society;
 
 class ShipController extends Controller {
 
-	public function indexAction(){
-		
-		$em = $this->getDoctrine()->getEntityManager();
-		$query = $em->createQuery('SELECT s.code, s.nameShip, s.nbPassenger, t.labelType, so.labelSociety FROM IaatoIaatoBundle:Ship s LEFT JOIN s.idtype t LEFT JOIN s.society so');
-		$ships = $query->getResult();
-		return $this->render('IaatoIaatoBundle:Ship:index.html.twig', array('ships' => $ships));
+	public function indexAction($index=null){
+	
+      $em = $this->getDoctrine()->getManager();
+      $count = 0;
+      if($index == null)
+	$index = 1;
+      $par_page = 15;
+      
+      $em = $this->getDoctrine()->getEntityManager();
+      //$ships = $em->getRepository('IaatoIaatoBundle:Ship')->findBy(array(),array('nameShip'=>'ASC'));
+      $query = $em->createQuery(
+      '
+      SELECT sh.nameShip, sh.code, sh.nbPassenger,ty.labelType,so.labelSociety
+      FROM IaatoIaatoBundle:Ship sh
+      INNER JOIN IaatoIaatoBundle:Society so with so.id = sh.society
+      INNER JOIN IaatoIaatoBundle:Type ty with ty.id = sh.idtype
+      ORDER BY sh.nameShip
+      '
+      );
+      $query->setFirstResult(($index-1)*$par_page);
+      $query->setMaxResults($par_page);
+      $ships = $query->getResult();
+      foreach($em->getRepository('IaatoIaatoBundle:Ship')->findAll() as $step)
+	$count++;
+      
+      $last_page = round($count / $par_page);
+      
+		return $this->render('IaatoIaatoBundle:Ship:index.html.twig', array(
+		'ships' => $ships,
+		'index'=>$index,
+		'last_page'=>$last_page,
+		));
 	
 	}
 
@@ -32,34 +64,35 @@ class ShipController extends Controller {
 		
 		$ship = new Ship();
 		$entityManager = $this->getDoctrine()->getEntityManager();
-		
-		$societies = $entityManager->getRepository("IaatoIaatoBundle:Society")->findAll();
-		$stackSoc = array();
-		
-		$types = $entityManager->getRepository("IaatoIaatoBundle:Type")->findAll();
-		$stackType = array();
-
-		foreach($societies as $society)
-			array_push($stackSoc,$society->getLabelSociety());
-
-		foreach($types as $type)
-			array_push($stackType,$type->getLabelType());
+		      
+        $societies = new EntityChoiceList($entityManager,'Iaato\IaatoBundle\Entity\Society');
+		$types = new EntityChoiceList($entityManager,'Iaato\IaatoBundle\Entity\Type');
 
 		$formBuilder = $this->createFormBuilder($ship);
 		$formBuilder
 			->add('code',	'text')
 			->add('nameShip',	'text')
-			->add('society', 'choice', array(
-        		'choices' => $stackSoc,
-        		'required' => false,'label'=>'Societies','multiple'=>false, 'empty_value' => '-- Choose a society --'
-    		))
+			->add('society','choice',array('choice_list'=> $societies,
+				'label'=>'Societies',
+				'empty_value' => '-- Choose a society --'
+			))
 			->add('nbPassenger',	'text')
-			->add('type', 'choice', array(
-        		'choices' => $stackType,
-        		'required' => false,'label'=>'Types','multiple'=>false, 'empty_value' => '-- Choose a type --'
-    		))
-			->add('email',	'email')
-			->add('phone',	'text');
+			->add('type','choice',array('choice_list'=> $types,
+				'label'=>'Types',
+				'empty_value' => '-- Choose a type --'
+			))
+			->add('email', 'collection', array(
+				'type' => new EmailType(),
+				'allow_add' => true,
+				'allow_delete' => true,
+				'by_reference' => false
+			))
+			->add('phone', 'collection', array(
+				'type' => new PhoneType(),
+				'allow_add' => true,
+				'allow_delete' => true,
+				'by_reference' => false
+			));
 			
 	    $form = $formBuilder->getForm();
 	    $request = $this->get('request');
@@ -77,6 +110,16 @@ class ShipController extends Controller {
 		      			'error'=>'Ship "'.$ship->getCode().'" not added : Code already exists',
 		      			'sucess'=>''
 		      		));
+		  		
+		  		foreach($ship->getEmail() as $email){
+            		$email->setShip($ship);
+            		$em->persist($email);
+        		}
+
+		  		foreach($ship->getPhone() as $phone){
+            		$phone->setShip($ship);
+            		$em->persist($phone);
+        		}
 		  		
 		  		$em->persist($ship);
 		  		$em->flush();
@@ -121,7 +164,10 @@ class ShipController extends Controller {
 	    if ($request->getMethod() == 'POST'){
 			$form->bind($request);
 			if ($form->isValid()){
+				//$email = $em->getRepository("IaatoIaatoBundle:Email")->findBy(array('email'=>$ship->getEmail()));
+				//$phone = $em->getRepository("IaatoIaatoBundle:Phone")->findBy(array('numberPhone'=>$ship->getPhone()));
 		  		unset($stack[$ship->getNameShip()]);
+		  		//unset($email);
 		  		
 		  		$ship = $em->getRepository("IaatoIaatoBundle:Ship")->findOneBy(array('nameShip'=>$ship->getNameShip()));
 		  		$formBuilder = $this->createFormBuilder($ship);

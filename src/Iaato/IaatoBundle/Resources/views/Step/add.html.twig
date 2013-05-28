@@ -1,4 +1,4 @@
-{% extends '::base.html.twig' %}
+{% extends ['IaatoIaatoBundle:Capitaine:index.html.twig'] %}
 
 {% block title %}
 	Expedition Leader
@@ -6,18 +6,9 @@
 
 {% block body %}
 
-<div class="well">
-
-<div class ="btn-group">
-  <a class="btn btn-warning" href={{ path('iaato_map_homepage') }}>Map</a>
-  <a class="btn btn-warning" href={{ path('iaato_step_list') }}>List</a>
-  <a class="btn btn-warning" href={{ path('iaato_csv_download_steps_el') }}>Download Step CSV</a>
-  <a class="btn btn-warning" href={{ path('iaato_csv_upload_el') }}>Upload Step CSV</a>
-  <a class="btn btn-warning" href={{ path('iaato_csv_download_sites_el') }}>Sites</a>
-</div>
-  
+ 
 <ul class="nav" style="margin-top:15px;">
-	<a class="btn btn-info" href="{{ path('iaato_step_list') }}" >Show steps</a>
+	<a class="btn btn-info" href="{{ path('iaato_step_list',{'index':1) }}" >Show steps</a>
 	<a class="btn btn-info" href="{{ path('iaato_step_list_add',{"param":"null"}) }}" >Add a step</a>	
 	<a class="btn btn-info" href="{{ path('iaato_step_list_remove') }}" >Remove a step</a>
 </ul>
@@ -25,24 +16,22 @@
 <h3>{{ msg }}</h3>
   <div >
   <form class="span5" action="" method="post" {{ form_enctype(form_day) }} class="form">
-  <br/><br/>
       {{ form_errors(form_day) }}
       {{ form_label(form_day.date) }}
       {{ form_widget(form_day.date) }}
       {{ form_rest(form_day) }}
-      <br/>
-      <br/>
       <input type="submit" value="Check Sites" class="btn btn-primary" />
+      <br/><br/>
   </form>
   </div>
-  <form action="" method="post" {{ form_enctype(form_site) }} class="form">
+  <form class="" action="" method="post" {{ form_enctype(form_site) }} class="form"> 
+<br/>
       {{ form_errors(form_site) }}
       {{ form_rest(form_site) }}
       <br/>
       <input type="submit" value="Check Disponibility" class="btn btn-primary" />
   </form>
-
-</div>
+<br/>
 {% endblock %}
 {% block javascripts %}
 <script>

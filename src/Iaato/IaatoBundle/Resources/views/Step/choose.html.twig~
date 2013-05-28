@@ -5,14 +5,6 @@
 {% endblock %}
 
 {% block body %}
-<div class="well">
-<div class ="btn-group">
-  <a class="btn btn-warning" href={{ path('iaato_map_homepage') }}>Map</a>
-  <a class="btn btn-warning" href={{ path('iaato_step_list') }}>List</a>
-  <a class="btn btn-warning" href={{ path('iaato_csv_download_steps_el') }}>Download Step CSV</a>
-  <a class="btn btn-warning" href={{ path('iaato_csv_upload_el') }}>Upload Step CSV</a>
-  <a class="btn btn-warning" href={{ path('iaato_csv_download_sites') }}>Sites</a>
-</div>
   
 <h2>Choose the period</h2>
 
