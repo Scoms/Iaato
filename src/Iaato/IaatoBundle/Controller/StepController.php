@@ -45,6 +45,7 @@ class StepController extends Controller
       return $this->render('IaatoIaatoBundle:Step:show.html.twig',array(
 	'ship'=>$ship,
 	'list_step'=>$list_step,
+	'index'=>$index,
       ));
     }
     public function addAction()

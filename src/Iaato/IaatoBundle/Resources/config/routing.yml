@@ -7,7 +7,7 @@ iaato_capitaine:
     defaults: { _controller: IaatoMapBundle:Default:index }
 
 iaato_step_list:
-    pattern: /capitaine/list
+    pattern: /capitaine/list/{index}
     defaults: { _controller: IaatoIaatoBundle:Step:index }
 
 iaato_step_list_add:

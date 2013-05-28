@@ -1,18 +1,90 @@
-{% extends '::base.html.twig' %}
+<!DOCTYPE html>
+<html>
 
+<head>
+    <title>
 {% block title %}
 	Expedition Leader
-{% endblock %}
+{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="{{ asset('../bootstrap/css/bootstrap.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ asset('../css/stylecontact.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ asset('../css/background.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ asset('javascripts/select2-3.4.0/select2.css') }}" rel="stylesheet" media="screen">    
+    <link rel="stylesheet" href="{{ asset('javascripts/jquery-ui-1.10.3/themes/base/jquery.ui.all.css') }}" />
+    
+    <script src="{{ asset('javascripts/jquery-ui-1.10.3/jquery-1.9.1.js') }}" media="screen"></script>
+    <script src="{{ asset('javascripts/select2-3.4.0/select2.js') }}" media="screen"></script>
+    <script src="{{ asset('javascripts/jquery-ui-1.10.3/ui/jquery-ui.js') }}"></script>
+    {% block javascripts %}
+    {% endblock %}
+    
+</head>
 
+<body class="container">
+<!-- Debut du header-->
+  <header>
+    <img style="margin:0 auto; display:block;" src="/Iaato/img/iaato.png">
+  </header><!-- bar de navigation -->
+
+  <div class="navbar">
+    <div class="navbar-inner">
+      
+      <div class="container">
+        <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        
+        <a class="brand" href="{{ path('iaato_iaato_homepage') }}">Welcome</a>
+        
+        <div class="nav-collapse collapse">
+          <ul class="nav">
+            <li ><a href="{{ path('iaato_iaato_homepage') }}">Home</a></li>
+            <li><a href="{{ path('iaato_capitaine') }}">Expedition Leader</a></li>
+            <li><a href="{{ path('iaato_secretariat') }}">IAATO</a></li>
+            <li><a href="{{ path('iaato_contact') }}">Contact</a></li>
+            {% if is_granted('ROLE_ADMIN') %}
+            <li><a href="{{ path('iaato_admin') }}"><i class="icon-cog" ></i></a></li>
+            {% endif %}
+          </ul>
+          <a class="btn btn-primary" href="{{ path('login') }}">Login</a>
+          {% block connexion %}
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+              <a class="btn btn-danger"  href="{{ path('logout') }}">Logout</a>
+            {% endif %}
+          {% endblock %}          
+        </div><!--/.nav-collapse -->
+      </div>
+
+    </div>
+  </div>
+<div class="well">
 {% block bodysup %}
 <div class ="btn-group">
-  <a class="btn btn-warning" href={{ path('iaato_map_homepage') }}>Map</a>
-  <a class="btn btn-warning" href={{ path('iaato_step_list') }}>List</a>
-  <a class="btn btn-warning" href={{ path('iaato_csv_download_steps_el') }}>Download Step CSV</a>
-  <a class="btn btn-warning" href={{ path('iaato_csv_upload_el') }}>Upload Step CSV</a>
-  <a class="btn btn-warning" href={{ path('iaato_csv_download_sites_el') }}>Sites</a>
+  <a class="btn btn-info" href={{ path('iaato_map_homepage') }}>Map</a>
+  <a class="btn btn-info" href={{ path('iaato_step_list',{"index":"1"}) }}>List</a>
+  <a class="btn btn-info" href={{ path('iaato_csv_download_steps_el') }}>Download Step CSV</a>
+  <a class="btn btn-info" href={{ path('iaato_csv_upload_el') }}>Upload Step CSV</a>
+  <a class="btn btn-info" href={{ path('iaato_csv_download_sites_el') }}>Sites</a>
 </div>
+{% endblock %}
 {% block body %}
+{% endblock %}
+</body>
 
-{% endblock %}
-{% endblock %}
+<footer>
+  <address style="text-align:center; line-height:normal; margin:0">
+    Steve Wellmeier - Administrative Director
+    <br />
+    11 South Angell St., Box 302 - Providence, RI 02906
+    <br />
+    Tel. : 401 272 2152 Fax : 401 272 2154
+  </address>
+</footer>
+
+</html>
+
+
