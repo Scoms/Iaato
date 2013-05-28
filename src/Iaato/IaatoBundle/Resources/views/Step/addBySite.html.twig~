@@ -45,5 +45,4 @@
     {% endfor %}
 </table>
 {% endif %}
-</div>
 {% endblock %}

@@ -12,7 +12,23 @@
 </ul>
 <h6>Show -- Your ship : {{ ship.nameship }}</h6>
 
-
+  <div style='text-align:center;'>
+  {% if index != 1 %}
+  <a  href="{{ path('iaato_step_list',{"index":1}) }}"><<</a>
+  <a  href="{{ path('iaato_step_list',{"index":index-1}) }}"><</a>
+  {% else %}
+  <a  onclick="return false" href="{{ path('iaato_step_list',{"index":1}) }}"><<</a>
+  <a  onclick="return false" href="{{ path('iaato_step_list',{"index":index-1}) }}"><</a>
+  {% endif %}
+  <a style='text-align:right'>{{ index }} / {{ last_page }}</a>
+  {% if index != last_page %}
+  <a  href="{{ path('iaato_step_list',{"index":index+1}) }}">></a>
+  <a  href="{{ path('iaato_step_list',{"index":last_page}) }}">>></a>
+  {% else %}
+  <a onclick="return false" href="{{ path('iaato_step_list',{"index":index+1}) }}">></a>
+  <a onclick="return false" href="{{ path('iaato_step_list',{"index":last_page}) }}">>></a>
+  {% endif %}
+  </div>
 <table class="table table-hover table-bordered" style=";background-color:white;margin-top:15px;">
 
   <thead style="background-color:#49afcd">
@@ -30,11 +46,5 @@
   {% endfor %}
   </tbody>
 </table>
-<ul class='navbar' style='text-align:center;'>
-  <a href="{{ path('iaato_step_list',{"index":1}) }}"><<</a>
-  <a href="{{ path('iaato_step_list',{"index":index-1}) }}"><</a>
-  <a>{{ index }}</a>
-  <a href="{{ path('iaato_step_list',{"index":index+1}) }}">></a>
-  <a href="{{ path('iaato_step_list',{"index":1}) }}">>></a>
-</ul>
+
 {% endblock %}

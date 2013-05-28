@@ -32,7 +32,6 @@
       <input type="submit" value="Check Disponibility" class="btn btn-primary" />
   </form>
 <br/>
-</div>
 {% endblock %}
 {% block javascripts %}
 <script>

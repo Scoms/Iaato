@@ -1,17 +1,13 @@
-{% extends '::base.html.twig' %}
+{% extends ['IaatoIaatoBundle:Capitaine:index.html.twig'] %}
 
 {% block title %}
 	Expedition Leader
 {% endblock %}
 
 {% block body %}
-
-<div class="well">
-
   
 <div class="alert alert-sucess" >
 {{ site }} is booked for {{ day }} !
 </div>
 <h6>Remove </h6>
-</div>
 {% endblock %}

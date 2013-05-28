@@ -6,7 +6,6 @@
 
 {% block body %}
 
-<div class="well">  
 <ul class="nav" style="margin-top:15px;">
 	<a class="btn btn-info" href="{{ path('iaato_step_list',{"index":1) }}" >Show steps</a>
 	<a class="btn btn-info" href="{{ path('iaato_step_list_add',{"param":"null"}) }}" >Add a step</a>
@@ -27,7 +26,6 @@
       {% endif %}
       <br/><br/>
   </form>
-</div>
 {% endblock %}
 {% block javascripts %}
 <script>
