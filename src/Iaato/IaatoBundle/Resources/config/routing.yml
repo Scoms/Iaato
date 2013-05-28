@@ -35,7 +35,7 @@ iaato_secretariat:
     defaults: { _controller: IaatoIaatoBundle:Secretariat:index }
 
 iaato_ship:
-    pattern: /secretariat/ship
+    pattern: /secretariat/ship/{index}
     defaults: { _controller: IaatoIaatoBundle:Ship:index }
 
 iaato_ship_add:

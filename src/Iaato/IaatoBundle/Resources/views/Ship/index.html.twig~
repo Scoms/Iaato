@@ -10,14 +10,14 @@
 
 <ul class = "nav nav-pills">
   <li><a href={{ path('iaato_society') }}>Company</a></li>
-  <li class = "active"><a href={{ path('iaato_ship') }}>Ship</a></li>
+  <li class = "active"><a href={{ path('iaato_ship',{"index":"1"}) }}>Ship</a></li>
   <li><a href={{ path('iaato_site') }}>Site</a></li>
   <li><a href={{ path('iaato_activity') }}>Activity</a></li>
   <li><a href={{ path('iaato_type') }}>Type</a></li>
 </ul>
 
 <ul class="nav nav-pills">
-	<a class="btn btn-info" href="{{ path('iaato_ship') }}">Show ships</a>
+	<a class="btn btn-info" href="{{ path('iaato_ship',{"index":"1"}) }}">Show ships</a>
 	<a class="btn btn-info" href="{{ path('iaato_ship_add') }}">Add a ship</a>
 	<a class="btn btn-info" href="{{ path('iaato_ship_remove') }}">Remove a ship</a>
 </ul>
@@ -28,6 +28,23 @@
   <p>No ships</p>
 
 {% else %}
+  <ul class="pagination pagination-centered">
+  {% if index != 1 %}
+  <a  href="{{ path('iaato_ship',{"index":1}) }}"><<</a>
+  <a  href="{{ path('iaato_ship',{"index":index-1}) }}"><</a>
+  {% else %}
+  <a  onclick="return false" href="{{ path('iaato_ship',{"index":1}) }}"><<</a>
+  <a  onclick="return false" href="{{ path('iaato_ship',{"index":index-1}) }}"><</a>
+  {% endif %}
+  <a style='text-align:right'>{{ index }} / {{ last_page }}</a>
+  {% if index != last_page %}
+  <a  href="{{ path('iaato_ship',{"index":index+1}) }}">></a>
+  <a  href="{{ path('iaato_ship',{"index":last_page}) }}">>></a>
+  {% else %}
+  <a onclick="return false" href="{{ path('iaato_ship',{"index":index+1}) }}">></a>
+  <a onclick="return false" href="{{ path('iaato_ship',{"index":last_page}) }}">>></a>
+  {% endif %}
+  </ul>
   <table class="table table-hover table-bordered" style="width: 100%;background-color:white;">
     
     <thead style="background-color:#49afcd">
@@ -46,8 +63,8 @@
       			<td><p>{{ ship.code }}</p></td>
       			<td><p>{{ ship.nameShip }}</p></td>
       			<td><p>{{ ship.nbPassenger }}</p></td>
-      			<td><p>{{ ship.type.labelType }}</p></td>
-      			<td><p>{{ ship.society.labelSociety }}</p></td>
+      			<td><p>{{ ship.labelType }}</p></td>
+      			<td><p>{{ ship.labelSociety }}</p></td>
     			</tr>
       {% endfor %}
   	</tbody>
@@ -55,11 +72,7 @@
   </table>
 {% endif %}
 
-<div class="pagination pagination-centered">
-  <ul>
-    <li><a href="#">1</a></li>
-  </ul>
-</div>
+
 
 {% endblock %}
 

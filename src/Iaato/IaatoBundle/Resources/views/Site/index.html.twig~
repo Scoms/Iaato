@@ -10,7 +10,7 @@
 
 <ul class = "nav nav-pills">
   <li><a href={{ path('iaato_society') }}>Company</a></li>
-  <li><a href={{ path('iaato_ship') }}>Ship</a></li>
+  <li><a href={{ path('iaato_ship',{"index":"1") }}>Ship</a></li>
   <li class = "active"><a href={{ path('iaato_site') }}>Site</a></li>
   <li><a href={{ path('iaato_activity') }}>Activity</a></li>
   <li><a href={{ path('iaato_type') }}>Type</a></li>
@@ -46,7 +46,7 @@
             <td><p>{{ site.nameSite }}</p></td>
             <td><p>{{ site.latitude }}</p></td>
             <td><p>{{ site.longitude }}</p></td>
-            <td><p>{{% if site.iaato %}}true{{% else %}}false{{% endif %}}</p></td>
+            <td><p>{% if site.iaato %}true{% else %}false{% endif %}</p></td>
             <td><p>{{ site.subZone.labelSubz }} </p></td>
           </tr>
       {% endfor %}
