@@ -12,7 +12,7 @@
 </ul>
 <h6>Show -- Your ship : {{ ship.nameship }}</h6>
 
-  <div style='text-align:center;'>
+  <ul class="pagination pagination-centered">
   {% if index != 1 %}
   <a  href="{{ path('iaato_step_list',{"index":1}) }}"><<</a>
   <a  href="{{ path('iaato_step_list',{"index":index-1}) }}"><</a>
@@ -28,7 +28,7 @@
   <a onclick="return false" href="{{ path('iaato_step_list',{"index":index+1}) }}">></a>
   <a onclick="return false" href="{{ path('iaato_step_list',{"index":last_page}) }}">>></a>
   {% endif %}
-  </div>
+  </ul>
 <table class="table table-hover table-bordered" style=";background-color:white;margin-top:15px;">
 
   <thead style="background-color:#49afcd">

@@ -32,7 +32,7 @@ class ShipController extends Controller {
     	$ships = $query->getResult();*/
 
 		$em = $this->getDoctrine()->getEntityManager();
-		$ships = $em->getRepository('IaatoIaatoBundle:Ship')->findAll();
+		$ships = $em->getRepository('IaatoIaatoBundle:Ship')->findBy(array(),array('nameShip'=>'ASC'));
 
 		//$this->pager = new sfDoctrinePager('ship', 3);
 
