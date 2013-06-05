@@ -7,6 +7,7 @@ $(function() {
  
   //tout d'abord on définit le centre de notre map par sa latitude et longitude, par exemple Montpellier: 
   var latLng = new google.maps.LatLng(-list_step[0][0],-list_step[0][1]);
+  var pt = new google.maps.Point(10,10);
   //puis on créé la map
   gmap = new google.maps.Map(document.getElementById('gmap-div'),
   {
@@ -20,7 +21,9 @@ $(function() {
   //addSites(-64.14, 61.08);
 
   var lineSymbol = {
-    path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+    path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
+    scale: 2.5,
+    //anchor: pt
   };
 
   polyline = new google.maps.Polyline({
@@ -28,15 +31,14 @@ $(function() {
     strokeOpacity: 0.5,       //l'opacité
     strokeWeight:  2,         //l'épaisseur du trait,
     icons: [{
-      path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
-      //icon: lineSymbol,
-      offset: '15',
-      fillColor: 'green',
+      icon: lineSymbol,
+      offset: '50%',
     }],
     map:           gmap       //la map à laquelle rattacher la polyline
   });
   path = polyline.getPath();
-  
+
+  /*
   var sites = new Array();
   var array_content = new Array();
   for(var cor in list_step){
@@ -46,7 +48,7 @@ $(function() {
         /*
         array_content[name] = "<div><strong>"+cor[2]+"</strong><br/>";
         array_content[name] += "<p>"+cor[3]+"</p>";
-        */
+        *//*
         array_content.push(content);
         sites.push(name);
       }
@@ -56,26 +58,27 @@ $(function() {
       
   }
   
-  
+  */
 
   //cpt = 0;
   for(var coor in list_step)
   {
-      addSites(list_step[coor], array_content[coor[2]]); 
+      addSites(list_step[coor]/*, array_content[coor[2]]*/); 
       //cpt+=1;  
   }
 });	
 
-function addSites(coor, content)
+function addSites(coor)
 {
+
     var myLatlng = new google.maps.LatLng(-coor[0],-coor[1]);
     path.push(myLatlng);
     var marker = new google.maps.Marker({ position: myLatlng, title: coor[2]});
     marker.setMap(gmap);
-    /*
+   // var content = "<div><strong>"+cor[2]+"</strong><br/><p>"+cor[3]+"</p>";
     var content = "<div><strong>"+coor[2]+"</strong><br/>";
     content += "<p>"+coor[3]+"</p>";
-    */
+    
     content += "<p>"+coor[0]+";"+coor[1]+"</p></div>";
     var infowindow = new google.maps.InfoWindow({ content: content } );
     gMarkers.push(new GMarkerClass(marker, infowindow));  
