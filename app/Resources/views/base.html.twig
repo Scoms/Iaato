@@ -47,10 +47,11 @@
             <li><a href="{{ path('iaato_admin') }}"><i class="icon-cog" ></i></a></li>
             {% endif %}
           </ul>
-          <a class="btn btn-primary" href="{{ path('login') }}">Login</a>
           {% block connexion %}
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
               <a class="btn btn-danger"  href="{{ path('logout') }}">Logout</a>
+            {% else %}  
+              <a class="btn btn-primary" href="{{ path('login') }}">Login</a>
             {% endif %}
           {% endblock %}          
         </div><!--/.nav-collapse -->
