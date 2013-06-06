@@ -20,6 +20,7 @@ use Iaato\IaatoBundle\Entity\TimeSlotLabel;
 use Iaato\IaatoBundle\Entity\Date;
 use Symfony\Component\Security\Core\SecurityContext;
 
+
 class CSVUpController extends Controller
 {
   
@@ -46,25 +47,25 @@ class CSVUpController extends Controller
                 $name = explode(".", $filename);
                 switch($name[0]){
                     case "ships":
-                        return $this->forward('IaatoIaatoBundle:CSVUp:ship', array('data' => $data));
+                        return $this->forward('IaatoIaatoBundle:CSVUp:ship', array('data' => $data , 'filename' => $filename));
                         break;
                     case "societies":
-                        return $this->forward('IaatoIaatoBundle:CSVUp:society', array('data' => $data));
+                        return $this->forward('IaatoIaatoBundle:CSVUp:society', array('data' => $data , 'filename' => $filename));
                         break;
                     case "activities":
-                        return $this->forward('IaatoIaatoBundle:CSVUp:activity', array('data' => $data));
+                        return $this->forward('IaatoIaatoBundle:CSVUp:activity', array('data' => $data , 'filename' => $filename));
                         break;
                     case "steps":
-                        return $this->forward('IaatoIaatoBundle:CSVUp:step', array('data' => $data));
+                        return $this->forward('IaatoIaatoBundle:CSVUp:step', array('data' => $data , 'filename' => $filename));
                         break;
                     case "sites":
-                        return $this->forward('IaatoIaatoBundle:CSVUp:site', array('data' => $data));
+                        return $this->forward('IaatoIaatoBundle:CSVUp:site', array('data' => $data , 'filename' => $filename));
                         break;
                     case "types":
-                        return $this->forward('IaatoIaatoBundle:CSVUp:type', array('data' => $data));
+                        return $this->forward('IaatoIaatoBundle:CSVUp:type', array('data' => $data , 'filename' => $filename));
                         break;
                     case "zones":
-                        return $this->forward('IaatoIaatoBundle:CSVUp:zone', array('data' => $data));
+                        return $this->forward('IaatoIaatoBundle:CSVUp:zone', array('data' => $data , 'filename' => $filename));
                         break;
                     default:
 			return $this->forward('IaatoIaatoBundle:CSVUp:step2', array('filename'=>$filename ,'data' => $data));
@@ -129,9 +130,12 @@ class CSVUpController extends Controller
   }
   
   // Ok
-  public function shipAction($data)
+  public function shipAction($data, $filename)
   {
     $handle = fopen($data, "r");
+    $p = "CSV/Save/" . $filename;
+    $save = fopen($p, "a");
+    
     $errors = array();
     $cpt_done = 0;
     $cpt_total = 0;
@@ -139,7 +143,7 @@ class CSVUpController extends Controller
     while(($lin = fgetcsv($handle,1000,";")) !== FALSE){
         $cpt_total++;
         $em = $this->getDoctrine()->getEntityManager();
-        
+
         if($em->getRepository("IaatoIaatoBundle:Ship")->findOneBy(array('nameShip' => $lin[0]))==NULL){
             if($em->getRepository("IaatoIaatoBundle:Society")->findOneBy(array('labelSociety' => $lin[1]))!=NULL){
                 if($em->getRepository("IaatoIaatoBundle:Type")->findOneBy(array('labelType' => $lin[2]))!=NULL){
@@ -177,6 +181,10 @@ class CSVUpController extends Controller
                     $ship->addEmail($email);
                     $ship->addPhone($phone);
                     
+                    // Sauvegarde des données dans un fichier csv en plus de la base de données
+                    fputcsv($save, $lin, ';');
+                    
+                    
                     
                     $cpt_done++;
                     $em->persist($ship);
@@ -201,13 +209,17 @@ class CSVUpController extends Controller
         }
     }
     fclose($handle);
+    fclose($save);
 	return $this->render('IaatoIaatoBundle:CSV:show.html.twig', array('cpt_done' => $cpt_done, 'cpt_total' => $cpt_total,'name' => "ships", 'error' => $errors));
   }
   
   // Ok tested
-  public function societyAction($data)
+  public function societyAction($data, $filename)
   {
     $handle = fopen($data, "r");
+    $p = "CSV/Save/" . $filename;
+    $save = fopen($p, "a");
+    
     $cpt_done = 0;
     $cpt_total = 0;
     $errors = array();
@@ -223,6 +235,8 @@ class CSVUpController extends Controller
             $em->persist($soc);
             $cpt_done++;
             $em->flush();
+            
+            fputcsv($save, $lin, ';');
         }
         else{
             $line_num = $cpt_total+1;
@@ -235,9 +249,12 @@ class CSVUpController extends Controller
   }
   
   // Ok tested
-  public function activityAction($data)
+  public function activityAction($data, $filename)
   {
     $handle = fopen($data, "r");
+    $p = "CSV/Save/" . $filename;
+    $save = fopen($p, "a");
+    
     $cpt_done = 0;
     $cpt_total = 0;
     $errors = array();
@@ -253,6 +270,8 @@ class CSVUpController extends Controller
             $em->persist($activity);
             $cpt_done++;
             $em->flush();
+            
+            fputcsv($save, $lin, ';');
         }  
         else{
             $line_num = $cpt_total+1;
@@ -263,10 +282,13 @@ class CSVUpController extends Controller
 	return $this->render('IaatoIaatoBundle:CSV:show.html.twig', array('cpt_done' => $cpt_done, 'cpt_total' => $cpt_total, 'name' => "activities", 'error' => $errors));
   }
   
-  // Need TypeSlot...
-  public function stepAction($data)
+  // Ok
+  public function stepAction($data, $filename)
   {
     $handle = fopen($data, "r");
+    $p = "CSV/Save/" . $filename;
+    $save = fopen($p, "a");
+    
     $cpt_done = 0;
     $cpt_total = 0;
     $errors = array();
@@ -298,7 +320,7 @@ class CSVUpController extends Controller
                     }
                     
                     $tsl = $em->getRepository("IaatoIaatoBundle:TimeSlotLabel")->findOneBy(array('tslabel' => $lin[3]));
-                    if($em->getRepository("IaatoIaatoBundle:TimeSlot")->findBy(array('date' => $date,'label' => $tsl))!= NULL){
+                    if($em->getRepository("IaatoIaatoBundle:TimeSlot")->findOneBy(array('date' => $date,'label' => $tsl))!= NULL){
                       $timeslot = $em->getRepository("IaatoIaatoBundle:TimeSlot")->findOneBy(array('date' => $date,'label' => $tsl));
                     }
                     else{
@@ -315,6 +337,8 @@ class CSVUpController extends Controller
                     $cpt_done++;
                     $em->persist($step);
                     $em->flush();
+                    
+                    fputcsv($save, $lin, ';');
                 }
                 else{
                     /* Le time slot est pas bon */
@@ -511,9 +535,12 @@ class CSVUpController extends Controller
 	return $this->render('IaatoIaatoBundle:CSV:show_el.html.twig', array('cpt_done' => $cpt_done, 'cpt_total' => $cpt_total, 'name' => "steps", 'error' => $errors));
   }
   // Ok tested
-  public function siteAction($data)
+  public function siteAction($data, $filename)
   {
     $handle = fopen($data, "r");
+    $p = "CSV/Save/" . $filename;
+    $save = fopen($p, "a");
+    
     $cpt_done = 0; 
     $cpt_total = 0;
     $errors = array();
@@ -542,6 +569,8 @@ class CSVUpController extends Controller
                 $em->persist($site);
                 $em->flush();
                 $cpt_done++;
+                
+                fputcsv($save, $lin, ';');
             }
             else{
                 $line_num = $cpt_total+1;
@@ -559,9 +588,12 @@ class CSVUpController extends Controller
   }
   
   // Ok tested
-  public function typeAction($data)
+  public function typeAction($data, $filename)
   {
     $handle = fopen($data, "r");
+    $p = "CSV/Save/" . $filename;
+    $save = fopen($p, "a");
+    
     $cpt_done = 0;
     $cpt_total = 0;
     $errors = array();
@@ -577,6 +609,8 @@ class CSVUpController extends Controller
             $em->persist($type);
             $em->flush();
             $cpt_done++;
+            
+            fputcsv($save, $lin, ';');
         }
         else{
             $line_num = $cpt_total+1;
@@ -589,9 +623,12 @@ class CSVUpController extends Controller
   }
   
   // Ok -- Il serait peut-être bien de pouvoir ajouter une zone sans forçément mettre une subzone ?
-  public function zoneAction($data)
+  public function zoneAction($data, $filename)
   {
     $handle = fopen($data, "r");
+    $p = "CSV/Save/" . $filename;
+    $save = fopen($p, "a");
+    
     $cpt_done = 0;
     $cpt_total = 0;
     $errors = array();
@@ -619,6 +656,8 @@ class CSVUpController extends Controller
             $em->persist($zone);  
             $em->flush();
             $cpt_done++;
+            
+            fputcsv($save, $lin, ';');
         }
         else{
             $line_num = $cpt_total+1;

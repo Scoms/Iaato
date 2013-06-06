@@ -19,6 +19,7 @@ class StepController extends Controller
     public function indexAction($index=null)
     {
       //On simule une variable 
+      $count = 0;
       if($index == null)
 	$index = 1;
       $par_page = 15;
@@ -30,6 +31,7 @@ class StepController extends Controller
       $ship_id = $ship->getId();
       //On récupère la liste des steps.
       $query_builder = $em->createQueryBuilder();
+      
      $query = $em->createQuery(
      'SELECT st FROM IaatoIaatoBundle:Step st 
      INNER JOIN IaatoIaatoBundle:TimeSlot ts with st.timeslot = ts.id
@@ -42,9 +44,15 @@ class StepController extends Controller
       $query->setFirstResult(($index-1)*$par_page);
       $query->setMaxResults(($index)*$par_page);
       $list_step = $query->getResult();
+      foreach($repo_step->findBy(array('ship'=>$ship)) as $step)
+	$count++;
+      
+      $last_page = round($count / $par_page);
       return $this->render('IaatoIaatoBundle:Step:show.html.twig',array(
 	'ship'=>$ship,
 	'list_step'=>$list_step,
+	'index'=>$index,
+	'last_page'=>$last_page,
       ));
     }
     public function addAction()

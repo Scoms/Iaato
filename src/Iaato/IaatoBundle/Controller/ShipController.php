@@ -25,18 +25,38 @@ use Iaato\IaatoBundle\Entity\Society;
 
 class ShipController extends Controller {
 
-	public function indexAction(){
-
-    	/*$em = $this->getDoctrine()->getEntityManager();
-    	$query = $em->createQuery('SELECT s.code, s.name, s.nbPassenger FROM IaatoIaatoBundle:Ship s LEFT JOIN s.society so LEFT JOIN s.idtype t limit(15)');
-    	$ships = $query->getResult();*/
-
-		$em = $this->getDoctrine()->getEntityManager();
-		$ships = $em->getRepository('IaatoIaatoBundle:Ship')->findAll();
-
-		//$this->pager = new sfDoctrinePager('ship', 3);
-
-		return $this->render('IaatoIaatoBundle:Ship:index.html.twig', array('ships' => $ships));
+	public function indexAction($index=null){
+	
+      $em = $this->getDoctrine()->getManager();
+      $count = 0;
+      if($index == null)
+	$index = 1;
+      $par_page = 15;
+      
+      $em = $this->getDoctrine()->getEntityManager();
+      //$ships = $em->getRepository('IaatoIaatoBundle:Ship')->findBy(array(),array('nameShip'=>'ASC'));
+      $query = $em->createQuery(
+      '
+      SELECT sh.nameShip, sh.code, sh.nbPassenger,ty.labelType,so.labelSociety
+      FROM IaatoIaatoBundle:Ship sh
+      INNER JOIN IaatoIaatoBundle:Society so with so.id = sh.society
+      INNER JOIN IaatoIaatoBundle:Type ty with ty.id = sh.idtype
+      ORDER BY sh.nameShip
+      '
+      );
+      $query->setFirstResult(($index-1)*$par_page);
+      $query->setMaxResults($par_page);
+      $ships = $query->getResult();
+      foreach($em->getRepository('IaatoIaatoBundle:Ship')->findAll() as $step)
+	$count++;
+      
+      $last_page = round($count / $par_page);
+      
+		return $this->render('IaatoIaatoBundle:Ship:index.html.twig', array(
+		'ships' => $ships,
+		'index'=>$index,
+		'last_page'=>$last_page,
+		));
 	
 	}
 
