@@ -17,20 +17,22 @@ class Users extends AbstractFixture implements OrderedFixtureInterface
     $user->setUsername('superadmin');
     $user->setPassword(sha1('iaato2013_LEE'));
     $user->setSalt('');
-	$user->setRoles(array('ROLE_ADMIN'));
+    $user->setRoles(array('ROLE_ADMIN'));
     $manager->persist($user);
+    
     $user = new User;
     $user->setUsername('secretariat');
     $user->setPassword(sha1('pass'));
     $user->setSalt('');
-	$user->setRoles(array('ROLE_SECRETARIAT'));
+    $user->setRoles(array('ROLE_SECRETARIAT'));
     $manager->persist($user);
+    
     $user = new User;
     $user->setUsername('capitaine');
     $user->setPassword(sha1('pass'));
     $user->setSalt('');
-	$user->setRoles(array('ROLE_CAPITAINE'));
-	$user->setShip($manager->getRepository('IaatoIaatoBundle:Ship')->findOneBy(array('nameShip'=>'Alexander von Humboldt')));
+    $user->setRoles(array('ROLE_CAPITAINE'));
+    $user->setShip($manager->getRepository('IaatoIaatoBundle:Ship')->findOneBy(array('nameShip'=>'Alexander von Humboldt')));
     $manager->persist($user);
     
     /*
