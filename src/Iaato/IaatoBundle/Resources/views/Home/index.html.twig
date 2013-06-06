@@ -17,7 +17,7 @@
   <script type="text/javascript">
   var list_ship = new Array();
   {% for step in array_ship %}
-    list_ship.push(new Array("{{ step.site.latitude }}","{{ step.site.longitude }}","{{ step.ship }}","{{ step.timeslot }}"));
+    list_ship.push(new Array("{{ step.site.latitude }}","{{ step.site.longitude }}","{{ step.ship }}","{{ step.timeslot }}","{{ step.site.nameSite }}"));
   {% endfor %}
   </script>
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>

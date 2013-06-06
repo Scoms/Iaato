@@ -6,7 +6,10 @@ $(function() {
   //J'utilise dans l'exemple jQuery pour améliorer la lisibilité du code, le focus étant sur GoogleMaps
  
   //tout d'abord on définit le centre de notre map par sa latitude et longitude, par exemple Montpellier: 
-  var latLng = new google.maps.LatLng(-list_ship[0][0],-list_ship[0][1]);
+  if(list_ship[0] != null)
+    var latLng = new google.maps.LatLng(-list_ship[0][0],-list_ship[0][1]);
+  else
+    var latLng = new google.maps.LatLng(-60,-60); 
   //puis on créé la map
   gmap = new google.maps.Map(document.getElementById('gmap-div'),
   {
@@ -39,7 +42,8 @@ function addShip(coor)
 					 icon: "../../img/ship.png"
     });
     marker.setMap(gmap);
-    var content = "<div  ><strong>" + coor[2] + "</strong><br/>";
+    var content = "<div  ><h5 style='color:#070975;'>"+coor[4]+"</h5>";
+    content += "<h5>" + coor[2] + "</h5>";
     content += "<p>" + coor[3] + "</p></div>";
     var infowindow = new google.maps.InfoWindow({ content: content });
     gMarkers.push(new GMarkerClass(marker, infowindow));

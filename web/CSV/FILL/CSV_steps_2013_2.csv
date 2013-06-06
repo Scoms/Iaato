@@ -1,0 +1,141 @@
+Day;TimeSlot;Site;;
+1;early morning;;1;Neko Harbor (09:01) / Danco Island (14:01)
+1;morning;Neko Harbor;2;Portal Point (09:01) / Cierva Cove (14:01)
+1;afternoon;Danco Island;3;Whalers Bay (09:01) / Baily Head (14:01)
+1;evening;;4;At Sea
+1;overnight;;5;At Sea
+2;early morning;;6;* (DP) Ushuaia (00:00) * / * (EP) Ushuaia (00:00) *
+2;morning;Portal Point;7;At Sea
+2;afternoon;Cierva Cove;8;West Point Island (09:01) / Saunders Island (14:01)
+2;evening;;9;Stanley (09:01)
+2;overnight;;10;At Sea
+3;early morning;;11;At Sea
+3;morning;Whalers Bay;;
+3;afternoon;Baily Head;;
+3;evening;;;
+3;overnight;;;
+4;early morning;;;
+4;morning;;;
+4;afternoon;;;
+4;evening;;;
+4;overnight;;;
+5;early morning;;;
+5;morning;;;
+5;afternoon;;;
+5;evening;;;
+5;overnight;Ushuaia;;
+6;early morning;;;
+6;morning;;;
+6;afternoon;;;
+6;evening;;;
+6;overnight;;;
+7;early morning;;;
+7;morning;;;
+7;afternoon;;;
+7;evening;;;
+7;overnight;;;
+8;early morning;;;
+8;morning;West Point Island;;
+8;afternoon;Saunders Island;;
+8;evening;;;
+8;overnight;;;
+9;early morning;;;
+9;morning;Stanley;;
+9;afternoon;;;
+9;evening;;;
+9;overnight;;;
+10;early morning;;;
+10;morning;;;
+10;afternoon;;;
+10;evening;;;
+10;overnight;;;
+11;early morning;;;
+11;morning;;;
+11;afternoon;;;
+11;evening;;;
+11;overnight;;;
+12;early morning;;;
+12;morning;Elsehul;;
+12;afternoon;Salisbury Plain;;
+12;evening;Prion Island;;
+12;overnight;Fortuna Bay;;
+13;early morning;Stromness Harbour;;
+13;morning;Grytviken (King Edward Point);;
+13;afternoon;Grytviken (King Edward Point);;
+13;evening;;;
+13;overnight;;;
+14;early morning;Saint Andrews Bay;;
+14;morning;Gold Harbour;12;Elsehul (09:01) / Salisbury Plain in the Bay of Isles (14:01) / Prion Island (19:31)
+14;afternoon;Cooper Bay;13;Fortuna Bay (00:00) / Stromness (05:31) / Grytviken (09:01) / Grytviken (14:01)
+14;evening;;14;St. Andrews Bay (05:31) / Gold Harbour (09:01) / Cooper Bay (14:01)
+14;overnight;;15;Drygalski Fjord and Larsen Harbour (09:01)
+15;early morning;;16;At Sea
+15;morning;Drygalski Fjord & Larsen Harbour;17;At Sea
+15;afternoon;;18;Point Wild (14:01)
+15;evening;;19;Aitcho - Barrientos Island (09:01) / Whalers Bay (14:01)
+15;overnight;;20;Wilhelmina Bay (09:01) / Cuverville Island (14:01)
+16;early morning;;;
+16;morning;;;
+16;afternoon;;;
+16;evening;;;
+16;overnight;;;
+17;early morning;;;
+17;morning;;;
+17;afternoon;;;
+17;evening;;;
+17;overnight;;;
+18;early morning;;;
+18;morning;;;
+18;afternoon;Wild, Point;;
+18;evening;;;
+18;overnight;;;
+19;early morning;;;
+19;morning;Aitcho Barrientos Island;;
+19;afternoon;Whalers Bay;;
+19;evening;;;
+19;overnight;;;
+20;early morning;;;
+20;morning;Wilhelmina Bay;;
+20;afternoon;Cuverville Island;;
+20;evening;;;
+20;overnight;;;
+21;early morning;;21;Almirante Brown (09:01) / Skontorp Cove (09:01) / Neko Harbor (14:01)
+21;morning;Alimrante Brown;22;At Sea
+21;afternoon;Neko Harbor;23;At Sea
+21;evening;;24;* (DP) Ushuaia (00:00) * / * (EP) Ushuaia (00:00) *
+21;overnight;;25;At Sea
+22;early morning;;;
+22;morning;;;
+22;afternoon;;;
+22;evening;;;
+22;overnight;;;
+23;early morning;;;
+23;morning;;;
+23;afternoon;;;
+23;evening;;;
+23;overnight;Ushuaia;;
+24;early morning;;;
+24;morning;;;
+24;afternoon;;;
+24;evening;;;
+24;overnight;;;
+25;early morning;;;
+25;morning;;;
+25;afternoon;;;
+25;evening;;;
+25;overnight;;;
+26;early morning;;;
+26;morning;;;
+26;afternoon;;;
+26;evening;;;
+26;overnight;Lemaire Channel;26;At Sea
+27;early morning;;27;Lemaire Channel (00:00) / Petermann Island (09:01) / Yalour Islands (14:01)
+27;morning;Petermann Island;28;Vernadsky Station (09:01) / Pléneau Island (14:01)
+27;afternoon;Yalour Islands;29;Almirante Brown (09:01) / Skontorp Cove (09:01) / Neko Harbor (14:01)
+27;evening;;;
+27;overnight;;;
+28;early morning;;;
+28;morning;Vernadsky Station;;
+28;afternoon;Pléneau Island;;
+28;evening;;;
+28;overnight;;;

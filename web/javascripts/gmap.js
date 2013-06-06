@@ -7,7 +7,10 @@ $(function() {
   //J'utilise dans l'exemple jQuery pour améliorer la lisibilité du code, le focus étant sur GoogleMaps
  
   //tout d'abord on définit le centre de notre map par sa latitude et longitude, par exemple Montpellier: 
-  var latLng = new google.maps.LatLng(-list_step[0][0],-list_step[0][1]);
+  if(list_step[0] != null)
+    var latLng = new google.maps.LatLng(-list_step[0][0],-list_step[0][1]);
+  else
+    var latLng = new google.maps.LatLng(-60,-60); 
   var pt = new google.maps.Point(10,10);
   //puis on créé la map
   gmap = new google.maps.Map(document.getElementById('gmap-div'),

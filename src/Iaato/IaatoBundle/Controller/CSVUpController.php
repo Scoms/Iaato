@@ -431,8 +431,12 @@ class CSVUpController extends Controller
 	  $test_step2 = $repo_step->findOneBy(array("timeslot"=>$timeslot,"site"=>$site));
 	  //Pas de reservation enregistré
 	  if($test_step2 != null)
-	    array_push($errors,"Line " . $lines . " :  the site is already booked by ($ship).");
-	 
+        {
+
+        array_push($errors,"Line " . $lines . " :  the site is already booked by (".$test_step2->getShip().").");
+        array_push($errors,"    Phone : ".$test_step2->getShip()->getPhone()[0]);
+        array_push($errors,"    Email : ".$test_step2->getShip()->getEmail()[0]);
+	    }
 	 //Création de la reservation 
 	  else
 	  {
